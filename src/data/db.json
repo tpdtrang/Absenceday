@@ -1,0 +1,86 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "thoigianDK": "2019-06-11",
+      "thoigianBD": "2019-06-13",
+      "thoigianKT": "2019-06-13",
+      "hinhthuc": "Buổi sáng",
+      "theloai": "Nghỉ phép năm",
+      "lydo": "nghỉ ốm",
+      "pheduyet": "đã phê duyệt"
+    },
+    {
+      "id": 2,
+      "thoigianDK": "2019-06-11",
+      "thoigianBD": "2019-06-13",
+      "thoigianKT": "2019-06-13",
+      "hinhthuc": "Buổi sáng",
+      "theloai": "Nghỉ phép năm",
+      "lydo": "nghỉ ốm",
+      "pheduyet": "đã phê duyệt"
+    },
+    {
+      "id": 3,
+      "thoigianDK": "2019-06-10",
+      "thoigianBD": "2019-06-14",
+      "thoigianKT": "2019-06-14",
+      "hinhthuc": "Buổi sáng",
+      "theloai": "Nghỉ phép năm",
+      "lydo": "nghỉ ốm",
+      "pheduyet": "chưa phê duyệt"
+    },
+    {
+      "id": 4,
+      "thoigianDK": "2019-06-11",
+      "thoigianBD": "2019-06-13",
+      "thoigianKT": "2019-06-13",
+      "hinhthuc": "Buổi sáng",
+      "theloai": "Nghỉ phép năm",
+      "lydo": "nghỉ ốm",
+      "pheduyet": "đã phê duyệt"
+    },
+    {
+      "thoigianDK": "2019-06-14",
+      "thoigianBD": "2019-06-14",
+      "thoigianKT": "2019-06-14",
+      "hinhthuc": "Buổi sáng",
+      "theloai": "Nghỉ phép năm",
+      "lydo": "Có việc gia đình",
+      "pheduyet": "",
+      "id": 6
+    },
+    {
+      "thoigianDK": "2019-06-13",
+      "thoigianBD": "2019-06-13",
+      "thoigianKT": "2019-06-13",
+      "hinhthuc": "Buổi chiều",
+      "theloai": "Nghỉ phép năm",
+      "lydo": "đi đẻ",
+      "pheduyet": "",
+      "id": 7
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "ten": "Nguyễn Văn B",
+      "tuoi": 25,
+      "quequan": "Đà Nẵng",
+      "vitri": "Nhân Viên",
+      "khoi": "Java",
+      "username": "nducanh@gmail.com",
+      "password": 123
+    },
+    {
+      "id": 2,
+      "ten": "Nguyễn Văn A",
+      "tuoi": 25,
+      "quequan": "Đà Nẵng",
+      "vitri": "Nhân Viên",
+      "khoi": "Java",
+      "username": "nducanh12@gmail.com",
+      "password": 123
+    }
+  ]
+}
