@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
-// import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie';
 import {Modal} from 'antd';
-import {GoogleLogin} from 'react-google-login';
+import {GoogleLogin, GoogleLogout} from 'react-google-login';
 import * as action from '../../../actions/login';
 import {connect} from 'react-redux'
-// import {Redirect} from 'react-router-dom'
-// const cookies = new Cookies();
+import {Redirect} from 'react-router-dom'
+import img from '../../../assets/images/logo-light.svg';
+const cookies = new Cookies();
 class HeaderLayout extends Component {
     constructor(props){
         super(props);
         this.state = {
             showGoogle: false,
-            isRedirect : false
+            isRedirect : false,
+            isLogout: false,
+            isLogoutDrop: false
         }
     }
     handleOk = (e) => {
@@ -26,10 +29,13 @@ class HeaderLayout extends Component {
         });
     }
     responseGoogle = (data) =>{
+        console.log(data);
         if(data){
-            this.props.dispatch(action.requestLogin(data.accessToken));
+            this.props.dispatch(action.requestLogin(data));
+            cookies.set('accessToken', data.accessToken);
             this.setState({
-                showGoogle: false
+                showGoogle: false,
+                isLogout: false
             })
         }
     }
@@ -38,8 +44,62 @@ class HeaderLayout extends Component {
             showGoogle: true
         })
     }
-    render() { 
-       
+    onCloseLogin = () =>{
+        this.setState({
+            showGoogle: false
+        })
+    }
+    logoutGoogle = () =>{
+        this.props.dispatch(action.requestLogout(cookies.remove('accessToken')));
+        this.setState({
+            isLogout: true
+        })
+    }
+    onLogout = ()=>{
+        this.setState({
+            isLogoutDrop: !this.state.isLogoutDrop
+        })
+    }
+    render() {         
+        if(this.state.isRedirect){
+            return (
+                <Redirect to="/admin"></Redirect>
+            )
+        }
+        const contentLogin = () =>{
+            if(cookies.get('data') !== undefined){
+                return(
+                    <div className= "b-dropdown">
+                        <button className="btn-user" onClick={this.onLogout}>{cookies.get('data').attributes.name}<i className="fas fa-chevron-down">&nbsp;</i></button>
+                        <div className={this.state.isLogoutDrop ? "b-logout active" : "b-logout"}>
+                            <GoogleLogout 
+                                clientId={'892644700775-73gunamcbm623v3002opqgpghlfuqudh.apps.googleusercontent.com'}
+                                buttonText="Đăng Xuất"
+                                onLogoutSuccess={this.logoutGoogle}
+                                className="btn-logout"
+                                style={{"marginLeft":"50px;"}}
+                            >
+                            </GoogleLogout>
+                        </div>
+                    </div>
+                )
+            }else{
+                return(
+                    <button className="btn-login" onClick={this.onShowLogin}>Đăng Nhập</button>
+                )
+            }
+        }
+        const contentLogout = () =>{
+            if(this.state.isLogout){
+                return(
+                    <button className="btn-login" onClick={this.onShowLogin}>Đăng Nhập</button>
+                )
+            }else{
+                return <>
+                    {contentLogin()}
+                </>
+            }
+        }
         return (
             
             <header className="b-header-container">
@@ -47,23 +107,24 @@ class HeaderLayout extends Component {
                     <div className="b-header">
                         <div className="img-logo">
                             <a href="login.html" className="link-img">
-                                <img className="logo" src="../../images/logo-light.svg" alt="logo"/>
+                                <img className="logo" src={img} alt="logo"/>
                             </a>
                         </div>
-                        
-                        <div className="b-logout">
+                        <div className="b-login">
                             <div className="b-admin">
                                 <button className="btn-admin" onClick={this.onRedirect}><i className="fas fa-users-cog"></i></button>
                             </div>
-                            <button className="btn-logout" onClick={this.onShowLogin}>Đăng Nhập</button>
+                            {contentLogout()}
                             <Modal
                                 visible={this.state.showGoogle}
                                 onOk={this.handleOk}
-                                onCancel={this.handleCancel}
+                                closable={false}
+                                footer={null}
                             >
-                                <div className="b-login">
+                                <div className="google-login">
                                     <div className="b-title">
                                         <h1 className="title">Đăng Nhập</h1>
+                                        <button onClick={this.onCloseLogin}><i className="fas fa-times"></i></button>
                                     </div>
                                     <div className="b-content">
                                         <GoogleLogin

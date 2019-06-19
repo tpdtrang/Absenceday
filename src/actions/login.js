@@ -7,12 +7,13 @@ const cookies = new Cookies();
 export function requestLogin(data){
     let token = null;
     token = {
-        'token' : data
+        'token' : data.accessToken,
+        'email' : data.email
     }
     return (dispatch)=>{
         return axios.request({
             method: "POST",
-            url: `${API.API_TOKEN}/auth/login`,
+            url: `${API.API_URL}/auth/google`,
             headers: {
                 "Accept": "application/json",
                 'Content-Type': 'application/json',
@@ -23,13 +24,15 @@ export function requestLogin(data){
                 cookies.set('token',response.data.access_token);
                 axios.request({
                     method: "GET",
-                    url: `${API.API_TOKEN}/me`,
+                    url: `${API.API_URL}/me`,
                     headers: {
                         "Accept": "application/json",
                         'Content-Type': 'application/json',
                         "Authorization": `${'bearer' + response.data.access_token}`
                     },
-                }).then(function(response){
+                }).then(function(response){      
+                    console.log(response);
+                                
                     if(response){
                         cookies.set("data",response.data.data)
                         message.success('Đăng nhập thành công')
@@ -39,13 +42,40 @@ export function requestLogin(data){
             }
         }).catch(function (error) {
             if (error.response) {
-                // console.log(error.response.data);
+                message.error('Đăng nhập ko thành công')
                 cookies.set("error",error.response.data)
             }
         })
     }
 }
 
+
+//logout
+export function requestLogout(data){
+    let token = {
+        'token' : data
+    }
+    return (dispatch)=>{
+        return axios.request({
+            method: 'POST',
+            url: `${API.API_URL}/auth/logout`,
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+                "Authorization": `${'bearer' +  cookies.get('token')}`
+            },
+            data: token
+        }).then(function(response){
+            cookies.remove('token');
+            cookies.remove('data');
+            cookies.remove('accessToken');
+            message.success('Đăng xuất thành công');
+            dispatch(reviceData(types.REQUEST_LOGUOT,response))
+        }).catch(function(error){
+            console.log(error);
+        })
+    }
+}
 export function reviceData(action,payload){
     return{
         type: action,

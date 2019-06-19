@@ -1,11 +1,56 @@
+// ----------------------------------------------------------------------
+// Font
+// ----------------------------------------------------------------------
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&subset=vietnamese');
+@font-face{
+    font-family: "Roboto";
+    src: url('/fonts/Roboto-Light.ttf');
+}
+@font-face{
+    font-family: "Awesome";
+    src:  url('/fonts/fa-solid-900.ttf');
+}
+// ----------------------------------------------------------------------
+// Base
+// ----------------------------------------------------------------------
+@import "base/mixins";
+@import "base/variables";
+@import "base/extends";
+@import "base/reset";
+@import "base/fonts";
+@import "base/utility";
+@import "base/button";
+
+// ----------------------------------------------------------------------
+// Layout
+// ----------------------------------------------------------------------
+@import "layout/header";
+@import "layout/footer";
+@import "layout/siderbar";
+// ----------------------------------------------------------------------
+// Custom
+// ----------------------------------------------------------------------
+@import "custom/custom-plugin";
+
+// ----------------------------------------------------------------------
+// Pages
+// ----------------------------------------------------------------------
+@import "pages/homepage";
+@import "pages/loginpage";
+@import "pages/menu";
+// ----------------------------------------------------------------------
+// Responsive
+// ----------------------------------------------------------------------
+@import "responsive/responsive";
 @import "~@fullcalendar/core/main.css";
 @import "~@fullcalendar/daygrid/main.css";
 @import "~@fullcalendar/timegrid/main.css";
 
 .b-form-content {
     position: relative;
-    width: 400px;
+    width: 450px;
     background-color: #fff;
+    margin-left: 10px;
     .b-heading {
         // border-bottom: 1px solid rgb(194, 191, 191);
         // width: 100%;
@@ -100,6 +145,40 @@
         }
     }
 }
+.btn-search{
+    margin-left: -7px;
+    height: 35px;
+    width: 40px;
+    border: 1px solid rgb(91, 167, 238);
+    background-color: rgb(91, 167, 238);
+    border-radius: 2px;
+    i{
+        color: #fff;
+    }
+    &:hover{
+        background: #fff;
+        i{
+            color: rgb(91, 167, 238);
+        }
+    }
+}
+.google-login{
+    .b-title{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button{
+            background: #fff;
+            border: none;
+            color:  #2962FF;
+        }
+        .title{
+            color:  #2962FF;
+            font-size: 17px;
+        }
+    }
+    
+}
 .b-pagination{
     padding-top: 20px;
     .b-list-page{
@@ -125,12 +204,14 @@
 }
 .b-admin{
     float: left;
+    margin-top: 3px;
     .btn-admin{
         width: 50px;
         background-color: #fff;
         margin: 5px 15px;
         border: 1px solid rgb(79, 123, 245);
         border-radius: 5px;
+        float: left;
         i{
             font-size: 20px;
             color: rgb(79, 123, 245);
@@ -143,14 +224,17 @@
         }
     }
 }
-.b-profile{
-    background-color: #bedff5;
-    .b-information{
-        .b-title{
-            width: 120px;
-        }
-    }
-}
+// .b-profile{
+//     height: 320px;
+//     background-color: #bedff5;
+//     .b-information{
+//         .b-title{
+//             width: 120px;
+//             margin: 10px 0;
+//         }
+        
+//     }
+// }
 .b-table-container{
     .b-table{
         .b-title{
@@ -163,12 +247,26 @@
                 padding: 10px 0;
             }
         }
-        .title-table{
-            .item-table{
-                font-size: 16px;
-                font-weight: 500;
-                color: rgb(79, 123, 245);
+        .table{
+            width: 100%;
+            .title-table{
+                .item-table{
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #fff;
+                    border-right: 1px solid #fff;
+                    background-color: #2962FF;
+                    &:last-child{
+                        border-right: none;
+                    }
+                }
             }
+        }
+        .name-item{
+            border-right: 1px solid #fff;
         }
     }
 }
+
+
+

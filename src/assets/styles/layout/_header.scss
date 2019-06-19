@@ -1,0 +1,64 @@
+.b-header-container{
+    position: relative;
+    background-color: rgb(190, 223, 245); 
+    padding: 15px 0;
+    .b-header{
+        @include flexbox();
+        @include justify-content(space-between);
+        @include align-items(center);
+        .img-logo{
+            .logo{
+                width: 200px;
+                height: 50px;
+            }
+        }
+        .b-login{
+            .btn-login{
+                width: 120px;
+                padding: 7px 10px; 
+                outline: none;
+                background-color: #fff;
+                border: 1px solid rgb(91, 167, 238);
+                color: rgb(91, 167, 238);
+                border-radius: 10px;
+                font-size: 15px;
+                font-weight: 600;
+                &:hover{
+                    background-color: rgb(91, 167, 238);
+                    color: #fff;
+                }
+            }
+            .b-dropdown{
+                float: left;
+                height: 50px;
+                .btn-user{
+                    margin-top: 3px;
+                    width: 100%;
+                    border: none;
+                    height: 40px;
+                    background: white;
+                    border-radius: 5px;
+                    border: 1px solid rgb(79, 123, 245);
+                    font-weight: 700;
+                    align-items: center;
+                    color: rgb(79, 123, 245);
+                    i{
+                        padding: 0 10px;
+                    }
+                    &:hover{
+                        .b-logout{
+                            opacity: 1;
+                        }
+                    }
+                }
+                .b-logout{ 
+                    opacity:0;
+                    &.active{
+                        opacity: 1;
+                    }
+                   
+                }
+            }
+        }
+    }
+}

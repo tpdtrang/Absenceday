@@ -10,6 +10,10 @@ export default function (state = INTINIAL_STATE, action ={}){
             return Object.assign({},state,{
                 user: action.payload
             })
+        case types.REQUEST_LOGUOT:
+            return Object.assign({},state,{
+                user: {}
+            })
         default:
             return state;
     }

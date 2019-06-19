@@ -11,13 +11,11 @@ class MenuLayout extends Component {
         super(props);
         this.state = {
             visible: false,
-            thoigianDK: '',
-            thoigianBD: '',
-            thoigianKT: '',
-            hinhthuc: '',
-            theloai: '',
-            lydo: '',
-            pheduyet: ''
+            time_off_beginning: '',
+            time_off_ending: '',
+            type: '',
+            at_time: '',
+            note: '',
         }
     }
     showModal = () => {
@@ -53,17 +51,17 @@ class MenuLayout extends Component {
         event.preventDefault();
         this.setState({visible: false})
     }
-    onReset() {
-        this.setState({
-            thoigianDK: '',
-            thoigianBD: '',
-            thoigianKT: '',
-            hinhthuc: '',
-            theloai: '',
-            lydo: '',
-            pheduyet: ''
-        })
-    }
+    // onReset() {
+    //     this.setState({
+    //         thoigianDK: '',
+    //         thoigianBD: '',
+    //         thoigianKT: '',
+    //         hinhthuc: '',
+    //         theloai: '',
+    //         lydo: '',
+    //         pheduyet: ''
+    //     })
+    // }
     render() {
         const contentUser = () => {
             if (cookies.get("data") !== undefined) {
@@ -74,20 +72,16 @@ class MenuLayout extends Component {
                             <span className="b-text">{cookies.get("data").attributes.name}</span>
                         </div>
                         <div className="b-information">
-                            <h1 className="b-title">Tuổi:</h1>
-                            <span className="b-text">13</span>
-                        </div>
-                        <div className="b-information">
                             <h1 className="b-title">Quê quán:</h1>
-                            <span className="b-text">da nang</span>
+                            <span className="b-text">{cookies.get("data").attributes.address}</span>
                         </div>
                         <div className="b-information">
                             <h1 className="b-title">Vị trí:</h1>
-                            <span className="b-text">nhan vien</span>
+                            <span className="b-text"key={cookies.get("data").attributes.team.id}>{cookies.get("data").attributes.team.name}</span>
                         </div>
                         <div className="b-information">
                             <h1 className="b-title">Khối:</h1>
-                            <span className="b-text">Java</span>
+                            <span className="b-text"key={cookies.get("data").attributes.position.id}>{cookies.get("data").attributes.position.name}</span>
                         </div>
                     </div>
                 )
@@ -108,7 +102,8 @@ class MenuLayout extends Component {
                     <button className="btn-list" onClick={this.onViews}>Danh sách
                     </button>
                     <div className="b-input">
-                        <input type="search" className="b-search" placeholder="tìm kiếm ..." style={{"color":"rgb(79, 123, 245)"}}/>
+                        <input type="search" className="b-search" placeholder="tìm kiếm..."/>
+                        <button className="btn-search"><i className="fas fa-search"></i></button>
                     </div>
                 </div>
                 <Modal
@@ -131,14 +126,6 @@ class MenuLayout extends Component {
                             <div className="b-content">
                                 <form className="b-form" onSubmit={this.onSubmit}>
                                     <div className="form-group">
-                                        <label className="b-text">Thời gian đăng ký:</label>
-                                        <DatePicker
-                                            className="ip-time"
-                                            onChange={this.onChangeDate}
-                                            defaultValue={moment(now, dateFormat)}/>
-
-                                    </div>
-                                    <div className="form-group">
                                         <label className="b-text">Thời gian bắt đầu:</label>
                                         <DatePicker
                                             className="ip-time"
@@ -160,8 +147,9 @@ class MenuLayout extends Component {
                                             value={this.state.hinhthuc}
                                             name="hinhthuc">
                                             <option>Chọn hình thức</option>
-                                            <option>Buổi sáng</option>
-                                            <option>Buổi chiều</option>
+                                            <option>Morning</option>
+                                            <option>Afternoon</option>
+                                            <option>Full</option>
                                         </select>
                                     </div>
                                     <div className="form-group">
@@ -171,9 +159,11 @@ class MenuLayout extends Component {
                                             onChange={this.onChanger}
                                             value={this.state.theloai}
                                             name="theloai">
-                                            <option>Chọn thể loại</option>
-                                            <option>Nghỉ phép năm</option>
-                                            <option>Nghỉ sinh</option>
+                                            {
+                                                this.props.typedayoff.map(data=>(
+                                                    <option value={data.id} key={data.id}>{data.attributes.name}</option>
+                                                ))
+                                            }
                                         </select>
                                     </div>
                                     <div className="form-group">

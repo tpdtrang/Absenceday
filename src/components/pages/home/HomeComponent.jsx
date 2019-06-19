@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { HeaderLayout, SiderLayout, MenuLayout } from '../../layouts/home';
+import { HeaderLayout, MenuLayout } from '../../layouts/home';
 import {ListComponent, FullCalenderComponent} from '../../shared/home';
 import * as action_dayoff from '../../../actions/dayoff';
-import * as action_user from '../../../actions/user';
+import * as action_typedayoff from '../../../actions/typeday';
 import {connect} from 'react-redux';
-// import Cookies from 'universal-cookie';
-// const cookies = new Cookies();
 class HomeComponent extends Component {
     constructor(props){
         super(props);
@@ -15,7 +13,7 @@ class HomeComponent extends Component {
     }
     componentDidMount(){
         this.props.dispatch(action_dayoff.requestGetDayOff());
-        this.props.dispatch(action_user.requestGetUser());
+        this.props.dispatch(action_typedayoff.requestGetTypeDayOff());
     }
     onViews = () =>{
         this.setState({
@@ -27,15 +25,9 @@ class HomeComponent extends Component {
             views: false
         })
     }
-    onAdd = (data)=>{
-        this.props.dispatch(action_dayoff.requestCreateDayOff(data));
-        this.setState({
-            views: true
-        })
-    }
     render() {
         
-        // console.log(cookies.get('data'));
+        
         const mainContent = () =>{
             if(this.state.views){
                 return(
@@ -52,9 +44,8 @@ class HomeComponent extends Component {
             <div className="wrapper">
                 <HeaderLayout></HeaderLayout>
                 <div className="b-content">
-                    <SiderLayout  user={this.props.user}></SiderLayout>
                     <div className="b-right-content">
-                        <MenuLayout onViews={this.onViews} onViewCalendar={this.onViewCalendar} user={this.props.user} onAdd = {this.onAdd}></MenuLayout>
+                        <MenuLayout onViews={this.onViews} onViewCalendar={this.onViewCalendar} typedayoff={this.props.typedayoff} onAdd = {this.onAdd}></MenuLayout>
                         {mainContent()}
                         
                     </div>
@@ -66,7 +57,8 @@ class HomeComponent extends Component {
 function mapStateToProps(state){
     return {
         dayoff: state.dayoff.all,
-        user: state.user.all
+        typedayoff: state.typedayoff.all,
+        login: state.login.user
     }
 }
 export default connect(mapStateToProps,null)(HomeComponent);
