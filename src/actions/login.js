@@ -7,8 +7,8 @@ const cookies = new Cookies();
 export function requestLogin(data){
     let token = null;
     token = {
-        'token' : data.accessToken,
-        'email' : data.email
+        'token' : data.Zi.access_token,
+        'email' : data.email,
     }
     return (dispatch)=>{
         return axios.request({
@@ -20,7 +20,7 @@ export function requestLogin(data){
             },
             data: token
         }).then(function(response){
-            if(response !== undefined){
+            if(response !== undefined){ 
                 cookies.set('token',response.data.access_token);
                 axios.request({
                     method: "GET",
@@ -31,25 +31,21 @@ export function requestLogin(data){
                         "Authorization": `${'bearer' + response.data.access_token}`
                     },
                 }).then(function(response){      
-                    console.log(response);
-                                
                     if(response){
                         cookies.set("data",response.data.data)
                         message.success('Đăng nhập thành công')
-                        dispatch(reviceData(types.REQUEST_LOGIN,response.data.data))
+                        dispatch(reviceData(types.REQUEST_LOGIN,response.data.data));
                     }
                 })
             }
         }).catch(function (error) {
             if (error.response) {
-                message.error('Đăng nhập ko thành công')
-                cookies.set("error",error.response.data)
+                message.error('Đăng nhập ko thành công');
+                cookies.remove('accessToken');
             }
         })
     }
 }
-
-
 //logout
 export function requestLogout(data){
     let token = {
@@ -76,6 +72,7 @@ export function requestLogout(data){
         })
     }
 }
+
 export function reviceData(action,payload){
     return{
         type: action,

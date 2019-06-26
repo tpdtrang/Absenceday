@@ -29,7 +29,6 @@ class HeaderLayout extends Component {
         });
     }
     responseGoogle = (data) =>{
-        console.log(data);
         if(data){
             this.props.dispatch(action.requestLogin(data));
             cookies.set('accessToken', data.accessToken);
@@ -41,7 +40,8 @@ class HeaderLayout extends Component {
     }
     onShowLogin = () =>{
         this.setState({
-            showGoogle: true
+            showGoogle: true,
+            isLogoutDrop: false
         })
     }
     onCloseLogin = () =>{
@@ -55,12 +55,12 @@ class HeaderLayout extends Component {
             isLogout: true
         })
     }
-    onLogout = ()=>{
+    onLogout = ()=>{   
         this.setState({
             isLogoutDrop: !this.state.isLogoutDrop
         })
     }
-    render() {         
+    render() {             
         if(this.state.isRedirect){
             return (
                 <Redirect to="/admin"></Redirect>
@@ -70,17 +70,30 @@ class HeaderLayout extends Component {
             if(cookies.get('data') !== undefined){
                 return(
                     <div className= "b-dropdown">
-                        <button className="btn-user" onClick={this.onLogout}>{cookies.get('data').attributes.name}<i className="fas fa-chevron-down">&nbsp;</i></button>
-                        <div className={this.state.isLogoutDrop ? "b-logout active" : "b-logout"}>
-                            <GoogleLogout 
-                                clientId={'892644700775-73gunamcbm623v3002opqgpghlfuqudh.apps.googleusercontent.com'}
-                                buttonText="Đăng Xuất"
-                                onLogoutSuccess={this.logoutGoogle}
-                                className="btn-logout"
-                                style={{"marginLeft":"50px;"}}
-                            >
-                            </GoogleLogout>
-                        </div>
+                        <button className="btn-user" onClick={this.onLogout} style={{"height":"40px"}}>
+                            <img src={cookies.get('data').attributes.avatar !== null ? cookies.get('data').attributes.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXEt1isQ1nMtBdRADlrCjJFzv_SlgRKklidNseFF59i9RQg0Mt" } alt="avatar" 
+                                style={{"width":"30px","margin":"0 5px","borderRadius":"100%"}}/>
+                            {cookies.get('data').attributes.name}
+                            {this.state.isLogoutDrop ? <i className="fas fa-chevron-up">&nbsp;</i>
+                                :
+                                <i className="fas fa-chevron-down">&nbsp;</i>
+                            }
+                        </button>
+                        {
+                            this.state.isLogoutDrop ? 
+                                <div className="b-logout">
+                                    <GoogleLogout 
+                                        clientId={'892644700775-73gunamcbm623v3002opqgpghlfuqudh.apps.googleusercontent.com'}
+                                        buttonText="Đăng Xuất"
+                                        onLogoutSuccess={this.logoutGoogle}
+                                        className="btn-logout"
+                                        style={{"cursor":"default"}}
+                                    >
+                                    </GoogleLogout>
+                                </div>
+                            :
+                            <></> 
+                        }
                     </div>
                 )
             }else{
@@ -106,7 +119,7 @@ class HeaderLayout extends Component {
                 <div className="container-fluid">
                     <div className="b-header">
                         <div className="img-logo">
-                            <a href="login.html" className="link-img">
+                            <a href="/" className="link-img">
                                 <img className="logo" src={img} alt="logo"/>
                             </a>
                         </div>
@@ -127,11 +140,10 @@ class HeaderLayout extends Component {
                                         <button onClick={this.onCloseLogin}><i className="fas fa-times"></i></button>
                                     </div>
                                     <div className="b-content">
-                                        <GoogleLogin
+                                        <GoogleLogin                                        
                                             style={{"width":"100%"}}
                                             clientId={'892644700775-73gunamcbm623v3002opqgpghlfuqudh.apps.googleusercontent.com'}
                                             onSuccess={this.responseGoogle}
-                                            // onFailure={responseGoogle}
                                         /> 
                                     </div>
                                 </div>

@@ -1,50 +1,82 @@
 import * as API from '../constants/actionAPI';
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
-// import {message} from 'antd';
+import Cookies from 'universal-cookie';
+import {message} from 'antd';
+const cookies = new Cookies();
 export function requestGetDayOff(){
+    if(cookies.get('data') !== undefined){
+        return (dispatch)=>{
+            return axios.request({
+                method: 'GET',
+                url: `${API.API_URL}/information/${cookies.get('data').id}`,
+                headers: {
+                    "Accept" : "application/json",
+                    "Content-Type":"application/json",
+                },
+            }).then(function(response){
+                console.log(response.data.data);     
+                dispatch(reciveData(types.REQUEST_GET_DAYOFF,response.data.data));
+            }).catch(function(error){
+                console.log(error);
+            })
+        }
+    }else{
+        return (dispatch)=>{
+            return axios.request({
+                method: 'GET',
+                url: `${API.API_URL}/absence`,
+                headers: {
+                    "Accept" : "application/json",
+                    "Content-Type":"application/json",
+                },
+            }).then(function(response){
+                console.log(response); 
+            }).catch(function(error){
+                console.log(error);
+            })
+        }
+    }
+}
+export function requestCreateDayOff(data){
+    let dayoff = {}
+    if(data.checkType === false){
+        dayoff = {
+            user_id : cookies.get('data').id,
+            type_id : data.typeday,
+            time_start : data.time_start,
+            time_end : data.time_end,
+            note : data.note,
+            type: 'From day to day'
+        }
+    }else{
+        dayoff = {
+            user_id : cookies.get('data').id,
+            type_id : data.typeday,
+            date: `${data.date},${data.at_time}`,
+            note : data.note,
+            type: 'The specific day'
+        }
+    }
     return (dispatch)=>{
         return axios.request({
-            method: 'GET',
+            method: 'POST',
             url: `${API.API_URL}/absence`,
             headers: {
-                "Accept" : "application/json",
-                "Content-Type":"application/json"
-            }
-        }).then(function(response){
-            dispatch(reciveData(types.REQUEST_GET_DAYOFF,response.data.data))
+                "Accept":"application/json",
+                "Content-Type":"application/json",
+                'Authorization': `${'bearer' + cookies.get('token')}`
+            },
+            data: dayoff
+        }).then(function(response){ 
+            message.success("Bạn đã đăng ký thành công!")
+            dispatch(reciveData(types.REQUEST_ADD_DAYOFF,response.data.data))  
         }).catch(function(error){
             console.log(error);
-            
+            message.error(" Đăng ký không thành công!")
         })
     }
 }
-// export function requestCreateDayOff(data){
-//     let day = null;
-//     day = {
-//         thoigianDK : data.thoigianDK,
-//         thoigianBD : data.thoigianBD,
-//         thoigianKT : data.thoigianKT,
-//         hinhthuc : data.hinhthuc,
-//         theloai : data.theloai,
-//         lydo : data.lydo,
-//         pheduyet: data.pheduyet
-//     }
-//     return (dispatch)=>{
-//         return axios.request({
-//             method: 'POST',
-//             url: `${API.API_URL}/data`,
-//             headers: {
-//                 "Accept":"application/json",
-//                 "Content-Type":"application/json"
-//             },
-//             data: day
-//         }).then(function(response){
-//             message.success("Bạn đã đăng ký thành công!")
-//             dispatch(reciveData(types.REQUEST_ADD_DAYOFF,response.data))
-//         })
-//     }
-// }
 export function reciveData(aciton,payload){
     return{
         type: aciton,

@@ -19,8 +19,6 @@ export function requestGetTypeDayOff(){
         })
     }
 }
-
-
 export function reviceData(action,payload){
     return{
         type: action,
