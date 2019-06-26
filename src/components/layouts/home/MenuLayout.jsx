@@ -270,7 +270,7 @@ class MenuLayout extends Component {
                                                         <option>Afternoon</option>
                                                         <option>Full</option>
                                                     </select>
-                                                    <button onClick={this.onAddDay} className="btn-plus"><i class="fas fa-plus"></i></button>
+                                                    <button onClick={this.onAddDay} className="btn-plus"><i className="fas fa-plus"></i></button>
                                                 </div>
                                                 <div className="listdate">
                                                     {this.state.arrayNew.map(item => (
