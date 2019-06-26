@@ -1,175 +1,198 @@
-.b-right-content{   
-    
+.b-right-content {
+  position: relative;
+  width: 100%;
+  border: 1px solid rgb(219, 218, 218);
+  background-color: #fff;
+  margin-top: 5px;
+  min-height: 100vh;
+  box-shadow: 0 0 10px 2px rgb(219, 218, 218);
+  .b-menu-container {
     position: relative;
-    width: 100%;
-    border: 1px solid rgb(219, 218, 218);
-    background-color: #fff;
-    margin-top: 5px;
-    min-height: 100vh;
-    box-shadow: 0 0 10px 2px rgb(219, 218, 218);
-    .b-menu-container{
-        position: relative;
-        padding: 15px 0;
-        .b-menu{
-            @include flexbox();
-            @include justify-content(space-around);
-            border-bottom: 1px solid rgb(219, 218, 218); 
-            padding-bottom: 15px;
-            .b-profile{
-                .btn-profile{
-                    padding: 6px 0;
-                    width: 150px;
-                    background-color: #fff;
-                    outline: none;
-                    font-weight: 700;
-                    border-radius: 5px;
-                    border: 1px solid rgb(91, 167, 238);
-                    color: rgb(91, 167, 238);
-                &:hover{
-                    color: #fff;
-                    background-color: rgb(91, 167, 238);
-                    }
-                }
-            }
-            .btn-subcribe{
-                width: 100px;
-                background-color: #fff;
-                outline: none;
-                font-weight: 700;
-                border-radius: 5px;
-                border: 1px solid rgb(91, 167, 238);
-                color: rgb(91, 167, 238);
-                &:hover{
-                    color: #fff;
-                    background-color: rgb(91, 167, 238);
-                }
-            }
-            .slt-option{
-                width: 100px;
-                background-color: #fff;
-                outline: none;
-                border-radius: 5px;
-                border: 1px solid rgb(91, 167, 238);
-                color: rgb(91, 167, 238);
-                font-weight: 700;
-            }
-            .btn-list{
-                font-weight: 700;
-                width: 100px;
-                background-color: #fff;
-                outline: none;
-                border-radius: 5px;
-                border: 1px solid rgb(91, 167, 238);
-                color: rgb(91, 167, 238);
-                &:hover{
-                    color: #fff;
-                    background-color: rgb(91, 167, 238);
-                }
-            }
-           
+    padding: 15px 0;
+    .b-menu {
+      @include flexbox();
+      @include justify-content(space-around);
+      border-bottom: 1px solid rgb(219, 218, 218);
+      padding-bottom: 15px;
+      .b-profile {
+        .btn-profile {
+          padding: 6px 0;
+          width: 150px;
+          background-color: #fff;
+          outline: none;
+          font-weight: 700;
+          border-radius: 5px;
+          border: 1px solid rgb(91, 167, 238);
+          color: rgb(91, 167, 238);
+          &:hover {
+            color: #fff;
+            background-color: rgb(91, 167, 238);
+          }
         }
-        .b-form-content {
-            position: relative;
-            width: 420px;
-            background-color: #fff;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-            .b-heading {
-                padding-top: 20px;
-                padding-bottom: 20px;
-                .b-title {
-                    text-align: center;
-                    color: rgb(33, 114, 190);
-                    font-size: 25px;
-                    font-weight: 600;
-                }
-            }
-            .b-information {
-                padding: 5px 0;
-                .b-title {
-                    float: left;
-                    padding: 0 20px;
-                    color: rgb(51, 124, 192);
-                    font-weight: 500;
-                    font-size: 18px;
-                    width: 150px;
-                }
-                .b-text {
-                    padding: 0 20px;
-                    color: rgba(28, 32, 36,.7);
-                    font-weight: 500;
-                    font-size: 16px;
-                }
-            }
-            .b-content {
-                position: relative;
-                .b-form {
-                    .form-group {
-                        padding: 4px 0;
-                        opacity: 0;
-                        &.check-box{
-                            opacity: 1;
-                        }
-                    }
-                    .b-text {
-                        color: rgb(51, 124, 192);
-                        font-weight: 500;
-                        font-size: 18px;
-                        padding: 0 20px;
-                        width: 210px;
-                    }
-                    .text{
-                        float: left;
-                        color: rgb(51, 124, 192);
-                        font-weight: 500;
-                        font-size: 18px;
-                        padding: 0 20px;
-                    }
-                    .ip-time{
-                        outline: none;
-                        border: 1px solid rgb(136, 129, 129);
-                        height: 35px;
-                        width: 190px;
-                    }
-                    .b-select{
-                        outline: none;
-                        border: 1px solid rgb(136, 129, 129);
-                        height: 35px;
-                        width: 190px;
-                    }
-                    .b-area{
-                        margin-top: 10px;
-                        width: 70%;
-                        height: 100px;
-                    }
-                    .btn-cancel{
-                        width: 110px;
-                        border: 1px solid rgb(104, 174, 240);
-                        border-radius: 50px;
-                        background-color: #fff;
-                        padding: 3px 0;
-                        color: rgb(51, 124, 192);
-                        &:hover{
-                            color: #fff;
-                            background-color: rgb(104, 174, 240);
-                        }
-                    }
-                    .btn-submit{
-                        width: 110px;
-                        border: 1px solid rgb(104, 174, 240);
-                        border-radius: 50px;
-                        background-color: #fff;
-                        padding: 3px 0;
-                        color: rgb(51, 124, 192);
-                        &:hover{
-                            color: #fff;
-                            background-color: rgb(104, 174, 240);
-                        }
-                    }
-                }
-            }
+      }
+      .btn-subcribe {
+        width: 100px;
+        background-color: #fff;
+        outline: none;
+        font-weight: 700;
+        border-radius: 5px;
+        border: 1px solid rgb(91, 167, 238);
+        color: rgb(91, 167, 238);
+        &:hover {
+          color: #fff;
+          background-color: rgb(91, 167, 238);
         }
+      }
+      .slt-option {
+        width: 100px;
+        background-color: #fff;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid rgb(91, 167, 238);
+        color: rgb(91, 167, 238);
+        font-weight: 700;
+      }
+      .btn-list {
+        font-weight: 700;
+        width: 100px;
+        background-color: #fff;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid rgb(91, 167, 238);
+        color: rgb(91, 167, 238);
+        &:hover {
+          color: #fff;
+          background-color: rgb(91, 167, 238);
+        }
+      }
+      .b-input {
+        .b-search {
+          padding: 0 5px;
+          outline: none;
+          border: 1px solid rgb(91, 167, 238);
+          border-radius: 5px;
+          height: 35px;
+          color: rgb(91, 167, 238);
+          font-size: 16px;
+          font-weight: 500;
+        }
+        .btn-search {
+          height: 35px;
+          width: 40px;
+          border-right: 1px solid rgb(91, 167, 238);
+          background-color: rgb(91, 167, 238);
+          border: none;
+          border-radius: 2px;
+          font-size: 18px;
+          i {
+            color: #fff;
+          }
+        }
+      }
     }
-    
+    .b-form-content {
+      position: relative;
+      width: 420px;
+      background-color: #fff;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+     
+      .b-heading {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        .b-title {
+          text-align: center;
+          color: rgb(33, 114, 190);
+          font-size: 25px;
+          font-weight: 600;
+        }
+      }
+      .b-information {
+        padding: 5px 0;
+        .b-title {
+          float: left;
+          padding: 0 20px;
+          color: rgb(51, 124, 192);
+          font-weight: 500;
+          font-size: 18px;
+          width: 150px;
+        }
+        .b-text {
+          padding: 0 20px;
+          color: rgba(28, 32, 36, 0.7);
+          font-weight: 500;
+          font-size: 16px;
+        }
+      }
+      .b-content {
+        position: relative;
+
+        .b-form {
+          .form-group {
+            padding: 4px 0;
+            opacity: 0;
+            &.check-box {
+              opacity: 1;
+            }
+          }
+          .b-text {
+            color: rgb(51, 124, 192);
+            font-weight: 500;
+            font-size: 18px;
+            padding: 0 20px;
+            width: 210px;
+          }
+          .text {
+            float: left;
+            color: rgb(51, 124, 192);
+            font-weight: 500;
+            font-size: 18px;
+            padding: 0 20px;
+          }
+          .ip-time {
+            outline: none;
+            border: 1px solid rgb(136, 129, 129);
+            height: 35px;
+            width: 190px;
+          }
+          .b-select {
+            outline: none;
+            border: 1px solid rgb(136, 129, 129);
+            height: 35px;
+            width: 190px;
+          }
+          .b-area {
+            margin-top: 10px;
+            width: 70%;
+            height: 100px;
+          }
+          .btn-cancel {
+            width: 110px;
+            border: 1px solid rgb(104, 174, 240);
+            border-radius: 50px;
+            background-color: #fff;
+            padding: 3px 0;
+            color: rgb(51, 124, 192);
+            &:hover {
+              color: #fff;
+              background-color: rgb(104, 174, 240);
+            }
+          }
+          .btn-submit {
+            width: 110px;
+            border: 1px solid rgb(104, 174, 240);
+            border-radius: 50px;
+            background-color: #fff;
+            padding: 3px 0;
+            color: rgb(51, 124, 192);
+            &:hover {
+              color: #fff;
+              background-color: rgb(104, 174, 240);
+            }
+          }
+        }
+      }
+    }
+  }
 }
