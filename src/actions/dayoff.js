@@ -5,11 +5,10 @@ import Cookies from 'universal-cookie';
 import {message} from 'antd';
 const cookies = new Cookies();
 export function requestGetDayOff(){
-    if(cookies.get('data') !== undefined){
         return (dispatch)=>{
             return axios.request({
                 method: 'GET',
-                url: `${API.API_URL}/information/${cookies.get('data').id}`,
+                url: `${API.API_URL}/information/${cookies.get('data') !== undefined ? cookies.get('data').id : ''}`,
                 headers: {
                     "Accept" : "application/json",
                     "Content-Type":"application/json",
@@ -21,22 +20,6 @@ export function requestGetDayOff(){
                 console.log(error);
             })
         }
-    }else{
-        return (dispatch)=>{
-            return axios.request({
-                method: 'GET',
-                url: `${API.API_URL}/absence`,
-                headers: {
-                    "Accept" : "application/json",
-                    "Content-Type":"application/json",
-                },
-            }).then(function(response){
-                console.log(response); 
-            }).catch(function(error){
-                console.log(error);
-            })
-        }
-    }
 }
 export function requestCreateDayOff(data){
     let dayoff = {}
@@ -74,6 +57,27 @@ export function requestCreateDayOff(data){
         }).catch(function(error){
             console.log(error);
             message.error(" Đăng ký không thành công!")
+        })
+    }
+}
+export function requestSearchDay(data){
+    let params = {
+        'day' : data.day,
+    }
+    return(dispatch) =>{
+        return axios.request({
+            method: 'GET',
+            url: `${API.API_URL}/search`,
+            params,
+            headers: {
+                "Accept":"application/json",
+                "Content-Type":"application/json",
+                'Authorization': `${'bearer' + cookies.get('token')}`
+            }
+        }).then(function(response){
+            dispatch.reciveData(types.REQUEST_SEARCH, response.data.data)
+        }).catch(function(error){
+            console.log(error);
         })
     }
 }

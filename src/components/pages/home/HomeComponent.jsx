@@ -6,8 +6,8 @@ import * as action_dayoff from '../../../actions/dayoff';
 import * as action_typedayoff from '../../../actions/typeday';
 // import {message} from 'antd'
 import {connect} from 'react-redux';
-// import Cookies from 'universal-cookie';
-// const cookies = new Cookies();
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 class HomeComponent extends Component {
     constructor(props){
         super(props);
@@ -15,8 +15,8 @@ class HomeComponent extends Component {
             views: false
         }
     }
-    componentDidMount(){
-        this.props.dispatch(action_dayoff.requestGetDayOff());
+    componentDidMount(id){
+        this.props.dispatch(action_dayoff.requestGetDayOff(id));
         this.props.dispatch(action_typedayoff.requestGetTypeDayOff());
     }
     onViews = () =>{
@@ -62,11 +62,14 @@ class HomeComponent extends Component {
         }
         return arrB;
     }
+    onSearch = () =>{
+        
+    }
     render() {
         const mainContent = () =>{
             if(this.state.views){
                 return(
-                    <ListComponent data={this.props.dayoff}></ListComponent>
+                    <ListComponent data={cookies.get('data') !== undefined ? this.props.dayoff : ''}></ListComponent>
                 )
             }else{
                 return(

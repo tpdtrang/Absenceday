@@ -16,6 +16,10 @@ export default function (state=INTINIAL_STATE,action={}){
             return Object.assign({},state,{
                 all: [...state.all,action.payload],
             })
+        case types.REQUEST_SEARCH:
+            return Object.assign({}, state, {
+                all: action.payload,
+            })
         default:
             return state;
     }

@@ -263,11 +263,39 @@
             .title{
                 font-size: 25px;
                 font-weight: 700;
+                width: 100%;
                 color: #2962FF;
                 text-transform: uppercase;
                 text-align: center;
                 padding: 10px 0;
             }
+        }
+        .b-input{
+            margin-top: -50px;
+            margin-bottom: 30px;
+            margin-right: 30px;
+            text-align: right;
+           .form-search{
+                .b-search{
+                    padding: 0 6px;
+                    outline: none;
+                    color: rgb(91, 167, 238);
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+                .btn-search{
+                    height: 32px;
+                    width: 40px;
+                    border-right: 1px solid rgb(91, 167, 238);
+                    background-color: rgb(91, 167, 238);
+                    border: none;
+                    border-radius: 2px;
+                    font-size: 18px;
+                    i{
+                        color: #fff;
+                    }
+                }
+           }
         }
         .table{
             width: 100%;

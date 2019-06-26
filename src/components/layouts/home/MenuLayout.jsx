@@ -75,9 +75,6 @@ class MenuLayout extends Component {
             checked: e.target.checked,
         })
     }
-    handleBlur = (event) => {
-        console.log(event);
-    }
     onReset(){
         this.setState({
             time_start: dateFormatDate(now, 'yyyy-mm-dd'),
@@ -138,10 +135,6 @@ class MenuLayout extends Component {
                             onClick={this.onViewCalendar}>Lịch</button>
                     </div>
                     <button className="btn-list" onClick={this.onViews}>Danh sách</button>
-                    <div className="b-input">
-                        <input type="search" className="b-search" placeholder="tìm kiếm..." style={{"color":"rgb(91, 167, 238)"}}/>
-                        <button className="btn-search"><i className="fas fa-search"></i></button>
-                    </div>
                     
                 </div>
               
@@ -219,7 +212,7 @@ class MenuLayout extends Component {
                                                     <option>Afternoon</option>
                                                     <option>Full</option>
                                             </select>
-                                            <button onClick={this.onAddDay} className="btn-plus"><i class="fas fa-plus"></i></button>
+                                            <button onClick={this.onAddDay} className="btn-plus"><i className="fas fa-plus"></i></button>
                                         </div>
                                         :
                                         <></>

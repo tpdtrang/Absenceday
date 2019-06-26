@@ -1,18 +1,25 @@
 import React, {Component} from 'react';
-import Pagination from '../../../../feature/Pagination';
-// import Cookies from 'universal-cookie';
-var dateFormat = require('dateformat');
-// var cookies = new Cookies();
+// import Pagination from '../../../../feature/Pagination';
+import moment from 'moment';
+import {DatePicker} from 'antd';
+import Cookies from 'universal-cookie';
+var dateFormatDate = require('dateformat');
+var now = new Date();
+const dateFormat = 'YYYY-MM-DD';
+var cookies = new Cookies();
 class ListComponent extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            pageOfItems: [],
+            day: dateFormatDate(now, 'yyyy-mm-dd'),
         }
     }
-    onChangePage = (pageOfItems) => {
-        // update state with new page of items
-        this.setState({ pageOfItems: pageOfItems });
+    // onChangePage = (pageOfItems) => {
+    //     // update state with new page of items
+    //     this.setState({ pageOfItems: pageOfItems });
+    // }
+    onChangeDate = (date, dateString) => {
+        this.setState({  day: dateString})
     }
     render() {
         return (
@@ -20,6 +27,17 @@ class ListComponent extends Component {
                 <div className="b-table">
                     <div className="b-title">
                         <h1 className="title">Danh Sách Đăng Ký Ngày Nghỉ</h1>
+                    </div>
+                    <div className="b-input">
+                        <form className="form-search" onSubmit={this.onSearch}> 
+                            <DatePicker 
+                                className="b-search" 
+                                onChange={this.onChangeDate}
+                                defaultValue={moment(now, dateFormat)}
+                                name="day"
+                            ></DatePicker>
+                            <button className="btn-search"><i className="fas fa-search"></i></button>
+                        </form>
                     </div>
                     <table className="table table-striped">
                         <thead>
@@ -45,19 +63,21 @@ class ListComponent extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this
-                                .state
-                                .pageOfItems
+                            {
+                                cookies.get('data') !== undefined ?
+                                this
+                                .props
+                                .data
                                 .map(data => (
                                     <tr key={data.id}>
                                         <td className="name-item">{data.id}</td>
-                                        <td className="name-item">{dateFormat(data.attributes.created_at,"dd-mm-yyyy HH:MM")}</td>
+                                        <td className="name-item">{dateFormatDate(data.attributes.created_at,"dd-mm-yyyy HH:MM")}</td>
                                         <td className="name-item">
                                             {
                                                 data.attributes.time.map(item =>(
                                                     <div className="type" key={item.id} style={{"width":"100%"}}>
                                                         <div className="list-1">
-                                                        <p className="list-item1" >{dateFormat(item.time_details,"dd-mm-yyyy HH:MM")}</p>
+                                                        <p className="list-item1" >{dateFormatDate(item.time_details,"dd-mm-yyyy HH:MM")}</p>
                                                         </div>
                                                         <div className="list-2">
                                                         <p className="list-item2" >{item.type}</p>
@@ -74,11 +94,12 @@ class ListComponent extends Component {
                                         <td className="name-item">{data.attributes.total}</td>
                                     </tr>
                                 ))
+                                :
+                                <tr></tr>
                             }
                         </tbody>
                     </table>
                 </div>
-                <Pagination items={this.props.data} onChangePage={this.onChangePage}></Pagination>
             </section>
         );
     }
