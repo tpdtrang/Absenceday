@@ -50,8 +50,9 @@
         .menu-list {
           position: relative;
           .title {
+            margin-top: 10px;
             .heading-3 {
-              @include rem("font-size", 30);
+              @include rem("font-size", 22);
               font-family: "Roboto Bold";
             }
           }

@@ -10,9 +10,7 @@ class RegistrationPage extends Component {
     this.props.dispatch(action.requestGetUserStore());
 
   }
-  render() {
-    console.log(this.props.registration);
-    
+  render() {    
     return (
       <div>
         <HeaderAdLayout></HeaderAdLayout>
@@ -20,7 +18,6 @@ class RegistrationPage extends Component {
           <SideAdLayout></SideAdLayout>
           <TableRegistrationComponent data={this.props.registration} user={this.props.stores}></TableRegistrationComponent>
         </div>
-
       </div>
     );
   }

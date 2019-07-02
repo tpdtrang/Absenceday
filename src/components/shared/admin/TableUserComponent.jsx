@@ -112,12 +112,12 @@ class TableUserComponent extends Component {
               </div>
               <div className="menu-list">
                 <div className="search">
-                  <input type="text" />
-                  <a href="/">
+                  {/* <input type="text" /> */}
+                  {/* <a href="/">
                     <div className="icon">
                       <i className="fas fa-search" />
                     </div>
-                  </a>
+                  </a> */}
                 </div>
               </div>
               <div className="menu-list">
