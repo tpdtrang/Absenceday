@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 // import Moment from 'react-moment';
 // import {Table} from 'antd';
-
 class TableRegistrationComponent extends Component {
   render() {
     let sum=0;

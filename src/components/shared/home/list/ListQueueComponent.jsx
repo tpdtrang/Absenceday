@@ -4,16 +4,13 @@ import Cookies from 'universal-cookie';
 var dateFormatDate = require('dateformat');
 var cookies = new Cookies();
 class ListComponent extends Component {
-    onEdit(id){
-        this.props.onEdit(id);
-    }
+
     render() {
-        console.log(this.props.data);
         return (
             <section className="b-table-container">
                 <div className="b-table">
                     <div className="b-title">
-                        <h1 className="title">Danh Sách Đợi Duyệt</h1>
+                        <h1 className="title">Danh Sách Đăng Ký Ngày Nghỉ</h1>
                     </div>
                     <table className="table table-striped">
                         <thead>
@@ -36,8 +33,6 @@ class ListComponent extends Component {
                                 <th className="item-table">Thể loại</th>
                                 <th className="item-table">Lý Do</th>  
                                 <th className="item-table">Số Ngày Nghỉ</th>
-                                <th className="item-table">Người Duyệt</th>
-                                <th className="item-table">Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,18 +65,6 @@ class ListComponent extends Component {
                                         <td className="name-item">{data.attributes.type.name}</td>
                                         <td className="name-item">{data.attributes.note}</td>
                                         <td className="name-item">{data.attributes.total}</td>
-                                        <td className="name-item">{
-                                            data.attributes.approver_id.map(item=>(
-                                                <div className="type" key={item.id} style={{"width":"100%"}}>
-                                                    <div className="list-1">
-                                                        <p className="list-item1" >{item.name}</p>
-                                                    </div>
-                                                </div>
-                                            ))
-                                        }</td>
-                                        <td className="name-item">
-                                            <button className="btn-edit" onClick={this.onEdit.bind(this,data.id)}>Cập Nhật</button>
-                                        </td>
                                     </tr>
                                 ))
                                 :

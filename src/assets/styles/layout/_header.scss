@@ -46,17 +46,19 @@
                         padding: 0 10px;
                     }
                     &:hover{
-                        .b-logout{
-                            opacity: 1;
-                        }
+                        background-color: rgb(79, 123, 245);
+                        color: #fff;
                     }
                 }
                 .b-logout{ 
-                    opacity:0;
-                    &.active{
-                        opacity: 1;
+                    opacity:1;
+                    .btn-logout{
+                        position: relative;
+                        z-index: 9999;
+                        margin-top: 5px;
+                        width: 100%;
+                        
                     }
-                   
                 }
             }
         }

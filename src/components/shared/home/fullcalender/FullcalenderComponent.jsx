@@ -6,14 +6,28 @@ import listPlugin from '@fullcalendar/list';
 import rrulePlugin from '@fullcalendar/rrule';
 import interactionPlugin from '@fullcalendar/interaction' // needed for dayClick
 import allLocales from '@fullcalendar/core/locales-all';
-var now = new Date();
+// import Cookies from 'universal-cookie';
+// const cookies = new Cookies();
+var dateFormat = require('dateformat');
+var now = new Date()
 class FullcalenderComponent extends Component {
     calendarComponentRef = React.createRef();
     constructor(props){
         super(props);
         this.state = {
             datenow: now,
+            show: false,
         }
+    }
+    onEvent = (info) =>{
+        this.setState({
+            show: true,
+            title: info.event.title,
+            daystart: dateFormat(info.event.start,"dddd ,  dd mmmm yyyy"),
+            dayend: dateFormat(info.event.end,"dddd ,  dd mmmm yyyy"),
+            user: info.event.extendedProps.userId,
+            id: info.event.id
+        })
     }
     render() {
         return (
@@ -24,7 +38,8 @@ class FullcalenderComponent extends Component {
                         right: 'custom prev,next today',
                         center: 'title ',
                         left: 'dayGridMonth',
-                    }}                  
+                    }}     
+                    eventClick={this.onEvent}             
                     height={'parent'}
                     timeZone={'local'}
                     contentHeight={480}
@@ -34,14 +49,7 @@ class FullcalenderComponent extends Component {
                     locales={allLocales}
                     locale={'vi'}
                     events = {
-                        [
-                            {
-                                id: 1,
-                                title: "nghỉ phép",
-                                start: "2019-06-12 07:00",
-                                end: "2019-06-12 16:00",
-                            }
-                        ]
+                       this.props.data
                     }
                     eventTextColor={'#FEFEF9'}
                     eventBorderColor={'rgba(0,0,0,1.5)'}
