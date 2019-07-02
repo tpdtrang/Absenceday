@@ -11,7 +11,7 @@ class RegistrationPage extends Component {
 
   }
   render() {
-    console.log(this.props.registration);
+    // console.log(this.props.registration);
     
     return (
       <div>

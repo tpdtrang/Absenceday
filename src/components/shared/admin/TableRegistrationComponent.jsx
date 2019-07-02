@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
-import Moment from 'react-moment';
+// import Moment from 'react-moment';
+// import {Table} from 'antd';
+
 class TableRegistrationComponent extends Component {
   render() {
+    let sum=0;
     return (
       <div className="right-content">
         <section className="wrap-container">
@@ -27,24 +30,19 @@ class TableRegistrationComponent extends Component {
               <table className="table p-scrollbar" id="consumption-data">
                 <thead className="table-header">
                   <tr>
-                    <th>#</th>
-                    <th>User</th>
-                    <th>Type</th>
-                    <th>Note</th>
-                    <th>Status</th>
-                    <th>Requested</th>
+                    <th rowSpan="2">#</th>
+                    <th rowSpan="2">User</th>
+                    <th rowSpan="2">Type</th>
+                    <th rowSpan="2">Note</th>
+                    <th rowSpan="2">Status</th>
+                    <th rowSpan="2">Requested</th>
                     <th colSpan="30">Tháng 1</th>
-                    <th>At_Time</th>
-                    <th>Absence_days</th>
-                    <th>Approve</th>
+                    <th rowSpan="2">At_Time</th>
+                    <th rowSpan="2">Absence_days</th>
+                    <th rowSpan="2">Sum</th>
+                    <th rowSpan="2">Approve</th>
                   </tr>
                   <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
                     <th>1</th>
                     <th>2</th>
                     <th>3</th>
@@ -75,19 +73,16 @@ class TableRegistrationComponent extends Component {
                     <th>28</th>
                     <th>29</th>
                     <th>30</th>
-                    <th>
-                    </th>
-                    <th></th>
-                    <th></th>
-                    
                   </tr>
                 </thead>
                 <tbody className="results">
-                  {this.props.data.map(data => (
-                    <tr key={data.id}>
-                      <td className="description">{data.id}</td>
+                  {this.props.data.map(data => {
+                     sum = 0;
+                     return (
+                      <tr key={data.id}>
+                      <td className="description consumption">{data.id}</td>
                       <td className="description">{data.attributes.user.email}</td>
-                      <td className="description">
+                      <td className="description ">
                         {data.attributes.type.name}
                       </td>
                       <td className="description">{data.attributes.note}</td>
@@ -104,16 +99,7 @@ class TableRegistrationComponent extends Component {
                             <hr />
                           </span>
                         ))} */}
-                        {/* <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td> */}
+                       
                       </td>
                       <td className="description">
                         {data.attributes.time.map(data => (
@@ -124,17 +110,26 @@ class TableRegistrationComponent extends Component {
                         ))}
                       </td>
                       <td className="description">
-                        {data.attributes.time.map(data => (
-                          <span key={data.id}>
-                            {data.absence_days}
-                            <hr />
-                          </span>
-                        ))}
+
+                        {data.attributes.time.map(item => {
+                          sum += parseFloat(item.absence_days)
+                          
+                          return (
+                            <span key={item.id}>
+                              {item.absence_days}
+                              <hr />
+                            </span>
+                          )
+                        })}
                       </td>
+                      <td className="description">{sum}</td>
                       <td className="description">{data.attributes.approver_id.name}</td>
                     </tr>
-                  ))}
+                     )
+                    
+                  })}
                 </tbody>
+                
               </table>
             </div>
           </div>

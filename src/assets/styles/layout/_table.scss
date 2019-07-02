@@ -1,4 +1,4 @@
-// .right-content {
+// .wrap-form {
 //   position: relative;
 //   .table-wrapper {
 //     overflow-x: scroll;
@@ -16,13 +16,16 @@
 //       }
 
 //       th:first-child {
-//         position: fixed;
-//         left: 5px;
+//           position: fixed;
+//           left: 290px;
+//           z-index: 999;
 //       }
-//       // td:first-child {
-//       //   position: fixed;
-//       //   // left: 0px;
-//       // }
+//       td:first-child {
+//         position: fixed;
+//         left: 290px;
+//         z-index: 999;
+//         // background-color: #02a959;  
+//       }
 
 //     }
 //   }
