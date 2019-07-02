@@ -1,0 +1,28 @@
+.header-container {
+  background-color: rgba(0, 0, 0, 0);
+  position: relative;
+  top: 0;
+  left: 0;
+  // box-shadow: 0 0 5px 0 #999;
+  border:1px solid rgb(219, 218, 218);
+  .b-header {
+    @include flexbox();
+    @include justify-content(space-between);
+    @include align-items(center);
+    padding: 10px 15px;
+    .p-logo {
+      width: 300px;
+    }
+    .p-user-profile {
+      .profile {
+        .item-profile {
+          display: inline;
+          padding: 5px;
+          .link-profile {
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+}
