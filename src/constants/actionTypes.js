@@ -13,6 +13,18 @@ export const REQUEST_GET_LEAD = "REQUEST_GET_LEAD";
 //export reducer login 
 export const REQUEST_LOGIN = "REQUEST_LOGIN";
 export const REQUEST_LOGUOT = "REQUEST_LOGUOT";
+//export reducer team
+export const ADD_TEAM = "ADD_TEAM";
+export const GET_TEAM = "GET_TEAM";
+export const DELETE_TEAM = "DELETE_TEAM";
+export const UPDATE_TEAM = "UPDATE_TEAM";
+//export reducer position
+export const ADD_POSITION = "ADD_POSITION";
+export const GET_POSITION = "GET_POSITION";
+export const DELETE_POSITION = "DELETE_POSITION";
+export const UPDATE_POSITION = "UPDATE_POSITION";
+//export reducer registration
+export const GET_REGISTRATION = "GET_REGISTRATION";
 //export reducer type dayoff
 export const REQUEST_GET_TYPEDAYOFF = "REQUEST_GET_TYPEDAYOFF";
 export const REQUEST_DELETE_TYPEDAYOFF = "REQUEST_DELETE_TYPEDAYOFF";
@@ -22,3 +34,8 @@ export const REQUEST_SEARCH  = "REQUEST_SEARCH";
 export const REQUEST_LIST_QUEUE = "REQUEST_LIST_QUEUE";
 export const REQUEST_LIST_ACCEPT = "REQUEST_LIST_ACCEPT";
 export const REQUEST_UPDATE_ACCEPT = "REQUEST_UPDATE_ACCEPT";
+//export reducer admin
+export const ADD_STORE = "ADD_STORE";
+export const GET_STORE = "GET_STORE";
+export const DELETE_STORE = "DELETE_STORE";
+export const UPDATE_STORE = "UPDATE_STORE";

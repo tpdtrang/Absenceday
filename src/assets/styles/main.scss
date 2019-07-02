@@ -6,9 +6,21 @@
   font-family: "Roboto";
   src: url("/fonts/Roboto-Light.ttf");
 }
-@font-face {
-  font-family: "Awesome";
-  src: url("/fonts/fa-solid-900.ttf");
+@font-face{
+    font-family: "Roboto Bold";
+    src: url('../fonts/Roboto-Bold.ttf');
+}
+@font-face{
+    font-family: "Awesome";
+    src:  url('/fonts/fa-solid-900.ttf');
+}
+@font-face{
+    font-family: "Lato Reg";
+    src: url('../fonts/Lato-Regular.ttf');
+}
+@font-face{
+    font-family: "Lato Bold";
+    src:  url('../fonts/Lato-Bold.ttf');
 }
 // ----------------------------------------------------------------------
 // Base
@@ -25,8 +37,12 @@
 // Layout
 // ----------------------------------------------------------------------
 @import "layout/header";
+@import "layout/header-t";
 @import "layout/footer";
 @import "layout/siderbar";
+@import "layout/sidebar-menu";
+@import "layout/table";
+@import "pages/admin";
 // ----------------------------------------------------------------------
 // Custom
 // ----------------------------------------------------------------------
@@ -38,6 +54,7 @@
 @import "pages/homepage";
 @import "pages/loginpage";
 @import "pages/menu";
+@import "layout/scroll";
 // ----------------------------------------------------------------------
 // Responsive
 // ----------------------------------------------------------------------

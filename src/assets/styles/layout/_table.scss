@@ -1,0 +1,173 @@
+// .right-content {
+//   position: relative;
+//   .table-wrapper {
+//     overflow-x: scroll;
+//     overflow-y: visible;
+//     width: 250px;
+//     margin-left: 120px;
+//     .table {
+//       td {
+//         padding: 5px 20px;
+//         width: 100px;
+//       }
+//       th {
+//         padding: 5px 20px;
+//         width: 100px;
+//       }
+
+//       th:first-child {
+//         position: fixed;
+//         left: 5px;
+//       }
+//       // td:first-child {
+//       //   position: fixed;
+//       //   // left: 0px;
+//       // }
+
+//     }
+//   }
+// }
+
+.right-content {
+  position: relative;
+  width: calc(100% - 250px);
+  .wrap-container {
+    margin-left: 3px;
+    // box-shadow: 0 0 10px -2px rgb(180, 169, 169);
+    .wrap-form {
+      padding: 20px;
+      // margin: 1px;
+      // border: 1px solid rgb(219, 218, 218);
+      background-color: rgb(255, 249, 249);
+      .p-title {
+        @include flexbox();
+        @include justify-content(space-between);
+        @include align-items(center);
+        margin-bottom: 30px;
+        box-shadow: 0 0 10px -2px rgb(180, 169, 169);
+        background-color: rgb(255, 255, 255);
+        padding: 5px 20px;
+        .menu-list {
+          position: relative;
+          .title {
+            .heading-3 {
+              @include rem("font-size", 30);
+              font-family: "Roboto Bold";
+            }
+          }
+          .search {
+            input {
+              padding: 5px 20px;
+              border-radius: 50px;
+              border: 1px solid #000;
+              outline: none;
+            }
+            .icon {
+              position: absolute;
+              right: 0px;
+              top: 1px;
+              // background-color: #02a959;
+              padding: 5px 8px;
+              // border-top-right-radius: 10px;
+              // border-bottom-right-radius: 10px;
+              // border-bottom: 1px solid $cl-main;
+              // border-top: 1px solid $cl-main;
+              // border-right: 1px solid $cl-main;
+              .fas {
+                @include rem("font-size", 16);
+                color: $cl-main;
+              }
+              &:hover {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+      .menulayout {
+        @include flexbox();
+        @include justify-content(space-between);
+        @include align-items(center);
+        margin: 10px 10px;
+      }
+      .p-table {
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 0 10px -2px rgb(180, 169, 169);
+        .table {
+          position: relative;
+          // overflow-x: scroll;
+          // display: inline-block;
+          height: 100%;
+          width: 100%;
+          min-height: 4px;
+          bottom: 0;
+
+          th {
+            border-right: 1px solid #000;
+            background-color: #02a959;
+            color: #000;
+            text-align: center;
+          }
+          tr {
+            .description {
+              white-space: nowrap;
+              overflow: hidden;
+              max-width: 150px;
+              text-overflow: ellipsis;
+              color: #000;
+              font-family: "Roboto";
+            }
+          }
+        }
+        .p-scrollbar {
+          position: relative;
+          overflow-x: scroll;
+          display: inline-block;
+          height: 100%;
+          width: 100%;
+          min-height: 4px;
+          bottom: 0;
+        }
+      }
+      .p-modal {
+        width: 40%;
+        justify-content: center;
+        position: absolute;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%, -50%);
+        margin-top: 50px;
+        box-shadow: 0 0 5px 0 #999;
+        padding: 20px;
+        background-color: #fff;
+        .title-form {
+          @include rem("font-size", 20);
+          color: $cl-main;
+        }
+        .p-content {
+          .form-group {
+            .op-team {
+              width: 100%;
+              border-radius: 10px;
+              padding: 6px;
+              outline: none;
+              border: 1px solid rgb(73, 70, 70);
+            }
+            .form-search {
+              outline: none;
+              border: 1px solid rgb(73, 70, 70);
+              width: 100%;
+              border-radius: 10px;
+              padding: 5px;
+            }
+          }
+        }
+        .btn-wrap {
+          justify-content: flex-end;
+          text-align: right;
+        }
+      }
+    }
+  }
+}

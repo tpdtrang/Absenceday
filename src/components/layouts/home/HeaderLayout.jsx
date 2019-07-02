@@ -122,7 +122,7 @@ class HeaderLayout extends Component {
                 <div className="container-fluid">
                     <div className="b-header">
                         <div className="img-logo">
-                            <a href="/" className="link-img">
+                            <a href="/admin" className="link-img">
                                 <img className="logo" src={img} alt="logo"/>
                             </a>
                         </div>
