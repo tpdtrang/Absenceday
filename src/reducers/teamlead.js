@@ -1,20 +1,15 @@
 import * as types from '../constants/actionTypes';
 
 const INTINIAL_STATE = {
-    user: {}
+    all: []
 };
 
 export default function (state = INTINIAL_STATE, action ={}){
     switch(action.type){
-        case types.REQUEST_LOGIN:
+        case types.REQUEST_GET_LEAD:
             return Object.assign({},state,{
-                user: action.payload
+                all: action.payload
             })
-        case types.REQUEST_LOGUOT:
-            return Object.assign({},state,{
-                user: {}
-            })
-        
         default:
             return state;
     }

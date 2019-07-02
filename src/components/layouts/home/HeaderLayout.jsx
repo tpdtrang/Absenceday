@@ -62,7 +62,8 @@ class HeaderLayout extends Component {
             isLogoutDrop: !this.state.isLogoutDrop
         })
     }
-    render() {             
+    render() {         
+           
         if(this.state.isRedirect){
             return (
                 <Redirect to="/admin"></Redirect>

@@ -16,6 +16,10 @@ export default function (state=INTINIAL_STATE,action={}){
             return Object.assign({},state,{
                 all: [...state.all,action.payload],
             })
+        case types.REQUEST_UPDATE_DAYOFF:
+            return Object.assign({},state,{
+                all: state.all.map(data => data.id === action.payload.id ? action.payload : data)
+            })
         case types.REQUEST_SEARCH:
             return Object.assign({}, state, {
                 all: action.payload,

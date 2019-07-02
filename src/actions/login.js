@@ -30,7 +30,7 @@ export function requestLogin(data){
                         'Content-Type': 'application/json',
                         "Authorization": `${'bearer' + response.data.access_token}`
                     },
-                }).then(function(response){      
+                }).then(function(response){    
                     if(response){
                         cookies.set("data",response.data.data)
                         message.success('Đăng nhập thành công')
