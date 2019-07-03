@@ -308,6 +308,11 @@ export function requestGetRegistrationStore() {
     })
   }
 }
+export function requestFilterRegister(id) {
+  return (dispatch) => {
+    dispatch(reciveData(types.FILTER_REGISTER, id))
+  }
+}
 export function reciveData(aciton, payload) {
   return {
     type: aciton,
