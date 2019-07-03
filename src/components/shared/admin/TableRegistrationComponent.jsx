@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import Moment from 'react-moment';
+// import Moment from 'react-moment';
 class TableRegistrationComponent extends Component {
+  onhandleShow = (id) => {
+    this.props.onDetails(id);
+  }
   render() {
     let sum = 0;
     return (
@@ -14,63 +17,38 @@ class TableRegistrationComponent extends Component {
                 </div>
               </div>
               <div className="menu-list">
-                <div className="search">
+                {/* <div className="search">
                   <input type="text" />
                   <a href="/">
                     <div className="icon">
                       <i className="fas fa-search" />
                     </div>
                   </a>
-                </div>
+                </div> */}
               </div>
+              {/* <div className="menu-list">
+                <div className="add">
+                  <button type="submit" className="btn" onClick={this.onhandleShow} style={{ fontSize: "13px", color: "#fff", backgroundColor: " #02a959" }} >
+                    Calender
+                  </button>
+                </div>
+              </div> */}
             </div>
             <div className="p-table table-wrapper">
               <table className="table p-scrollbar" id="consumption-data">
                 <thead className="table-header">
                   <tr>
-                    <th rowSpan="2">#</th>
-                    <th rowSpan="2">User</th>
-                    <th rowSpan="2">Type</th>
-                    <th rowSpan="2">Note</th>
-                    <th rowSpan="2">Status</th>
-                    <th rowSpan="2">Requested</th>
-                    <th colSpan="30">Tháng 6</th>
-                    <th rowSpan="2">At_Time</th>
-                    <th rowSpan="2">Absence_days</th>
-                    <th rowSpan="2">Sum</th>
-                    <th rowSpan="2">Approve</th>
-                  </tr>
-                  <tr>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                    <th>5</th>
-                    <th>6</th>
-                    <th>7</th>
-                    <th>8</th>
-                    <th>9</th>
-                    <th>10</th>
-                    <th>11</th>
-                    <th>12</th>
-                    <th>13</th>
-                    <th>14</th>
-                    <th>15</th>
-                    <th>16</th>
-                    <th>17</th>
-                    <th>18</th>
-                    <th>19</th>
-                    <th>20</th>
-                    <th>21</th>
-                    <th>22</th>
-                    <th>23</th>
-                    <th>24</th>
-                    <th>25</th>
-                    <th>26</th>
-                    <th>27</th>
-                    <th>28</th>
-                    <th>29</th>
-                    <th>30</th>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Type</th>
+                    <th>Note</th>
+                    <th>Status</th>
+                    <th>Requested</th>
+                    <th>At_Time</th>
+                    <th>Absence_days</th>
+                    <th>Sum</th>
+                    <th>Approve</th>
+                    <th>Details</th>
                   </tr>
                 </thead>
                 <tbody className="results">
@@ -86,19 +64,6 @@ class TableRegistrationComponent extends Component {
                       <td className="description">{data.attributes.note}</td>
                       <td className="description">{data.attributes.status}</td>
                       <td className="description">{data.attributes.requested_date}</td>
-                      <td colSpan="30">
-                        {data.attributes.time.map(item => (
-                          <span className="current"
-                            key={item.id} >
-                            <Moment format="YYYY/MM/DD">
-                              {item.time_details}
-
-                            </Moment>
-                            <hr />
-                          </span>
-                        ))}
-                       
-                      </td>
                       <td className="description">
                         {data.attributes.time.map(data => (
                           <span key={data.id}>
@@ -108,10 +73,8 @@ class TableRegistrationComponent extends Component {
                         ))}
                       </td>
                       <td className="description">
-
                         {data.attributes.time.map(item => {
                           sum += parseFloat(item.absence_days)
-                          
                           return (
                             <span key={item.id}>
                               {item.absence_days}
@@ -122,6 +85,7 @@ class TableRegistrationComponent extends Component {
                       </td>
                       <td className="description">{sum}</td>
                       <td className="description">{data.attributes.approver_id.name}</td>
+                      <td className="description" onClick={this.onhandleShow.bind(this, data.id)}><button className="btn"><i className="fas fa-calendar-day" style={{ color: "blue", fontSize: "18px" }}></i></button></td>
                     </tr>
                      )
                   })}

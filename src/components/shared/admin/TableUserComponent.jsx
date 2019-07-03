@@ -112,12 +112,12 @@ class TableUserComponent extends Component {
               </div>
               <div className="menu-list">
                 <div className="search">
-                  <input type="text" name="search" onChange={this.onhandleChange} value={this.state.search} />
-                  <button>
-                    
+                  {/* <input type="text" /> */}
+                  {/* <a href="/">
+                    <div className="icon">
                       <i className="fas fa-search" />
-                    
-                  </button>
+                    </div>
+                  </a> */}
                 </div>
               </div>
               <div className="menu-list">

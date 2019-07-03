@@ -80,14 +80,14 @@ class TableTeamComponent extends Component {
                 </div>
               </div>
               <div className="menu-list">
-                <div className="search">
+                {/* <div className="search">
                   <input type="text" />
                   <a href="/">
                     <div className="icon">
                       <i className="fas fa-search" />
                     </div>
                   </a>
-                </div>
+                </div> */}
               </div>
               <div className="menu-list">
                 <div className="add">

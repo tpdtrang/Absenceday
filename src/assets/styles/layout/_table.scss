@@ -53,8 +53,9 @@
         .menu-list {
           position: relative;
           .title {
+            margin-top: 10px;
             .heading-3 {
-              @include rem("font-size", 30);
+              @include rem("font-size", 22);
               font-family: "Roboto Bold";
             }
           }
@@ -105,12 +106,15 @@
           width: 100%;
           min-height: 4px;
           bottom: 0;
-
+          .table-header {
+            min-width: 100%;
+          }
           th {
             border-right: 1px solid #000;
             background-color: #02a959;
             color: #000;
             text-align: center;
+            min-width: 180px;
           }
           tr {
             .description {
@@ -173,4 +177,10 @@
       }
     }
   }
+}
+.fc {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.15);
 }
