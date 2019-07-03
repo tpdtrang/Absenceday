@@ -32,26 +32,40 @@ class RegistrationPage extends Component {
     this.props.dispatch(action.requestFilterRegister(id));
   }
   covertDataToCalender(data) {
-
     if (data.length > 0) {
       return data.map(item => {
         return {
           id: item.id,
           title: item.attributes.type.name,
           date: dateFormat(item.attributes.approved_date, 'yyyy-mm-dd'),
-          email:item.attributes.user.name
+          email: item.attributes.user.name
         }
       })
     } else {
       return [];
     }
   }
+  covertArrayNew(data) {
+    let ItemNew = [];
+    data.map(item => {
+      ItemNew = item.attributes.time.map(timeItem => {
+        return {
+          id: timeItem.id,
+          title: item.attributes.type.name,
+          date: dateFormat(timeItem.at_time, 'yyyy-mm-dd'),
+          email: item.attributes.user.name
+        }
+      })
+      return [];
+    })
+    return ItemNew;
+  }
   render() {
     const mainContent = () => {
       switch (this.state.views) {
         case "CALENDER":
           return (
-            <CalenderComponent data={this.covertDataToCalender(this.props.filter)} onhandleShow={this.onhandleShow} ></CalenderComponent>
+            <CalenderComponent data={this.covertArrayNew(this.props.filter)} onhandleShow={this.onhandleShow} ></CalenderComponent>
           )
         case "TABLE":
           return (
