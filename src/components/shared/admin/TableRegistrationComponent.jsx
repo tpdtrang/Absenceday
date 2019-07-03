@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-// import Moment from 'react-moment';
-// import {Table} from 'antd';
+import Moment from 'react-moment';
 class TableRegistrationComponent extends Component {
   render() {
-    let sum=0;
+    let sum = 0;
     return (
       <div className="right-content">
         <section className="wrap-container">
@@ -35,7 +34,7 @@ class TableRegistrationComponent extends Component {
                     <th rowSpan="2">Note</th>
                     <th rowSpan="2">Status</th>
                     <th rowSpan="2">Requested</th>
-                    <th colSpan="30">Tháng 1</th>
+                    <th colSpan="30">Tháng 6</th>
                     <th rowSpan="2">At_Time</th>
                     <th rowSpan="2">Absence_days</th>
                     <th rowSpan="2">Sum</th>
@@ -88,7 +87,7 @@ class TableRegistrationComponent extends Component {
                       <td className="description">{data.attributes.status}</td>
                       <td className="description">{data.attributes.requested_date}</td>
                       <td colSpan="30">
-                        {/* {data.attributes.time.map(item => (
+                        {data.attributes.time.map(item => (
                           <span className="current"
                             key={item.id} >
                             <Moment format="YYYY/MM/DD">
@@ -97,7 +96,7 @@ class TableRegistrationComponent extends Component {
                             </Moment>
                             <hr />
                           </span>
-                        ))} */}
+                        ))}
                        
                       </td>
                       <td className="description">
@@ -125,10 +124,8 @@ class TableRegistrationComponent extends Component {
                       <td className="description">{data.attributes.approver_id.name}</td>
                     </tr>
                      )
-                    
                   })}
                 </tbody>
-                
               </table>
             </div>
           </div>
