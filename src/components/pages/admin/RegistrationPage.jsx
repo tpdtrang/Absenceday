@@ -45,15 +45,29 @@ class RegistrationPage extends Component {
       return [];
     }
   }
+  translateAtTime(data){
+    switch (data) {
+      case "Full": 
+        return "Cả ngày"
+      case "Morning":
+        return "Buổi sáng"
+      case "Afternoon":
+        return "Buổi chiều"
+      default:
+        break;
+    }
+  }
+
   covertArrayNew(data) {
     let ItemNew = [];
     data.map(item => {
       ItemNew = item.attributes.time.map(timeItem => {
         return {
           id: timeItem.id,
-          title: item.attributes.type.name,
-          date: dateFormat(timeItem.at_time, 'yyyy-mm-dd'),
+          title: this.translateAtTime(timeItem.at_time),
+          date: dateFormat(timeItem.time_details, 'yyyy-mm-dd'),
           email: item.attributes.user.name
+          
         }
       })
       return [];

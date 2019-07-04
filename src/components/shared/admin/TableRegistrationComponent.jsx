@@ -38,8 +38,8 @@ class TableRegistrationComponent extends Component {
               <table className="table p-scrollbar" id="consumption-data">
                 <thead className="table-header">
                   <tr>
-                    <th>#</th>
-                    <th>User</th>
+                    <th className="sticky-col first-col">#</th>
+                    <th className="sticky-col second-col">User</th>
                     <th>Type</th>
                     <th>Note</th>
                     <th>Status</th>
@@ -51,43 +51,43 @@ class TableRegistrationComponent extends Component {
                     <th>Details</th>
                   </tr>
                 </thead>
-                <tbody className="results">
+                <tbody className=" results">
                   {this.props.data.map(data => {
-                     sum = 0;
-                     return (
+                    sum = 0;
+                    return (
                       <tr key={data.id}>
-                      <td className="description consumption">{data.id}</td>
-                      <td className="description">{data.attributes.user.email}</td>
-                      <td className="description ">
-                        {data.attributes.type.name}
-                      </td>
-                      <td className="description">{data.attributes.note}</td>
-                      <td className="description">{data.attributes.status}</td>
-                      <td className="description">{data.attributes.requested_date}</td>
-                      <td className="description">
-                        {data.attributes.time.map(data => (
-                          <span key={data.id}>
-                            {data.at_time}
-                            <hr />
-                          </span>
-                        ))}
-                      </td>
-                      <td className="description">
-                        {data.attributes.time.map(item => {
-                          sum += parseFloat(item.absence_days)
-                          return (
-                            <span key={item.id}>
-                              {item.absence_days}
+                        <td className="description sticky-col first-col">{data.id}</td>
+                        <td className="description sticky-col second-col">{data.attributes.user.email}</td>
+                        <td className="description ">
+                          {data.attributes.type.name}
+                        </td>
+                        <td className="description">{data.attributes.note}</td>
+                        <td className="description">{data.attributes.status}</td>
+                        <td className="description">{data.attributes.requested_date}</td>
+                        <td className="description">
+                          {data.attributes.time.map(data => (
+                            <span key={data.id}>
+                              {data.at_time}
                               <hr />
                             </span>
-                          )
-                        })}
-                      </td>
-                      <td className="description">{sum}</td>
-                      <td className="description">{data.attributes.approver_id.name}</td>
-                      <td className="description" onClick={this.onhandleShow.bind(this, data.id)}><button className="btn"><i className="fas fa-calendar-day" style={{ color: "blue", fontSize: "18px" }}></i></button></td>
-                    </tr>
-                     )
+                          ))}
+                        </td>
+                        <td className="description">
+                          {data.attributes.time.map(item => {
+                            sum += parseFloat(item.absence_days)
+                            return (
+                              <span key={item.id}>
+                                {item.absence_days}
+                                <hr />
+                              </span>
+                            )
+                          })}
+                        </td>
+                        <td className="description">{sum}</td>
+                        <td className="description">{data.attributes.approver_id.name}</td>
+                        <td className="description" onClick={this.onhandleShow.bind(this, data.id)}><button className="btn"><i className="fas fa-calendar-day" style={{ color: "blue", fontSize: "18px" }}></i></button></td>
+                      </tr>
+                    )
                   })}
                 </tbody>
               </table>

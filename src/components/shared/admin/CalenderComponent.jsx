@@ -15,12 +15,7 @@ class CalenderComponent extends Component {
   onhandleShow = () => {
     this.props.onhandleShow('TABLE');
   }
-  onEvent = (info) => {
-    this.setState({
-      time_detail:info.event.time_detail,
-      id: info.event.id
-    })
-  }
+ 
   render() {
     return (
       <div className="right-content">
@@ -51,7 +46,6 @@ class CalenderComponent extends Component {
               </div>
             </div>
             <FullCalendar
-              eventClick={this.onEvent}
               schedulerLicenseKey={'GPL-My-Project-Is-Open-Source'}
               defaultView="dayGridMonth"
               customButtons={{
