@@ -3,17 +3,49 @@ import React, {Component} from 'react';
 import Cookies from 'universal-cookie';
 var dateFormatDate = require('dateformat');
 var cookies = new Cookies();
+var now = new Date();
 class ListComponent extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            day: dateFormatDate(now, 'yyyy-mm-dd'),
+            month: '',
+            year: '',
+        }
+    }
+    onChanger = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        this.setState({
+            [name]: value
+        })
+    }
+    onSearchDay = (event) =>{
+        event.preventDefault();
+        this.props.onSearch(this.state);
+    }
     onEdit(id){
         this.props.onEdit(id);
-    }
+    }  
     render() {
-        console.log(this.props.data);
         return (
             <section className="b-table-container">
                 <div className="b-table">
                     <div className="b-title">
                         <h1 className="title">Danh Sách Đợi Duyệt</h1>
+                    </div>
+                    <div className="b-input">
+                        <form onSubmit={this.onSearchDay}>
+                            {/* <DatePicker
+                                onChange={this.onChangeDateSearch}
+                                defaultValue={moment(now, dateFormat)}
+                                name="day"
+                                style={{"margin":"0 6px"}}
+                            ></DatePicker> */}
+                            {/* <input onChange={this.onChanger} type="text" value={this.state.year} name="year" className="b-search"></input> */}
+                            <input onChange={this.onChanger} type="text" value={this.state.month} name="month" className="b-search"></input>
+                            <button className="btn-search"><i className="fas fa-search" ></i></button>
+                        </form>
                     </div>
                     <table className="table table-striped">
                         <thead>
@@ -36,7 +68,6 @@ class ListComponent extends Component {
                                 <th className="item-table">Thể loại</th>
                                 <th className="item-table">Lý Do</th>  
                                 <th className="item-table">Số Ngày Nghỉ</th>
-                                <th className="item-table">Người Duyệt</th>
                                 <th className="item-table">Hành động</th>
                             </tr>
                         </thead>
@@ -70,22 +101,13 @@ class ListComponent extends Component {
                                         <td className="name-item">{data.attributes.type.name}</td>
                                         <td className="name-item">{data.attributes.note}</td>
                                         <td className="name-item">{data.attributes.total}</td>
-                                        <td className="name-item">{
-                                            data.attributes.approver_id.map(item=>(
-                                                <div className="type" key={item.id} style={{"width":"100%"}}>
-                                                    <div className="list-1">
-                                                        <p className="list-item1" >{item.name}</p>
-                                                    </div>
-                                                </div>
-                                            ))
-                                        }</td>
                                         <td className="name-item">
                                             <button className="btn-edit" onClick={this.onEdit.bind(this,data.id)}>Cập Nhật</button>
                                         </td>
                                     </tr>
                                 ))
                                 :
-                                <tr></tr>
+                                <></>
                             }
                         </tbody>
                     </table>

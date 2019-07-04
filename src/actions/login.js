@@ -35,6 +35,7 @@ export function requestLogin(data){
                         cookies.set("data",response.data.data)
                         message.success('Đăng nhập thành công')
                         dispatch(reviceData(types.REQUEST_LOGIN,response.data.data));
+                        window.location.reload();
                     }
                 })
             }
@@ -66,7 +67,8 @@ export function requestLogout(data){
             cookies.remove('data');
             cookies.remove('accessToken');
             message.success('Đăng xuất thành công');
-            dispatch(reviceData(types.REQUEST_LOGUOT,response))
+            dispatch(reviceData(types.REQUEST_LOGUOT,response));
+            window.location.reload();
         }).catch(function(error){
             console.log(error);
         })

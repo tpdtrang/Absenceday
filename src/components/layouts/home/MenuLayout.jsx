@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, DatePicker, message } from 'antd';
 import moment from 'moment';
-import * as action_search from '../../../actions/search';
-import {connect} from 'react-redux';
 import 'antd/dist/antd.css';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -27,25 +25,24 @@ class MenuLayout extends Component {
             disabledate: true,
             arrayNew: [],
             arrayLead: [],
-            day: dateFormatDate(now, 'yyyy-mm-dd'),
-            month: '',
-            year: '',
+            
         }
     }
     componentDidUpdate(prevProps, prevState) {
         var self = this;
-        if(this.props.data !== prevProps.data ){
+        if(this.props.data !== prevProps.data && !this.state.lead && this.props.data.length){
             self.setState({
                 typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
-                lead: this.props.data.length > 0 ? this.props.data[0].id : '',
+                lead:  this.props.data[0].id,
             })
         }
        if(prevProps.visible !== this.props.visible){
-        if ( prevProps.edit !== this.props.edit) {
+        if (prevProps.edit !== this.props.edit) {
             let data = this.props.dataEdit.attributes;
             self.setState({
                 id: this.props.dataEdit.id,
                 visible: this.props.edit,
+
                 time_start: data.type === "From day to day" ? dateFormatDate(data.time_start, 'yyyy-mm-dd') : dateFormatDate(now, 'yyyy-mm-dd'),
                 time_end: data.type === "From day to day" ? dateFormatDate(data.time_end, 'yyyy-mm-dd') : dateFormatDate(now, 'yyyy-mm-dd'),
                 checkType: data.type === null ? true : false,
@@ -53,6 +50,7 @@ class MenuLayout extends Component {
                 note: data.note,
                 type: data.checkType === true ? data.type : 'From day to day',
                 date: data.type === "The specific day" ? dateFormatDate(data.date, 'yyyy-mm-dd') : dateFormatDate(now, 'yyyy-mm-dd'),
+                typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
             })
         } else {
             this.onReset();
@@ -62,7 +60,6 @@ class MenuLayout extends Component {
         }
        }
     }
-    
     showModal = () => {
         if(cookies.get('data') !== undefined){
             this.setState({visible: true})
@@ -115,6 +112,18 @@ class MenuLayout extends Component {
         this.setState({
             checked: e.target.checked,
         })
+    } 
+    onSubmit = (e) => {
+        e.preventDefault();
+        if(this.props.edit === true){
+            this.props.onUpdateDay(this.state);
+            this.onReset();
+            this.props.onCheckModal();
+        }else{
+            this.props.onAddDayOff(this.state);
+            this.onReset();
+            this.props.onCheckModal();
+        }  
     }
     onReset() {
         this.setState({
@@ -131,24 +140,12 @@ class MenuLayout extends Component {
             arrayLead: []
         })
     }
-    onSubmit = (e) => {
-        e.preventDefault();
-        if(this.props.edit === true){
-            this.props.onUpdateDay(this.state);
-            this.onReset();
-            this.props.onCheckModal();
-        }else{
-            this.props.onAddDayOff(this.state);
-            this.onReset();
-            this.props.onCheckModal();
-        }  
-    }
     onAddLead = (e) =>{
         e.preventDefault();
         let checkAdd = false;
-        if(this.state.arrayLead.length > 0){
+        if(this.state.arrayLead.length > 0){     
             this.state.arrayLead.map(item =>{
-                if(item.lead === this.state.lead && item.namelead === this.state.namelead){
+                if(item.lead === this.state.lead){
                     checkAdd = false
                     message.error('Trùng người duyệt')
                 }else{
@@ -158,12 +155,12 @@ class MenuLayout extends Component {
             })
         }
         if(this.state.arrayLead.length > 0){
-            let name = this.props.data.filter(item=> parseInt(item.id) === parseInt(this.state.lead))
+            let name = this.props.data.filter(item => parseInt(item.id) === parseInt(this.state.lead))
             if(checkAdd === true){
                 let data = {
                     id: this.state.arrayLead.length > 0 ? parseInt(this.state.arrayLead[this.state.arrayLead.length - 1].id + 1) : 1,
                     lead: this.state.lead,
-                    namelead: name[0].attributes.name
+                    namelead: name[0].attributes.email
                 }
                 let arrayCurrent = this.state.arrayLead;
                 arrayCurrent = [...arrayCurrent, data]
@@ -176,7 +173,7 @@ class MenuLayout extends Component {
             let data = {
                 id: this.state.arrayLead.length > 0 ? parseInt(this.state.arrayLead[this.state.arrayLead.length - 1].id + 1) : 1,
                 lead: this.state.lead,
-                namelead: name[0].attributes.name
+                namelead: name[0].attributes.email
             }
             let arrayCurrent = this.state.arrayLead;
             arrayCurrent = [...arrayCurrent, data]
@@ -242,34 +239,50 @@ class MenuLayout extends Component {
             day: dateString,
         })
     }
-    onSearchDay = (event) =>{
-        event.preventDefault();
-        this.props.dispatch(action_search.requestSearchDay(this.state));
+    onDisAccept = () => {
+        this.props.onDisAccept();
     }
     onList = () =>{
         this.props.onList();
     }
     render() { 
-
+        // const contentButton = () =>{
+        //     let name = this.props.data.filter(item=> parseInt(item.id) === parseInt(this.state.lead))
+        //     console.log(name);
+                
+        //     if(cookies.get('data') !== undefined){
+                
+                
+        //         if(cookies.get('data').attributes.email !== name[0].attributes.email){
+        //             return(
+        //                 <button className="btn-list" onClick ={this.onList}>Duyệt</button> 
+        //             )
+        //         }else{
+        //             return(
+        //                 <></>
+        //             )
+        //         }
+        //     }
+        // }
         const contentUser = () => {
             if (cookies.get("data") !== undefined) {
                 return (
                     <div key={cookies.get("data").id}>
                         <div className="b-information">
                             <h1 className="b-title">Họ tên:</h1>
-                            <span className="b-text">{cookies.get("data").attributes.name}</span>
+                            <span className="b-text ">{cookies.get("data").attributes.name}</span>
                         </div>
                         <div className="b-information">
                             <h1 className="b-title">Quê quán:</h1>
-                            <span className="b-text">{cookies.get("data").attributes.address}</span>
+                            <span className="b-text ">{cookies.get("data").attributes.address}</span>
                         </div>
                         <div className="b-information">
                             <h1 className="b-title">Vị trí:</h1>
-                            <span className="b-text">{cookies.get("data").attributes.team.name}</span>
+                            <span className="b-text ">{cookies.get("data").attributes.team.name}</span>
                         </div>
                         <div className="b-information">
                             <h1 className="b-title">Khối:</h1>
-                            <span className="b-text" key={cookies.get("data").attributes.position.id}>{cookies.get("data").attributes.position.name}</span>
+                            <span className="b-text " key={cookies.get("data").attributes.position.id}>{cookies.get("data").attributes.position.name}</span>
                         </div>
                     </div>
                 )
@@ -277,31 +290,13 @@ class MenuLayout extends Component {
         }
         return (
             <section className="b-menu-container">
-                <div className="b-menu">
-                    <button className="btn-subcribe" onClick={this.showModal}>Đăng kí</button>
-                    <button className="btn-list" onClick={this.onListQueue}>Danh Sách</button>
-                    <button className="btn-list" onClick={this.onViews}>Hàng Đợi</button>
-                    {
-                        cookies.get('data') !== undefined && cookies.get('data').attributes.approved_role === 1 ?
-                        <button className="btn-list" onClick ={this.onList}>Duyệt</button>
-                        :
-                        <></>
-                    }
-                    <div className="b-input">
-                        <form onSubmit={this.onSearchDay}>
-                            {/* <DatePicker
-                                onChange={this.onChangeDateSearch}
-                                defaultValue={moment(now, dateFormat)}
-                                name="day"
-                                style={{"margin":"0 6px"}}
-                            ></DatePicker> */}
-                            <input onChange={this.onChanger} type="text" value={this.state.month} name="month" className="b-search"></input>
-                            <button className="btn-search"><i className="fas fa-search" ></i></button>
-                        </form>
-                    </div>
-
+                <div className="b-menu" id="myDIV">
+                    <button className="btn-subcribe" onClick={this.showModal}>Đăng ký</button>
+                    <button className="btn-list" onClick={this.onListQueue}>DS Được Duyệt</button>
+                    <button className="btn-list" onClick={this.onViews}>DS Đợi Duyệt</button>
+                    <button className="btn-list" onClick={this.onDisAccept}>DS Không Duyệt</button>
+                    <button className="btn-list" onClick ={this.onList}>DS Duyệt</button> 
                 </div>
-
                 <Modal
                     style={{
                         "width": "400px",
@@ -322,7 +317,7 @@ class MenuLayout extends Component {
                             <div className="b-content">
                                 <div className="b-form">
                                     <div className="form-group">
-                                        <label className="b-text">Loại Hình Nghỉ: </label>
+                                        <label className="b-text ">Loại Hình Nghỉ: </label>
                                         <select
                                             className="b-select"
                                             onChange={this.onChangeType}
@@ -338,18 +333,18 @@ class MenuLayout extends Component {
                                             :
                                             <div className="form-date">
                                                 <div className="form-group">
-                                                    <label className="b-text">Thời gian bắt đầu:</label>
+                                                    <label className="b-text ">Thời gian bắt đầu:</label>
                                                     <DatePicker
-                                                        className="ip-time"
+                                                        className="ip-date"
                                                         onChange={this.onChangeDateItem}
                                                         defaultValue={moment(now, dateFormat)}
                                                         name="time_off_beginning"
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                                                    <label className="b-text">Thời gian kết thúc:</label>
+                                                    <label className="b-text ">Thời gian kết thúc:</label>
                                                     <DatePicker
-                                                        className="ip-time"
+                                                        className="ip-date"
                                                         onChange={this.onChangeDate}
                                                         defaultValue={moment(now, dateFormat)}
                                                         name="time_off_ending"
@@ -360,16 +355,16 @@ class MenuLayout extends Component {
                                     {
                                         this.state.checkType ?
                                             <>
-                                                <div className="form-group">
-                                                    <label className="b-text">Thời gian:</label>
+                                                <div className="form-group sl-form">
+                                                    <label className="sl-text">Thời gian:</label>
                                                     <DatePicker
-                                                        className="ip-time"
+                                                        className="sl-date"
                                                         onChange={this.onChangeDate}
                                                         defaultValue={moment(now, dateFormat)}
                                                         style={{ "width": "120px" }}
                                                     />
                                                     <select
-                                                        className="b-select"
+                                                        className="sl-select"
                                                         onChange={this.onChanger}
                                                         value={this.state.at_time}
                                                         name="at_time">
@@ -403,7 +398,7 @@ class MenuLayout extends Component {
                                             <></>
                                     }
                                     <div className="form-group">
-                                        <label className="b-text">Thể loại:</label>
+                                        <label className="b-text ">Thể loại:</label>
                                         <select
                                             className="b-select"
                                             onChange={this.onChanger}
@@ -426,10 +421,13 @@ class MenuLayout extends Component {
                                             onChange={this.onChanger}
                                             value={this.state.note}
                                             name="note" required />
-                                    </div>
-                                    <>
-                                        <div className="form-group">
-                                            <label className="b-text">Người Duyệt:</label>
+                                        </div>
+                                    
+                                        {
+                                            this.props.edit === false ?
+                                            <>
+                                            <div className="form-group">
+                                            <label className="b-text ">Người Duyệt:</label>
                                             <select 
                                                 className="b-select"
                                                 onChange={this.onChanger}
@@ -438,7 +436,7 @@ class MenuLayout extends Component {
                                             >
                                                 {
                                                     this.props.data.map(item =>(
-                                                        <option key={item.id} value={item.id}>{item.attributes.name}</option>
+                                                        <option value={item.id} key={item.id}>{item.attributes.email}</option>
                                                     ))
                                                 }
                                             </select>
@@ -460,7 +458,11 @@ class MenuLayout extends Component {
                                                 </div>
                                             ))}
                                         </div>
-                                    </>
+                                            </>
+                                        :
+                                        <></>
+                                        }
+                                   
                                     <form onSubmit={this.onSubmit}>
                                         <div className="form-group text-center">
                                             <button type="submit" className="btn-cancel">{this.props.edit ? 'Cập Nhật' : 'Đăng ký'}</button>
@@ -476,9 +478,5 @@ class MenuLayout extends Component {
         );
     }
 }
-function mapStateToProps(state){
-    return {
-        dayoff: state.dayoff.all,
-    }
-}
-export default connect(mapStateToProps,null)(MenuLayout);
+
+export default MenuLayout;

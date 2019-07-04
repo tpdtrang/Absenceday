@@ -9,6 +9,7 @@ import StoreAdminReducer from './adminreducer';
 import AdminTeam from './adminteam'
 import AdminPosition from './adminpositon';
 import AdminRegistration from './adminregistration';
+import ListDisAccept from './listdisaccept';
 const rootReducer = combineReducers({
     dayoff: DayoffReducer,
     login: LoginReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     stores: StoreAdminReducer,
     team: AdminTeam,
     position: AdminPosition,
-    registration: AdminRegistration
+    registration: AdminRegistration,
+    disaccept: ListDisAccept
 });
 export default rootReducer;

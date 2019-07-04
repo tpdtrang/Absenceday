@@ -14,6 +14,11 @@ export default function (state=INTINIAL_STATE,action={}){
             return Object.assign({},state,{
                 all: state.all.filter(item => parseInt(item.id) !== parseInt(action.payload[0].id))
             })
+        case types.REQUEST_UPDATE_DISACCEPT:
+            console.log(action.payload);
+            return Object.assign({},state,{
+                all: state.all.filter(item => parseInt(item.id) !== parseInt(action.payload[0].id))
+            })
         default:
             return state;
     }
