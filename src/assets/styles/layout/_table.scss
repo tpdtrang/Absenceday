@@ -114,7 +114,8 @@
             background-color: #02a959;
             color: #000;
             text-align: center;
-            min-width: 180px;
+            min-width: 80px;
+            
           }
           tr {
             .description {
@@ -124,6 +125,7 @@
               text-overflow: ellipsis;
               color: #000;
               font-family: "Roboto";
+              min-width: 80px;
             }
           }
         }

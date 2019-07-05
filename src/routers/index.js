@@ -5,17 +5,16 @@ import { HomeAdmin } from '../components/pages/admin';
 import { TablePermissionPage, TableRolePage, PositionPage, TableTeamPage, UserPage,RegistrationPage ,TrackPage,ContentPage} from '../components/pages/admin';
 const Routes = () => (
   <Switch>
-    <Route path="/" exact={true} component={HomeComponent}></Route>
-    <Route path="/admin" component={HomeAdmin}></Route>
-    <Route path="/admin" component={HomeAdmin}></Route>
-    <Route path="/tableuser" component={UserPage}></Route>
-    <Route path="/tableteam" component={TableTeamPage}></Route>
-    <Route path="/tableposition" component={PositionPage}></Route>
-    <Route path="/tablerole" component={TableRolePage}></Route>
-    <Route path="/tablepermission" component={TablePermissionPage}></Route>
-    <Route path="/tableregistration" component={RegistrationPage}></Route>
-    <Route path="/tabletrack" component={TrackPage}></Route>
-    <Route path="/content" component={ContentPage}></Route>
+    <Route path="/" exact={true} component={HomeComponent} ></Route>
+    <Route path="/admin" component={HomeAdmin} exact></Route>
+    <Route path="/admin/user" component={UserPage} exact></Route>
+    <Route path="/admin/team" component={TableTeamPage} exact></Route>
+    <Route path="/admin/role" component={TableRolePage} exact></Route>
+    <Route path="/admin/position" component={PositionPage} exact></Route>
+    <Route path="/admin/permission" component={TablePermissionPage} exact></Route>
+    <Route path="/admin/registration" component={RegistrationPage} exact></Route>
+    <Route path="/admin/track" component={TrackPage} exact></Route>
+    <Route path="/admin/content" component={ContentPage} exact></Route>
   </Switch>
 );
 export default Routes;

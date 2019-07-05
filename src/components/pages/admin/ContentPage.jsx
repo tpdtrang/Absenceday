@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import {HeaderAdLayout,SideAdLayout} from '../../layouts/home/admin';
-
+import { HeaderAdLayout, SideAdLayout } from '../../layouts/home/admin';
+import TableContentComponent from '../../shared/admin/TableContentComponent'
 class ContentPage extends Component {
   render() {
+    
     return (
       <div>
         <HeaderAdLayout></HeaderAdLayout>
-        <SideAdLayout></SideAdLayout>
+        <div className="content">
+          <SideAdLayout></SideAdLayout>
+          <TableContentComponent ></TableContentComponent>
+        </div>
       </div>
     );
   }
