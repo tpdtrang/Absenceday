@@ -24,6 +24,7 @@ class HomeComponent extends Component {
         this.props.dispatch(action_dayoff.requestGetDayOff());
         this.props.dispatch(action_typedayoff.requestGetTypeDayOff());
         this.props.dispatch(action_typedayoff.requestGetLead());
+        this.props.dispatch(action_dayoff.requestGetMail());
         this.props.dispatch(action_dayoff.requestGetListQueue());
         this.props.dispatch(action_dayoff.requestGetListAccept());
         this.props.dispatch(action_dayoff.requestGetListDisAccept());
@@ -94,7 +95,7 @@ class HomeComponent extends Component {
     onSearchPending = (data) =>{
         this.props.dispatch(action_search.requestSearchPending(data));
     }
-    render() {
+    render() {        
         const mainContent = () =>{
             if(this.state.views === "1"){
                 return(
@@ -122,7 +123,7 @@ class HomeComponent extends Component {
                 <HeaderLayout></HeaderLayout>
                 <div className="b-content">
                     <div className="b-right-content">
-                        <MenuLayout data={this.props.leader} onDisAccept ={this.onDisListAccept} onCheckModal ={this.onCheckModal} visible={this.state.visible} edit={this.state.edit} dataEdit = {this.state.dataEdit} onUpdateDay ={this.onUpdateDay} onViews={this.onViews} onListQueue={this.onListQueue} onList={this.onList} typedayoff={this.props.typedayoff} onAddDayOff = {this.onAddDayOff}></MenuLayout>
+                        <MenuLayout data={this.props.leader} leadmail={this.props.mail} onDisAccept ={this.onDisListAccept} onCheckModal ={this.onCheckModal} visible={this.state.visible} edit={this.state.edit} dataEdit = {this.state.dataEdit} onUpdateDay ={this.onUpdateDay} onViews={this.onViews} onListQueue={this.onListQueue} onList={this.onList} typedayoff={this.props.typedayoff} onAddDayOff = {this.onAddDayOff}></MenuLayout>
                         {             
                             mainContent()     
                         }
@@ -141,6 +142,7 @@ function mapStateToProps(state){
         list: state.listqueue.all,
         listaccept: state.listaccept.all,
         disaccept: state.disaccept.all,
+        mail: state.mail.all,
         isList: state.dayoff.isList,
     }
 }

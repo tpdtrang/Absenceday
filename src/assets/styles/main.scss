@@ -86,7 +86,7 @@
         .text-norm {
           margin-left: 5px;
           margin-right: 5px;
-          width: 50%;
+          width: 90%;
         }
       }
       .group-button {
@@ -399,33 +399,37 @@
           width: 100px;
         }
       }
-      .btn-edit{
-        margin: 0 5px;
-        cursor: pointer;
-        background-color: #fff;
-        color: #2962ff;
-        border: 1px solid #2962ff;
-        padding: 5px;
-        font-weight: 500;
-        border-radius: 2px;
-        &:hover{
-          background-color: #2962ff;
-          color: #fff;
+      &.item-1{
+        width: 200px;
+        .btn-edit{
+          margin: 0 5px;
+          cursor: pointer;
+          background-color: #fff;
+          color: #2962ff;
+          border: 1px solid #2962ff;
+          padding: 5px;
+          font-weight: 500;
+          border-radius: 2px;
+          &:hover{
+            background-color: #2962ff;
+            color: #fff;
+          }
+        }
+        .btn-edit-2{
+          cursor: pointer;
+          background-color: #fff;
+          color: #fa1d1d;
+          border: 1px solid #fa1d1d;
+          padding: 5px;
+          font-weight: 500;
+          border-radius: 2px;
+          &:hover{
+            background-color: #fa1d1d;
+            color: #fff;
+          }
         }
       }
-      .btn-edit-2{
-        cursor: pointer;
-        background-color: #fff;
-        color: #fa1d1d;
-        border: 1px solid #fa1d1d;
-        padding: 5px;
-        font-weight: 500;
-        border-radius: 2px;
-        &:hover{
-          background-color: #fa1d1d;
-          color: #fff;
-        }
-      }
+      
     }
   }
 }

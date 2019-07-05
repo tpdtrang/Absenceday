@@ -10,11 +10,13 @@ import AdminTeam from './adminteam'
 import AdminPosition from './adminpositon';
 import AdminRegistration from './adminregistration';
 import ListDisAccept from './listdisaccept';
+import ListMail from './listmail';
 const rootReducer = combineReducers({
     dayoff: DayoffReducer,
     login: LoginReducer,
     typedayoff: TypeDayOff,
     lead: LeadReducer,
+    mail: ListMail,
     listqueue: ListQueue,
     listaccept: ListAccept,
     stores: StoreAdminReducer,

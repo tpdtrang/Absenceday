@@ -17,15 +17,17 @@ class MenuLayout extends Component {
             typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
             lead: this.props.data.length > 0 ? this.props.data[0].id : '',
             namelead: '',
-            at_time: 'Morning',
+            mailto: this.props.leadmail.length > 0 ? this.props.leadmail[0].id : '',
+            namemail: '',
+            at_time: 'Buổi Sáng',
             note: '',
-            type: 'From day to day',
+            type: 'Từ ngày đến ngày',
             date: dateFormatDate(now, 'yyyy-mm-dd'),
             checkType: false,
             disabledate: true,
             arrayNew: [],
             arrayLead: [],
-            
+            arrayMail: []
         }
     }
     componentDidUpdate(prevProps, prevState) {
@@ -36,21 +38,28 @@ class MenuLayout extends Component {
                 lead:  this.props.data[0].id,
             })
         }
+        if(this.props.leadmail !== prevProps.leadmail && !this.state.mailto && this.props.leadmail.length){
+            self.setState({
+                typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
+                mailto:  this.props.leadmail[0].id,
+            })
+        }
        if(prevProps.visible !== this.props.visible){
         if (prevProps.edit !== this.props.edit) {
             let data = this.props.dataEdit.attributes;
+            console.log(data);
+            
             self.setState({
                 id: this.props.dataEdit.id,
                 visible: this.props.edit,
-
-                time_start: data.type === "From day to day" ? dateFormatDate(data.time_start, 'yyyy-mm-dd') : dateFormatDate(now, 'yyyy-mm-dd'),
-                time_end: data.type === "From day to day" ? dateFormatDate(data.time_end, 'yyyy-mm-dd') : dateFormatDate(now, 'yyyy-mm-dd'),
-                checkType: data.type === null ? true : false,
-                at_time: data.type === "The specific day" ? data.at_time : 'Morning'  ,
+                time_start: data.type === "Từ ngày đến ngày" ? dateFormatDate(data.time_start, 'yyyy-mm-dd') : '',
+                time_end: data.type === "Từ ngày đến ngày" ? dateFormatDate(data.time_end, 'yyyy-mm-dd') : '',
+                checkType: data.type === "Chọn ngày" ? true : false,
+                at_time: data.type === "Chọn ngày" ? data.at_time : 'Buổi Sáng'  ,
                 note: data.note,
-                type: data.checkType === true ? data.type : 'From day to day',
-                date: data.type === "The specific day" ? dateFormatDate(data.date, 'yyyy-mm-dd') : dateFormatDate(now, 'yyyy-mm-dd'),
-                typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
+                type: data.checkType === null ? true : false,
+                date: data.type === "Chọn ngày" ? dateFormatDate(data.date, 'yyyy-mm-dd') : '',
+                typeday: data.type.id,
             })
         } else {
             this.onReset();
@@ -131,13 +140,14 @@ class MenuLayout extends Component {
             time_start: dateFormatDate(now, 'yyyy-mm-dd'),
             time_end: dateFormatDate(now, 'yyyy-mm-dd'),
             typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
-            at_time: 'Morning',
+            at_time: 'Buổi Sáng',
             note: '',
             lead: this.props.data.length > 0 ? this.props.data[0].id : '',
             date: dateFormatDate(now, 'yyyy-mm-dd'),
             checkType: false,
             arrayNew:[],
-            arrayLead: []
+            arrayLead: [],
+            arrayMail: []
         })
     }
     onAddLead = (e) =>{
@@ -182,6 +192,48 @@ class MenuLayout extends Component {
             })
         }
     }
+    onAddMail = (e) =>{
+        e.preventDefault();
+        let checkAdd = false;
+        if(this.state.arrayMail.length > 0){     
+            this.state.arrayMail.map(item =>{
+                if(item.mailto === this.state.mailto){
+                    checkAdd = false
+                    message.error('Trùng người duyệt')
+                }else{
+                    checkAdd = true
+                }
+                return [];
+            })
+        }
+        if(this.state.arrayMail.length > 0){
+            let mail = this.props.leadmail.filter(item => parseInt(item.id) === parseInt(this.state.mailto))
+            if(checkAdd === true){
+                let data = {
+                    id: this.state.arrayMail.length > 0 ? parseInt(this.state.arrayMail[this.state.arrayMail.length - 1].id + 1) : 1,
+                    mailto: this.state.mailto,
+                    namemail: mail[0].attributes.email
+                }
+                let arrayCurrent = this.state.arrayMail;
+                arrayCurrent = [...arrayCurrent, data]
+                this.setState({
+                    arrayMail: arrayCurrent
+                })
+            }
+        }else {
+            let mail =this.props.leadmail.filter(item=> parseInt(item.id) === parseInt(this.state.mailto))
+            let data = {
+                id: this.state.arrayMail.length > 0 ? parseInt(this.state.arrayMail[this.state.arrayMail.length - 1].id + 1) : 1,
+                mailto: this.state.mailto,
+                namemail: mail[0].attributes.email
+            }
+            let arrayCurrent = this.state.arrayMail;
+            arrayCurrent = [...arrayCurrent, data]
+            this.setState({
+                arrayMail: arrayCurrent
+            })
+        }
+    }
     onAddDay = (e) => {
         e.preventDefault();
         let checkAdd = false;
@@ -221,6 +273,12 @@ class MenuLayout extends Component {
                 arrayNew: arrayCurrent
             })
         }
+    }
+    removeItemMail = (id) => {
+        let data = this.state.arrayMail.filter(item => item.id !== id);
+        this.setState({
+            arrayMail: data
+        })
     }
     removeItemLead = (id) => {
         let data = this.state.arrayLead.filter(item => item.id !== id);
@@ -323,8 +381,8 @@ class MenuLayout extends Component {
                                             onChange={this.onChangeType}
                                             value={this.state.type}
                                             name="type">
-                                            <option value="1">From day to day</option>
-                                            <option value="2">The specific day</option>
+                                            <option value="1">Từ ngày đến ngày</option>
+                                            <option value="2">Chọn ngày</option>
                                         </select>
                                     </div>
                                     {
@@ -368,9 +426,9 @@ class MenuLayout extends Component {
                                                         onChange={this.onChanger}
                                                         value={this.state.at_time}
                                                         name="at_time">
-                                                        <option>Morning</option>
-                                                        <option>Afternoon</option>
-                                                        <option>Full</option>
+                                                        <option>Buổi Sáng</option>
+                                                        <option>Buổi Chiều</option>
+                                                        <option>Cả Ngày</option>
                                                     </select>
                                                     <button onClick={this.onAddDay} className="btn-plus"><i className="fas fa-plus"></i></button>
                                                 </div>
@@ -422,14 +480,16 @@ class MenuLayout extends Component {
                                             value={this.state.note}
                                             name="note" required />
                                         </div>
-                                    
+                                        <div className="form-group">
+                                            <label className="b-text ">Chọn nguời duyệt:</label>
+                                        </div>
                                         {
                                             this.props.edit === false ?
                                             <>
                                             <div className="form-group">
-                                            <label className="b-text ">Người Duyệt:</label>
+                                                <label className="b-text text-1">To:</label>
                                             <select 
-                                                className="b-select"
+                                                className="b-select sl-1"
                                                 onChange={this.onChanger}
                                                 value={this.state.lead}
                                                 name="lead"
@@ -462,7 +522,47 @@ class MenuLayout extends Component {
                                         :
                                         <></>
                                         }
-                                   
+                                     
+                                        {
+                                            this.props.edit === false ?
+                                            <>
+                                            <div className="form-group">
+                                            <label className="b-text text-1">CC:</label>
+                                            <select 
+                                                className="b-select sl-1"
+                                                onChange={this.onChanger}
+                                                value={this.state.mailto}
+                                                name="mailto"
+                                            >
+                                                {
+                                                    this.props.leadmail.map(data =>(
+                                                        <option value={data.id} key={data.id}>{data.attributes.email}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                            <button onClick={this.onAddMail} className="btn-plus"><i className="fas fa-plus"></i></button>
+                                        </div>
+                                        <div className="listdate">
+                                                {this.state.arrayMail.map(item => (
+                                                    <div className="item" key={item.id}>
+                                                        <div className="content">
+                                                            <p className="text-norm">
+                                                                {item.namemail}
+                                                            </p>
+                                                        </div>
+                                                        <div className="group-button">
+                                                            <button className="b-btn" onClick={this.removeItemMail.bind(this, item.id)}>
+                                                            Xóa
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                            </>
+                                        :
+                                        <></>
+                                        }
+                                      
                                     <form onSubmit={this.onSubmit}>
                                         <div className="form-group text-center">
                                             <button type="submit" className="btn-cancel">{this.props.edit ? 'Cập Nhật' : 'Đăng ký'}</button>

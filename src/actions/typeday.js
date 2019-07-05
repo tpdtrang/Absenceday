@@ -23,7 +23,7 @@ export function requestGetLead(){
     return (dispatch)=>{
         return axios.request({
             method: 'GET',
-            url: `${API.API_URL}/approver`,
+            url: `${API.API_URL}/to`,
             headers: {
                 "Accept" : "application/json",
                 "Content-Type":"application/json"
@@ -35,6 +35,7 @@ export function requestGetLead(){
         })
     }
 }
+
 export function reviceData(action,payload){
     return{
         type: action,

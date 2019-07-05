@@ -73,7 +73,7 @@ class ListComponent extends Component {
                                         <td className="name-item">{data.attributes.type.name}</td>
                                         <td className="name-item">{data.attributes.note}</td>
                                         <td className="name-item">{data.attributes.total}</td>
-                                        <td className="name-item">
+                                        <td className="name-item item-1">
                                             <button className="btn-edit" onClick={this.onAccept.bind(this,data.id)}>Duyệt</button>
                                             <button className="btn-edit-2" onClick={this.onDisAccept.bind(this,data.id)}>Không Duyệt</button>
                                         </td>
