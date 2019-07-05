@@ -65,6 +65,7 @@ class TableTeamComponent extends Component {
       })
     }
   }
+
   render() {
     return (
       <div className="right-content">

@@ -23,7 +23,7 @@ export function requestGetLead(){
     return (dispatch)=>{
         return axios.request({
             method: 'GET',
-            url: `${API.API_URL}/teamlead`,
+            url: `${API.API_URL}/approver`,
             headers: {
                 "Accept" : "application/json",
                 "Content-Type":"application/json"

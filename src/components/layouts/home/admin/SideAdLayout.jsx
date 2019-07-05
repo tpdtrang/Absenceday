@@ -15,6 +15,7 @@ class SideAdLayout extends Component {
             <li className="item menu-drop"><NavLink to="/tableposition" exact={true} activeClassName="active" className="link-menu link-drop"><i className="fas fa-crosshairs"></i> Bảng Vị trí</NavLink></li>
             <li className="item menu-drop"><NavLink to="/tableregistration" exact={true} activeClassName="active" className="link-menu link-drop"><i className="fas fa-window-restore"></i> Bảng Đăng kí</NavLink></li>
             <li className="item menu-drop"><NavLink to="/tabletrack" exact={true} activeClassName="active" className="link-menu link-drop"><i className="fas fa-calendar-minus"></i>Bảng thống kê</NavLink></li>
+            <li className="item menu-drop"><NavLink to="/table" exact={true} activeClassName="active" className="link-menu link-drop"><i className="fas fa-calendar-minus"></i>Bảng thống kê đăng kí</NavLink></li>
             {/* <li className="item menu-drop"><Link to="/tablerole" className="link-menu link-drop">Table Roles</Link></li>
                 <li className="item menu-drop"><Link to="/tabletype" className="link-menu link-drop">Table Types</Link></li> */}
 

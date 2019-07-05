@@ -47,7 +47,7 @@ class TableRegistrationComponent extends Component {
                     <th>At_Time</th>
                     <th>Absence_days</th>
                     <th>Sum</th>
-                    <th>Approve</th>
+                    {/* <th>Approve</th> */}
                     <th>Details</th>
                   </tr>
                 </thead>
@@ -84,7 +84,7 @@ class TableRegistrationComponent extends Component {
                           })}
                         </td>
                         <td className="description">{sum}</td>
-                        <td className="description">{data.attributes.approver_id.name}</td>
+                        {/* <td className="description">{data.attributes.approver_id.name}</td> */}
                         <td className="description" onClick={this.onhandleShow.bind(this, data.id)}><button className="btn"><i className="fas fa-calendar-day" style={{ color: "blue", fontSize: "18px" }}></i></button></td>
                       </tr>
                     )

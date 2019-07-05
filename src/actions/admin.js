@@ -308,6 +308,25 @@ export function requestGetRegistrationStore() {
     })
   }
 }
+//TRACK
+export function requestGetTrackStore(){
+  
+  return (dispatch)=>{
+    return axios.request({
+      method:'GET',
+      url:`${API.API}/track`,
+      headers:{
+        "Accept":"application/json",
+        'Content-type':'application/json'
+      }
+    }).then(function(response){
+      dispatch(reciveData(types.GET_TRACK, response.data.data))
+    }).catch(function(error){
+      console.log(error);
+      
+    })
+  }
+}
 export function requestFilterRegister(id) {
   return (dispatch) => {
     dispatch(reciveData(types.FILTER_REGISTER, id))

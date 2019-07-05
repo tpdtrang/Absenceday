@@ -6,11 +6,11 @@ const INTINIAL_STATE = {
 
 export default function (state=INTINIAL_STATE,action={}){
     switch(action.type){
-        case types.REQUEST_LIST_QUEUE:
+        case types.REQUEST_LIST_DISACCEPT:
             return Object.assign({},state,{
                 all: action.payload
             })
-        case types.REQUEST_SEARCH_APPROVED:
+        case types.REQUEST_SEARCH_DISAPPROVED:
             return Object.assign({}, state, {
                 all: action.payload,
             })

@@ -1,6 +1,6 @@
 .b-header-container{
     position: relative;
-    background-color: rgb(190, 223, 245); 
+    background-color: rgb(141, 202, 243); 
     padding: 15px 0;
     .b-header{
         @include flexbox();
@@ -38,15 +38,15 @@
                     height: 40px;
                     background: white;
                     border-radius: 5px;
-                    border: 1px solid rgb(79, 123, 245);
+                    border: 1px solid rgb(91, 167, 238);
                     font-weight: 700;
                     align-items: center;
-                    color: rgb(79, 123, 245);
+                    color: rgb(91, 167, 238);
                     i{
                         padding: 0 10px;
                     }
                     &:hover{
-                        background-color: rgb(79, 123, 245);
+                        background-color: rgb(91, 167, 238);
                         color: #fff;
                     }
                 }

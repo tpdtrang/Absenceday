@@ -75,6 +75,7 @@ class RegistrationPage extends Component {
     return ItemNew;
   }
   render() {
+    console.log(this.props.filter)
     const mainContent = () => {
       switch (this.state.views) {
         case "CALENDER":

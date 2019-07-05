@@ -8,14 +8,15 @@ export function requestGetDayOff() {
     return (dispatch) => {
         return axios.request({
             method: 'GET',
-            url: `${API.API_URL}/information/${cookies.get('data') !== undefined ? cookies.get('data').id : ''}`,
+            url: `${API.API_URL}/information`,
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
+                'Authorization': `${'bearer' + cookies.get('token')}`
             },
-        }).then(function (response) {
+        }).then(function (response){
             dispatch(reciveData(types.REQUEST_GET_DAYOFF, response.data.data));
-        }).catch(function (error) {
+        }).catch(function (error){
             console.log(error);
         })
     }
@@ -24,7 +25,7 @@ export function requestGetListQueue(){
     return (dispatch) => {
         return axios.request({
             method: 'GET',
-            url: `${API.API_URL}/approved/${cookies.get('data') !== undefined ? cookies.get('data').id : ''}`,
+            url: `${API.API_URL}/approved`,
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
@@ -33,6 +34,40 @@ export function requestGetListQueue(){
         }).then(function (response) {
             dispatch(reciveData(types.REQUEST_LIST_QUEUE, response.data.data));
         }).catch(function (error) {
+            console.log(error);
+        })
+    }
+}
+export function requestGetListDisAccept(){
+    return (dispatch) => {
+        return axios.request({
+            method: 'GET',
+            url: `${API.API_URL}/disapproved`,
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                'Authorization': `${'bearer' + cookies.get('token')}`
+            },
+        }).then(function (response) {
+            dispatch(reciveData(types.REQUEST_LIST_DISACCEPT, response.data.data));
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
+}
+export function requestDisAccept(id){
+    return (dispatch) => {
+        return axios.request({
+            method: 'PUT',
+            url: `${API.API_URL}/updated2/${id}`,
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `${'bearer' + cookies.get('token')}`
+            },
+        }).then(function (response){
+            dispatch(reciveData(types.REQUEST_UPDATE_DISACCEPT, response.data.data));
+        }).catch(function (error){
             console.log(error);
         })
     }
@@ -88,12 +123,12 @@ export function requestCreateDayOff(data) {
     let dataLead = "";
     data.arrayLead.map((item,i)=>{
         if (data.arrayLead.length === 1) {
-            dataLead = `${item.lead}`
+            dataLead = `${item.namelead}`
         } else {
             if(i === data.arrayLead.length - 1){
-                dataLead += `${item.lead}`
+                dataLead += `${item.namelead}`
             }else{
-                dataLead += `${item.lead},`
+                dataLead += `${item.namelead},`
             }
         }
         return [];
@@ -102,7 +137,7 @@ export function requestCreateDayOff(data) {
     if (data.checkType === false) {
         dayoff = {
             user_id: cookies.get('data').id,
-            approver_id: dataLead,
+            emails: dataLead,
             type_id: data.typeday,
             time_start: data.time_start,
             time_end: data.time_end,
@@ -112,15 +147,13 @@ export function requestCreateDayOff(data) {
     } else {
         dayoff = {
             user_id: cookies.get('data').id,
-            approver_id: dataLead,
+            emails: dataLead,
             type_id: data.typeday,
             date: dataArrray,
             note: data.note,
             type: 'The specific day'
         }
     }
-    console.log(dataLead);
-    
     return (dispatch) => {
         return axios.request({
             method: 'POST',
@@ -141,19 +174,6 @@ export function requestCreateDayOff(data) {
     }
 }
 export function requestUpdateDay(data){
-    let dataArrray = "";
-    data.arrayNew.map((item, i) => {
-        if (data.arrayNew.length === 1) {
-            dataArrray = `${item.date},${item.at_time}`
-        } else {
-            if (i === data.arrayNew.length - 1) {
-                dataArrray += `${item.date},${item.at_time}`
-            } else {
-                dataArrray += `${item.date},${item.at_time};`
-            }
-        }
-        return [];
-    })
     let paramData = {}
     if (data.checkType === false) {
         paramData = {
@@ -164,6 +184,21 @@ export function requestUpdateDay(data){
             type: 'From day to day'
         }
     } else {
+        let dataArrray = "";
+        if(data.type !== null){
+            data.arrayNew.map((item, i) => {
+                if (data.arrayNew.length === 1) {
+                    dataArrray = `${item.date},${item.at_time}`
+                } else {
+                    if (i === data.arrayNew.length - 1) {
+                        dataArrray += `${item.date},${item.at_time}`
+                    } else {
+                        dataArrray += `${item.date},${item.at_time};`
+                    }
+                }
+                return [];
+            })
+        }
         paramData = {
             type_id: data.typeday,
             date: dataArrray,
@@ -185,41 +220,14 @@ export function requestUpdateDay(data){
             },
         }).then(function(response){
             message.success("Bạn đã sửa thành công!")
-            dispatch(reciveData(types.REQUEST_UPDATE_DAYOFF, response.data.data))
+            dispatch(reciveData(types.REQUEST_UPDATE_DAYOFF, response.data.data));
         }).catch(function (error) {
             console.log(error);
             message.error("Sửa không thành công!")
         })
     }
 }
-// export function requestSearchDay(data) {
-//     let params = {
-//         'day': data.day,
-//         // 'month':data.month,
-//         // 'year':data.year
-//     }
-//     return (dispatch) => {
-//         return axios.request({
-//             method: 'GET',
-//             url: `${API.API_URL}/search`,
-//             params,
-//             headers: {
-//                 "Accept": "application/json",
-//                 "Content-Type": "application/json",
-//                 'Authorization': `${'bearer' + cookies.get('token')}`
-//             }
-//         }).then(function (response) {
-//             if (response.data.data.length > 0) {
-//                 dispatch(reciveData(types.REQUEST_SEARCH, response.data.data))
-//             } else {
-//                 message.warning('Không có đăng ký nghỉ trong thời gian này !!!');
-//             }
-            
-//         }).catch(function (error) {
-//             console.log(error);
-//         })
-//     }
-// }
+
 export function reciveData(aciton, payload) {
     return {
         type: aciton,

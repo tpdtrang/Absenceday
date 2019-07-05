@@ -15,8 +15,9 @@ class CalenderComponent extends Component {
   onhandleShow = () => {
     this.props.onhandleShow('TABLE');
   }
- 
+
   render() {
+    console.log(this.props.data)
     return (
       <div className="right-content">
         <section className="wrap-container">
@@ -51,7 +52,7 @@ class CalenderComponent extends Component {
               customButtons={{
                 myCustomButton: {
                   theme: 'true',
-                  text: this.props.data[0].email,
+                  text: this.props.data !== undefined ? this.props.data[0].email : "abc"
                 }
               }}
               header={{

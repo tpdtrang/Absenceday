@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 // import {Redirect} from 'react-router-dom'
 import { HeaderLayout, MenuLayout } from '../../layouts/home';
-import {ListComponent, ListQueueComponent, ListAcceptComponent} from '../../shared/home';
+import {ListComponent, ListQueueComponent, ListAcceptComponent, ListDisAcceptComponent} from '../../shared/home';
 import * as action_dayoff from '../../../actions/dayoff';
 import * as action_typedayoff from '../../../actions/typeday';
+import * as action_search from '../../../actions/search';
 // import {message} from 'antd'
 import {connect} from 'react-redux';
 import Cookies from 'universal-cookie';
@@ -16,14 +17,16 @@ class HomeComponent extends Component {
             dataEdit: {},
             edit: false,
             visible: false,
+            list: false
         }
     }
     componentDidMount(){
-        this.props.dispatch(action_dayoff.requestGetDayOff(cookies.get('data') !== undefined ? cookies.get('data').id : ''));
+        this.props.dispatch(action_dayoff.requestGetDayOff());
         this.props.dispatch(action_typedayoff.requestGetTypeDayOff());
         this.props.dispatch(action_typedayoff.requestGetLead());
-        this.props.dispatch(action_dayoff.requestGetListQueue(cookies.get('data') !== undefined ? cookies.get('data').id : ''));
+        this.props.dispatch(action_dayoff.requestGetListQueue());
         this.props.dispatch(action_dayoff.requestGetListAccept());
+        this.props.dispatch(action_dayoff.requestGetListDisAccept());
     }
     onViews = () =>{
         this.setState({
@@ -39,7 +42,12 @@ class HomeComponent extends Component {
     }
     onListQueue = () =>{
         this.setState({
-            views: "1"
+            views: "1",
+        })
+    }
+    onDisListAccept = () =>{
+        this.setState({
+            views: "4",
         })
     }
     onList = () =>{
@@ -49,6 +57,10 @@ class HomeComponent extends Component {
     }
     onAccept = (id) =>{
         this.props.dispatch(action_dayoff.requestUpdateAccept(id));
+    }
+    onDisAccept = (id) =>{
+        console.log(id);
+        this.props.dispatch(action_dayoff.requestDisAccept(id));
     }
     onEdit = (id) =>{
         let item = [...this.props.dayoff].filter(item => item.id === id);
@@ -73,32 +85,44 @@ class HomeComponent extends Component {
             edit: false
         })
     }
+    onSearchApproved = (data) =>{
+        this.props.dispatch(action_search.requestSearchApproved(data));
+    }
+    onSearchDisApproved = (data) =>{
+        this.props.dispatch(action_search.requestSearchDisApproved(data));
+    }
+    onSearchPending = (data) =>{
+        this.props.dispatch(action_search.requestSearchPending(data));
+    }
     render() {
         const mainContent = () =>{
             if(this.state.views === "1"){
                 return(
-                    <ListQueueComponent data={cookies.get('data') !== undefined ? this.props.list : ''}></ListQueueComponent>
+                    <ListQueueComponent data={cookies.get('data') !== undefined ? this.props.list : ''} onSearch={this.onSearchApproved}></ListQueueComponent>
                 )      
             }
             if(this.state.views === "2"){
                 return(
-                    <ListComponent data={cookies.get('data') !== undefined ? this.props.dayoff : ''} onEdit={this.onEdit}></ListComponent>
+                    <ListComponent data={cookies.get('data') !== undefined ? this.props.dayoff : ''} onSearch={this.onSearchPending} onEdit={this.onEdit}></ListComponent>
                 ) 
             }
-           
-                if(this.state.views === "3"){
-                    return(
-                        <ListAcceptComponent data={ cookies.get('data') !== undefined ? this.props.listaccept : ''}  onAccept={this.onAccept}></ListAcceptComponent>
-                    )
-                }
-            
+            if(this.state.views === "3"){
+                return(
+                    <ListAcceptComponent data={ cookies.get('data')  !== undefined ? this.props.listaccept : ''} onAccept={this.onAccept} onDisAccept={this.onDisAccept} ></ListAcceptComponent>
+                )
+            } 
+            if(this.state.views === "4"){
+                return(
+                    <ListDisAcceptComponent  data={cookies.get('data') !== undefined ? this.props.disaccept : ''} onSearch={this.onSearchDisApproved}></ListDisAcceptComponent>
+                )
+            }
         } 
         return ( 
             <div className="wrapper">
                 <HeaderLayout></HeaderLayout>
                 <div className="b-content">
                     <div className="b-right-content">
-                        <MenuLayout data={this.props.leader} onCheckModal ={this.onCheckModal} visible={this.state.visible} edit={this.state.edit} dataEdit = {this.state.dataEdit} onUpdateDay ={this.onUpdateDay} onViews={this.onViews} onListQueue={this.onListQueue} onList={this.onList} typedayoff={this.props.typedayoff} onAddDayOff = {this.onAddDayOff}></MenuLayout>
+                        <MenuLayout data={this.props.leader} onDisAccept ={this.onDisListAccept} onCheckModal ={this.onCheckModal} visible={this.state.visible} edit={this.state.edit} dataEdit = {this.state.dataEdit} onUpdateDay ={this.onUpdateDay} onViews={this.onViews} onListQueue={this.onListQueue} onList={this.onList} typedayoff={this.props.typedayoff} onAddDayOff = {this.onAddDayOff}></MenuLayout>
                         {             
                             mainContent()     
                         }
@@ -116,6 +140,7 @@ function mapStateToProps(state){
         leader: state.lead.all,
         list: state.listqueue.all,
         listaccept: state.listaccept.all,
+        disaccept: state.disaccept.all,
         isList: state.dayoff.isList,
     }
 }

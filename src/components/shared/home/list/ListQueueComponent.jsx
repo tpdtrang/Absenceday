@@ -4,13 +4,46 @@ import Cookies from 'universal-cookie';
 var dateFormatDate = require('dateformat');
 var cookies = new Cookies();
 class ListComponent extends Component {
-
+    constructor(props){
+        super(props);
+        this.state = {
+            // day: dateFormatDate(now, 'yyyy-mm-dd'),
+            month: '',
+            // year: '',
+        }
+    }
+    onChanger = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        this.setState({
+            [name]: value
+        })
+    }
+    onSearchDay = (event) =>{
+        console.log(this.state);
+        
+        event.preventDefault();
+        this.props.onSearch(this.state);
+    }
     render() {
         return (
             <section className="b-table-container">
                 <div className="b-table">
                     <div className="b-title">
                         <h1 className="title">Danh Sách Đăng Ký Ngày Nghỉ</h1>
+                    </div>
+                    <div className="b-input">
+                        <form onSubmit={this.onSearchDay}>
+                            {/* <DatePicker
+                                onChange={this.onChangeDateSearch}
+                                defaultValue={moment(now, dateFormat)}
+                                name="day"
+                                style={{"margin":"0 6px"}}
+                            ></DatePicker> */}
+                            {/* <input onChange={this.onChanger} type="text" value={this.state.year} name="year" className="b-search"></input> */}
+                            <input onChange={this.onChanger} type="text" value={this.state.month} name="month" className="b-search"></input>
+                            <button className="btn-search"><i className="fas fa-search" ></i></button>
+                        </form>
                     </div>
                     <table className="table table-striped">
                         <thead>
@@ -42,6 +75,7 @@ class ListComponent extends Component {
                                 .props
                                 .data
                                 .map(data => (
+                                    
                                     <tr key={data.id}>
                                         <td className="name-item">{data.id}</td>
                                         <td className="name-item">{dateFormatDate(data.attributes.created_at,"dd-mm-yyyy HH:MM")}</td>
@@ -68,7 +102,7 @@ class ListComponent extends Component {
                                     </tr>
                                 ))
                                 :
-                                <tr></tr>
+                                <></>
                             }
                         </tbody>
                     </table>
