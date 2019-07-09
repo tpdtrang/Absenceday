@@ -74,7 +74,7 @@ class TableTeamComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Table Teams</h3>
+                  <h3 className="heading-3">Quản Lí Teams</h3>
                 </div>
               </div>
               <div className="menu-list">

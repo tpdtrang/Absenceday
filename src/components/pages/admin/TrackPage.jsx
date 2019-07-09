@@ -7,7 +7,9 @@ class TrackPage extends Component {
   componentDidMount() {
     this.props.dispatch(action.requestGetTrackStore());
   }
-  render() {    
+  render() {
+    console.log(this.props.data);
+    
     return (
       <div>
         <HeaderAdLayout></HeaderAdLayout>

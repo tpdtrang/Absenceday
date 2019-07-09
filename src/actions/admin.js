@@ -309,21 +309,19 @@ export function requestGetRegistrationStore() {
   }
 }
 //TRACK
-export function requestGetTrackStore(){
-  
-  return (dispatch)=>{
+export function requestGetTrackStore() {
+  return (dispatch) => {
     return axios.request({
-      method:'GET',
-      url:`${API.API}/track`,
-      headers:{
-        "Accept":"application/json",
-        'Content-type':'application/json'
+      method: 'GET',
+      url: `${API.API}/track`,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
       }
-    }).then(function(response){
+    }).then(function (response) {
       dispatch(reciveData(types.GET_TRACK, response.data.data))
-    }).catch(function(error){
+    }).catch(function (error) {
       console.log(error);
-      
     })
   }
 }

@@ -9,7 +9,7 @@ class TableTrackComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Bảng thống kê</h3>
+                  <h3 className="heading-3">Quản Lí thống kê</h3>
                 </div>
               </div>
             </div>
@@ -17,12 +17,16 @@ class TableTrackComponent extends Component {
               <table className="table p-scrollbar">
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>Team</th>
-                    <th>User</th>
-                    <th>Year</th>
-                    <th>annual_leave_total</th>
-                    <th>annual_leave_unused</th>
+                    <th rowSpan="2">#</th>
+                    {/* <th>Team</th> */}
+                    <th rowSpan="2">User</th>
+                    <th rowSpan="2">Year</th>
+                    <th rowSpan="2">annual_leave_total</th>
+                    <th rowSpan="2">annual_leave_unused</th>
+                    <th colSpan="12">Month</th>
+                    <th rowSpan="2">Total holidays</th>
+                  </tr>
+                  <tr>
                     <th>January</th>
                     <th>February</th>
                     <th>March</th>
@@ -41,7 +45,7 @@ class TableTrackComponent extends Component {
                   {this.props.data.map(data => (
                     <tr key={data.id}>
                       <td className="description">{data.id}</td>
-                      <td className="description">{data.attributes.team}</td>
+                      {/* <td className="description">{data.attributes.team}</td> */}
                       <td className="description">{data.attributes.user.email}</td>
                       <td className="description">{data.attributes.year}</td>
                       <td className="description">{data.attributes.annual_leave_total}</td>
@@ -58,6 +62,7 @@ class TableTrackComponent extends Component {
                       <td className="description">{data.attributes.October}</td>
                       <td className="description">{data.attributes.November}</td>
                       <td className="description">{data.attributes.December}</td>
+                      <td className="description">123</td>
                     </tr>
                   ))}
                 </tbody>

@@ -13,7 +13,7 @@ class TableRegistrationComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Bảng Đăng Kí</h3>
+                  <h3 className="heading-3">Quản Lí Đăng Kí</h3>
                 </div>
               </div>
               <div className="menu-list">
