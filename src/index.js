@@ -8,12 +8,12 @@ import { Router } from 'react-router-dom'
 import configStore from './config/config-store';
 import { Provider } from 'react-redux'
 ReactDOM.render(
-    <Provider store={configStore()}>
-        <Router history={createHistory()}>
-            <App />
-        </Router>
-    </Provider>
-    , document.getElementById('root'));
+  <Provider store={configStore()}>
+    <Router history={createHistory()}>
+      <App />
+    </Router>
+  </Provider>
+  , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
