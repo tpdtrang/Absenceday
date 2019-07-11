@@ -6,7 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import { createBrowserHistory as createHistory } from 'history';
 import { Router } from 'react-router-dom'
 import configStore from './config/config-store';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import 'antd/dist/antd.css';
 ReactDOM.render(
     <Provider store={configStore()}>
         <Router history={createHistory()}>

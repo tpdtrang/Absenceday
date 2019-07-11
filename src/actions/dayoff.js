@@ -5,20 +5,40 @@ import Cookies from 'universal-cookie';
 import { message } from 'antd';
 const cookies = new Cookies();
 export function requestGetDayOff() {
-    return (dispatch) => {
-        return axios.request({
-            method: 'GET',
-            url: `${API.API_URL}/information`,
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                'Authorization': `${'bearer' + cookies.get('token')}`
-            },
-        }).then(function (response){
-            dispatch(reciveData(types.REQUEST_GET_DAYOFF, response.data.data));
-        }).catch(function (error){
-            console.log(error);
-        })
+    if(cookies.get('data') !== undefined){
+        return (dispatch) => {
+            return axios.request({
+                method: 'GET',
+                url: `${API.API_URL}/information`,
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    'Authorization': `${'bearer' + cookies.get('token')}`
+                },
+            }).then(function (response){
+                dispatch(reciveData(types.REQUEST_GET_DAYOFF, response.data.data));
+            }).catch(function (error){
+                console.log(error);
+            })
+        }
+    }else{
+        return (dispatch) => {
+            return axios.request({
+                method: 'GET',
+                url: `${API.API_URL}/information`,
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    'Authorization': `${'bearer' + cookies.get('token')}`
+                },
+            }).then(function (response){
+                console.log(response);
+                
+                dispatch(reciveData(types.REQUEST_GET_DISDAYOFF,response.data.data));
+            }).catch(function (error){
+                console.log(error);
+            })
+        }
     }
 }
 export function requestGetListQueue(){
@@ -106,6 +126,23 @@ export function requestUpdateAccept(id){
         })
     }
 }
+export function requestGetMail(){
+    return (dispatch)=>{
+        return axios.request({
+            method: 'GET',
+            url: `${API.API_URL}/cc`,
+            headers: {
+                "Accept" : "application/json",
+                "Content-Type":"application/json",
+                "Authorization": `${'bearer' + cookies.get('token')}`
+            }
+        }).then(function(response){
+            dispatch(reciveData(types.REQUEST_GET_MAIL,response.data.data))
+        }).catch(function(error){
+            console.log(error); 
+        })
+    }
+}
 export function requestCreateDayOff(data) {
     let dataArrray = "";
     data.arrayNew.map((item, i) => {
@@ -133,27 +170,44 @@ export function requestCreateDayOff(data) {
         }
         return [];
     })
+    let dataMail = "";
+    data.arrayMail.map((item,i)=>{
+        if (data.arrayMail.length === 1) {
+            dataMail = `${item.namemail}`
+        } else {
+            if(i === data.arrayMail.length - 1){
+                dataMail += `${item.namemail}`
+            }else{
+                dataMail += `${item.namemail},`
+            }
+        }
+        return [];
+    })
     let dayoff = {}
     if (data.checkType === false) {
         dayoff = {
             user_id: cookies.get('data').id,
             emails: dataLead,
+            cc: dataMail,
             type_id: data.typeday,
             time_start: data.time_start,
             time_end: data.time_end,
             note: data.note,
-            type: 'From day to day'
+            type: 'Từ ngày đến ngày'
         }
     } else {
         dayoff = {
             user_id: cookies.get('data').id,
             emails: dataLead,
+            cc: dataMail,
             type_id: data.typeday,
             date: dataArrray,
             note: data.note,
-            type: 'The specific day'
+            type: 'Chọn ngày'
         }
     }
+    console.log(dayoff);
+    
     return (dispatch) => {
         return axios.request({
             method: 'POST',
@@ -175,35 +229,33 @@ export function requestCreateDayOff(data) {
 }
 export function requestUpdateDay(data){
     let paramData = {}
+    let dataArrray = "";
+    data.arrayNew.map((item, i) => {
+        if (data.arrayNew.length === 1) {
+            dataArrray = `${item.date},${item.at_time}`
+        } else {
+            if (i === data.arrayNew.length - 1) {
+                dataArrray += `${item.date},${item.at_time}`
+            } else {
+                dataArrray += `${item.date},${item.at_time};`
+            }
+        }
+        return [];
+    })
     if (data.checkType === false) {
         paramData = {
             type_id: data.typeday,
             time_start: data.time_start,
             time_end: data.time_end,
             note: data.note,
-            type: 'From day to day'
+            type: 'Từ ngày đến ngày'
         }
     } else {
-        let dataArrray = "";
-        if(data.type !== null){
-            data.arrayNew.map((item, i) => {
-                if (data.arrayNew.length === 1) {
-                    dataArrray = `${item.date},${item.at_time}`
-                } else {
-                    if (i === data.arrayNew.length - 1) {
-                        dataArrray += `${item.date},${item.at_time}`
-                    } else {
-                        dataArrray += `${item.date},${item.at_time};`
-                    }
-                }
-                return [];
-            })
-        }
         paramData = {
             type_id: data.typeday,
             date: dataArrray,
             note: data.note,
-            type: 'The specific day'
+            type: 'Chọn ngày'
         }
     }
     console.log(paramData);

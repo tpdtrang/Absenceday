@@ -1,5 +1,6 @@
 //export reducer home
 export const REQUEST_GET_DAYOFF = "REQUEST_GET_DAYOFF";
+export const REQUEST_GET_DISDAYOFF = "REQUEST_GET_DISDAYOFF";
 export const REQUEST_DELETE_DAYOFF = "REQUEST_DELETE_DAYOFF";
 export const REQUEST_ADD_DAYOFF = "REQUEST_ADD_DAYOFF";
 export const REQUEST_UPDATE_DAYOFF = "REQUEST_UPDATE_DAYOFF";
@@ -10,6 +11,7 @@ export const REQUEST_ADD_USER = "REQUEST_ADD_USER";
 export const REQUEST_UPDATE_USER = "REQUEST_UPDATE_USER";
 //export reducer user
 export const REQUEST_GET_LEAD = "REQUEST_GET_LEAD";
+export const REQUEST_GET_MAIL = "REQUEST_GET_MAIL";
 //export reducer login 
 export const REQUEST_LOGIN = "REQUEST_LOGIN";
 export const REQUEST_LOGUOT = "REQUEST_LOGUOT";

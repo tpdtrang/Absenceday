@@ -106,7 +106,7 @@ export function requestGetTeamStore() {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response);
+      // console.log(response);
       dispatch(reciveData(types.GET_TEAM, response.data.data))
     }).catch(function (error) {
       console.log(error);

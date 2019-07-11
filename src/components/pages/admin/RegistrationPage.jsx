@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import TableRegistrationComponent from '../../shared/admin/TableRegistrationComponent';
 import { CalenderComponent } from '../../shared/admin';
-import { HeaderAdLayout, SideAdLayout } from '../../layouts/home/admin';
+import {
+  HeaderAdLayout,
+  SideAdLayout
+} from '../../layouts/home/admin';
 import { connect } from 'react-redux';
 import * as action from '../../../actions/admin';
 var dateFormat = require('dateformat');
@@ -17,20 +20,22 @@ class RegistrationPage extends Component {
   componentDidMount() {
     this.props.dispatch(action.requestGetRegistrationStore());
     this.props.dispatch(action.requestGetUserStore());
-
+    this.props.dispatch(action.requestGetTeamStore());
   }
+
   onhandleShow = (views) => {
     this.setState({
       views: views
     })
-
   }
+
   onDetails = (id) => {
     this.setState({
       views: "CALENDER"
     })
     this.props.dispatch(action.requestFilterRegister(id));
   }
+
   covertDataToCalender(data) {
     if (data.length > 0) {
       return data.map(item => {
@@ -45,9 +50,9 @@ class RegistrationPage extends Component {
       return [];
     }
   }
-  translateAtTime(data){
+  translateAtTime(data) {
     switch (data) {
-      case "Full": 
+      case "Full":
         return "Cả ngày"
       case "Morning":
         return "Buổi sáng"
@@ -67,13 +72,13 @@ class RegistrationPage extends Component {
           title: this.translateAtTime(timeItem.at_time),
           date: dateFormat(timeItem.time_details, 'yyyy-mm-dd'),
           email: item.attributes.user.name
-          
         }
       })
       return [];
     })
     return ItemNew;
   }
+
   render() {
     console.log(this.props.filter)
     const mainContent = () => {
@@ -84,7 +89,7 @@ class RegistrationPage extends Component {
           )
         case "TABLE":
           return (
-            <TableRegistrationComponent onDetails={this.onDetails} onhandleShow={this.onhandleShow} data={this.props.registration} user={this.props.stores}></TableRegistrationComponent>
+            <TableRegistrationComponent onDetails={this.onDetails} team={this.props.team} onhandleShow={this.onhandleShow} data={this.props.registration} user={this.props.stores}></TableRegistrationComponent>
           )
         default:
           return (<></>)
@@ -101,11 +106,13 @@ class RegistrationPage extends Component {
     );
   }
 }
+
 function mapPropsToState(state) {
   return {
     registration: state.registration.all,
     user: state.stores.all,
-    filter: state.registration.filter
+    filter: state.registration.filter,
+    team: state.team.all
   }
 }
 

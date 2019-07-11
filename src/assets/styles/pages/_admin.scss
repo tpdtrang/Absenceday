@@ -71,6 +71,10 @@
         font-size: 18px;
         padding: 0 20px;
         width: 210px;
+        &.text-1{
+          margin-left: 25px;
+          width: 130px;
+        }
       }
       .text {
         float: left;
@@ -90,6 +94,10 @@
         border-radius: 3px;
         height: 35px;
         width: 190px;
+        &.sl-1{
+          padding-right: -15px;  
+          width: 45%;
+        }
       }
       .b-area {
         margin-top: 10px;

@@ -113,8 +113,16 @@ class TableTeamComponent extends Component {
                       <td className="description">{data.id}</td>
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
-                      <td className="description"><button className="btn" onClick={this.onDelete.bind(this, data.id)}><i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }}></i></button></td>
-                      <td className="description"><button className="btn" onClick={this.onEdit.bind(this, data.id)}><i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }}></i></button></td>
+                      <td className="description">
+                        <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
+                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
+                        </button>
+                      </td>
+                      <td className="description">
+                        <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
+                          <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
