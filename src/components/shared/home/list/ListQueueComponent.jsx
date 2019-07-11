@@ -21,7 +21,6 @@ class ListComponent extends Component {
   }
   onSearchDay = (event) => {
     console.log(this.state);
-
     event.preventDefault();
     this.props.onSearch(this.state);
   }

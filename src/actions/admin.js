@@ -28,7 +28,6 @@ export function requestAddUserStore(data) {
     address: data.address,
     first_workday: data.first_workday,
     email: data.email,
-    password: '123123',
     role: data.role
   }
   console.log(store);

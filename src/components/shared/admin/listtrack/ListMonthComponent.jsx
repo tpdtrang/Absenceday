@@ -1,43 +1,38 @@
 import React, { Component } from 'react';
-import { DatePicker } from 'antd';
-import moment from 'moment';
-const dateFormat = 'YYYY/MM/DD';
-var now = new Date();
-var dateFormatDate = require('dateformat');
-class ListdatetodateComponent extends Component {
-  constructor(props) {
-    super(props);
+
+class ListMonthComponent extends Component {
+  constructor(props, context) {
+    super(props, context);
     this.state = {
-      from: dateFormatDate(now, 'yyyy-mm-dd'),
-      to: dateFormatDate(now, 'yyyy-mm-dd'),
+      month: ''
     }
   }
-  onChangeDate = (date, dateString) => {
-    this.setState({ from: dateString })
-  }
-  onChangeDateItem = (date, dateString) => {
+
+  onhandleChange = (event) => {
     this.setState({
-      to: dateString,
+      [event.target.name]: event.target.value
     })
   }
-  onSubmit = (e) => {
-    e.preventDefault();
-    this.props.onSearchDate(this.state);
+
+  onSubmit = (event) => {
+    event.preventDefault();
+    this.props.onSearch(this.state);
   }
 
   render() {
     return (
-      <div >
+      <div>
         <section className="wrap-container">
           <div className="wrap-form">
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Từ ngày đến ngày</h3>
+                  <h3 className="heading-3">Nghỉ phép tháng</h3>
                 </div>
               </div>
               <form onSubmit={this.onSubmit}>
-                <DatePicker
+                <input type="text" className="p-search" name="month" value={this.state.month} onChange={this.onhandleChange} />
+                {/* <DatePicker
                   className="ip-date"
                   onChange={this.onChangeDate}
                   defaultValue={moment(now, dateFormat)}
@@ -48,8 +43,8 @@ class ListdatetodateComponent extends Component {
                   onChange={this.onChangeDateItem}
                   defaultValue={moment(now, dateFormat)}
                   name="to"
-                />
-                <button  className="btn btn-s" type="submit">search</button>
+                /> */}
+                <button className="btn btn-s" type="submit">search</button>
               </form>
             </div>
 
@@ -80,8 +75,7 @@ class ListdatetodateComponent extends Component {
                             ))
                             :
                             data.attributes.time_details
-                        }
-                      </td>
+                        } </td>
                       <td className="description">
                         {
                           Array.isArray(data.attributes.at_time) ?
@@ -98,6 +92,7 @@ class ListdatetodateComponent extends Component {
                       <td className="description">{data.attributes.current_year}</td>
                     </tr>
                   ))}
+
                 </tbody>
               </table>
             </div>
@@ -108,4 +103,4 @@ class ListdatetodateComponent extends Component {
   }
 }
 
-export default ListdatetodateComponent;
+export default ListMonthComponent;

@@ -181,7 +181,7 @@ class TableUserComponent extends Component {
               <table className="table p-scrollbar">
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th className="first-col">#</th>
                     <th>Team</th>
                     <th>Position</th>
                     <th>Name</th>
@@ -189,10 +189,9 @@ class TableUserComponent extends Component {
                     <th>Address</th>
                     <th>Email</th>
                     <th>Firstday</th>
-                    <th>Password</th>
                     <th>Roles</th>
                     <th>Xóa</th>
-                    <th>Sửa</th>
+                   
                   </tr>
                 </thead>
                 <tbody>
@@ -200,7 +199,7 @@ class TableUserComponent extends Component {
                     this.state.isFilter ?
                       this.handleShow(this.props.data).map(data => (
                         <tr key={data.id}>
-                          <td className="description">{data.id}</td>
+                          <td className="description first-col">{data.id}</td>
                           <td className="description">{data.attributes.team.name}</td>
                           <td className="description">{data.attributes.position.name}</td>
                           <td className="description">{data.attributes.name}</td>
@@ -208,14 +207,11 @@ class TableUserComponent extends Component {
                           <td className="description">{data.attributes.address}</td>
                           <td className="description">{data.attributes.email}</td>
                           <td className="description">{data.attributes.first_workday}</td>
-                          <td className="description">1233456</td>
                           <td className="description">{data.attributes.roles}</td>
-                          <td className="description">
+                          <td className="description">  
                             <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
                               <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
                             </button>
-                          </td>
-                          <td className="description">
                             <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
                               <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                             </button>
@@ -225,7 +221,7 @@ class TableUserComponent extends Component {
                       :
                       this.props.data.map(data => (
                         <tr key={data.id}>
-                          <td className="description">{data.id}</td>
+                          <td className="description first-col">{data.id}</td>
                           <td className="description">{data.attributes.team.name}</td>
                           <td className="description">{data.attributes.position.name}</td>
                           <td className="description">{data.attributes.name}</td>
@@ -233,14 +229,11 @@ class TableUserComponent extends Component {
                           <td className="description">{data.attributes.address}</td>
                           <td className="description">{data.attributes.email}</td>
                           <td className="description">{data.attributes.first_workday}</td>
-                          <td className="description">1233456</td>
                           <td className="description">{data.attributes.roles}</td>
                           <td className="description">
                             <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
                               <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
                             </button>
-                          </td>
-                          <td className="description">
                             <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
                               <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                             </button>
