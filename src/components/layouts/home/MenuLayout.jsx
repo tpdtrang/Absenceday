@@ -21,7 +21,7 @@ class MenuLayout extends Component {
       namemail: '',
       at_time: 'Buổi Sáng',
       note: '',
-      type: 'Từ ngày đến ngày',
+      type: 'Từ ngày đến hết ngày',
       date: dateFormatDate(now, 'yyyy-mm-dd'),
       checkType: false,
       disabledate: true,
@@ -40,7 +40,6 @@ class MenuLayout extends Component {
     }
     if (this.props.leadmail !== prevProps.leadmail && !this.state.mailto && this.props.leadmail.length) {
       self.setState({
-        typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
         mailto: this.props.leadmail[0].id,
       })
     }
@@ -48,17 +47,16 @@ class MenuLayout extends Component {
       if (prevProps.edit !== this.props.edit) {
         let data = this.props.dataEdit.attributes;
         console.log(data);
-
         self.setState({
           id: this.props.dataEdit.id,
           visible: this.props.edit,
-          time_start: data.type === "Từ ngày đến ngày" ? dateFormatDate(data.time_start, 'yyyy-mm-dd') : '',
-          time_end: data.type === "Từ ngày đến ngày" ? dateFormatDate(data.time_end, 'yyyy-mm-dd') : '',
-          checkType: data.type === "Chọn ngày" ? true : false,
-          at_time: data.type === "Chọn ngày" ? data.at_time : 'Buổi Sáng',
+          time_start: data.time[0].type === "Từ ngày đến hết ngày" ? dateFormatDate(data.time[0].time_details, 'yyyy-mm-dd') : '',
+          time_end: data.time[0].type === "Từ ngày đến hết ngày" ? dateFormatDate(data.time[0].time_details, 'yyyy-mm-dd') : '',
+          checkType: data.time[0].type === "Chọn ngày" ? true : false,
+          at_time: data.time[0].type === "Chọn ngày" ? data.time[0].at_time : 'Buổi Sáng',
           note: data.note,
-          type: data.checkType === null ? true : false,
-          date: data.type === "Chọn ngày" ? dateFormatDate(data.date, 'yyyy-mm-dd') : '',
+          type: data.time.length > 0 ? data.time[0].type : '',
+          date: data.time[0].type === "Chọn ngày" ? dateFormatDate(data.time[0].time_details, 'yyyy-mm-dd') : '',
           typeday: data.type.id,
         })
       } else {
@@ -304,24 +302,6 @@ class MenuLayout extends Component {
     this.props.onList();
   }
   render() {
-    // const contentButton = () =>{
-    //     let name = this.props.data.filter(item=> parseInt(item.id) === parseInt(this.state.lead))
-    //     console.log(name);
-
-    //     if(cookies.get('data') !== undefined){
-
-
-    //         if(cookies.get('data').attributes.email !== name[0].attributes.email){
-    //             return(
-    //                 <button className="btn-list" onClick ={this.onList}>Duyệt</button> 
-    //             )
-    //         }else{
-    //             return(
-    //                 <></>
-    //             )
-    //         }
-    //     }
-    // }
     const contentUser = () => {
       if (cookies.get("data") !== undefined) {
         return (
@@ -348,12 +328,12 @@ class MenuLayout extends Component {
     }
     return (
       <section className="b-menu-container">
-        <div className="b-menu" id="myDIV">
-          <button className="btn-subcribe" onClick={this.showModal}>Đăng ký</button>
-          <button className="btn-list" onClick={this.onListQueue}>DS Được Duyệt</button>
+        <div className="b-menu">
+          <button className="btn-list btn-subcribe" onClick={this.showModal}>Đăng ký</button>
+          <button className="btn-list active" onClick={this.onListQueue}>DS Được Duyệt</button>
           <button className="btn-list" onClick={this.onViews}>DS Đợi Duyệt</button>
           <button className="btn-list" onClick={this.onDisAccept}>DS Không Duyệt</button>
-          <button className="btn-list" onClick={this.onList}>DS Duyệt</button>
+          <button className="btn-list" onClick={this.onList}>DS Duyệt </button>
         </div>
         <Modal
           style={{
@@ -369,7 +349,7 @@ class MenuLayout extends Component {
               <div className="b-heading">
                 <h1 className="b-title">
                   Đăng Ký Nghỉ Phép
-                                </h1>
+                </h1>
               </div>
               {contentUser()}
               <div className="b-content">
@@ -381,7 +361,7 @@ class MenuLayout extends Component {
                       onChange={this.onChangeType}
                       value={this.state.type}
                       name="type">
-                      <option value="1">Từ ngày đến ngày</option>
+                      <option value="1">Từ ngày đến hết ngày</option>
                       <option value="2">Chọn ngày</option>
                     </select>
                   </div>
@@ -446,7 +426,7 @@ class MenuLayout extends Component {
                               <div className="group-button">
                                 <button className="b-btn" onClick={this.removeItemTime.bind(this, item.id)}>
                                   Xóa
-                                                                </button>
+                                </button>
                               </div>
                             </div>
                           ))}
@@ -472,20 +452,19 @@ class MenuLayout extends Component {
                   </div>
 
                   <div className="form-group">
-                    <p className="text">Lý do:
-                                        </p>
+                    <p className="text">Lý do</p>
                     <textarea
                       className="b-area"
                       onChange={this.onChanger}
                       value={this.state.note}
                       name="note" required />
                   </div>
-                  <div className="form-group">
-                    <label className="b-text ">Chọn nguời duyệt:</label>
-                  </div>
                   {
                     this.props.edit === false ?
                       <>
+                        <div className="form-group">
+                          <label className="b-text ">Chọn nguời duyệt:</label>
+                        </div>
                         <div className="form-group">
                           <label className="b-text text-1">To:</label>
                           <select
@@ -513,7 +492,7 @@ class MenuLayout extends Component {
                               <div className="group-button">
                                 <button className="b-btn" onClick={this.removeItemLead.bind(this, item.id)}>
                                   Xóa
-                                                        </button>
+                                </button>
                               </div>
                             </div>
                           ))}
@@ -522,7 +501,6 @@ class MenuLayout extends Component {
                       :
                       <></>
                   }
-
                   {
                     this.props.edit === false ?
                       <>
@@ -553,7 +531,7 @@ class MenuLayout extends Component {
                               <div className="group-button">
                                 <button className="b-btn" onClick={this.removeItemMail.bind(this, item.id)}>
                                   Xóa
-                                                        </button>
+                                </button>
                               </div>
                             </div>
                           ))}

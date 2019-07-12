@@ -56,18 +56,31 @@
       .btn-list {
         padding: 5px 0;
         font-weight: 700;
-        width: 100px;
+        width: 150px;
         background-color: #fff;
         outline: none;
         border-radius: 5px;
         border: 1px solid rgb(91, 167, 238);
         color: rgb(91, 167, 238);
-        
+        &:hover{
+          background-color: rgb(91, 167, 238);
+          color: white;
+        }
+        &.active{
+          background-color: rgb(91, 167, 238);
+          color: #fff;
+        }
+        .b-warning{
+          color: red;
+          &.text{
+            opacity: 0;
+          }
+        }
       }
-      .active,.btn-list:hover {
-        background-color: rgb(91, 167, 238);
-        color: white;
-      }
+      // .active,.btn-list:hover {
+      //   background-color: rgb(91, 167, 238);
+      //   color: white;
+      // }
       .b-input {
         .b-search {
           padding: 0 5px;

@@ -5,23 +5,23 @@ import thunk from 'redux-thunk';
 
 
 export default function configureStore(initialState = {}) {
-    // Create the store with middlewares
-    const middlewares = [
-        thunk
-    ]
+  // Create the store with middlewares
+  const middlewares = [
+    thunk
+  ]
 
-    const enhancers = [
-        applyMiddleware(...middlewares)
-    ]
+  const enhancers = [
+    applyMiddleware(...middlewares)
+  ]
 
-    const store = createStore(
-        reducers
-        , initialState
-        , compose(...enhancers)
-    )
+  const store = createStore(
+    reducers
+    , initialState
+    , compose(...enhancers)
+  )
 
-    // Extensions
-    store.asyncReducers = {} // Async reducer registry
+  // Extensions
+  store.asyncReducers = {} // Async reducer registry
 
-    return store
+  return store
 }
