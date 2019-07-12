@@ -154,7 +154,7 @@ class TableUserComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Quản Lí Users</h3>
+                  <h3 className="heading-3">Quản lí người dùng</h3>
                 </div>
               </div>
               <div className="menu-list">
@@ -182,15 +182,15 @@ class TableUserComponent extends Component {
                 <thead>
                   <tr>
                     <th className="first-col">#</th>
-                    <th>Team</th>
-                    <th>Position</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Address</th>
+                    <th>Nhóm</th>
+                    <th>Vị trí</th>
+                    <th>Tên</th>
+                    <th>Sđt</th>
+                    <th>Địa chỉ</th>
                     <th>Email</th>
-                    <th>Firstday</th>
-                    <th>Roles</th>
-                    <th>Xóa</th>
+                    <th>Ngày đi làm đầu tiên</th>
+                    <th>Vị trí</th>
+                    <th>Hoạt động</th>
                    
                   </tr>
                 </thead>

@@ -289,7 +289,7 @@ export function requestUpdateDay(data) {
       time_start: data.time_start,
       time_end: data.time_end,
       note: data.note,
-      type: 'Từ ngày đến ngày'
+      type: 'Từ ngày đến hết ngày'
     }
   }
   console.log(paramData);
