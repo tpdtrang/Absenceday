@@ -31,7 +31,7 @@ class TableTeamPage extends Component {
     })
   }
   onEdit = (id) => {  
-    let item = [...this.props.data].filter(item => item.id === id)
+    let item = [...this.props.team].filter(item => item.id === id)
     if (item.length > 0) {
       this.setState({
         id: id,
@@ -51,7 +51,7 @@ class TableTeamPage extends Component {
         <HeaderAdLayout></HeaderAdLayout>
         <div className="content">
           <SideAdLayout></SideAdLayout>
-          <TableTeamComponent data={this.props.data} onAdd={this.onAdd} dataEdit={this.state.dataEdit} onUpdate={this.onUpdate} edit={this.state.edit} onDelete={this.onDelete} onEdit={this.onEdit} onClose={this.onClose}></TableTeamComponent>
+          <TableTeamComponent data={this.props.team} onAdd={this.onAdd} dataEdit={this.state.dataEdit} onUpdate={this.onUpdate} edit={this.state.edit} onDelete={this.onDelete} onEdit={this.onEdit} onClose={this.onClose}></TableTeamComponent>
         </div>
       </div>
     );
@@ -59,7 +59,7 @@ class TableTeamPage extends Component {
 }
 function mapPropsToState(state) {
   return {
-    data: state.team.all
+    team: state.team.all
   }
 }
 export default connect(mapPropsToState, null)(TableTeamPage);

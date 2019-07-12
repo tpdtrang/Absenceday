@@ -460,7 +460,6 @@ class MenuLayout extends Component {
                       value={this.state.note}
                       name="note" required />
                   </div>
-
                   {
                     this.props.edit === false ?
                       <>

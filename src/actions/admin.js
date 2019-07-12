@@ -28,7 +28,6 @@ export function requestAddUserStore(data) {
     address: data.address,
     first_workday: data.first_workday,
     email: data.email,
-    password: '123123',
     role: data.role
   }
   console.log(store);
@@ -106,7 +105,7 @@ export function requestGetTeamStore() {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response);
+      // console.log(response);
       dispatch(reciveData(types.GET_TEAM, response.data.data))
     }).catch(function (error) {
       console.log(error);
@@ -308,6 +307,29 @@ export function requestGetRegistrationStore() {
     })
   }
 }
+//TRACK
+export function requestGetTrackStore() {
+  return (dispatch) => {
+    return axios.request({
+      method: 'GET',
+      url: `${API.API}/track`,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(reciveData(types.GET_TRACK, response.data.data))
+    }).catch(function (error) {
+      console.log(error);
+    })
+  }
+}
+export function requestFilterRegister(id) {
+  return (dispatch) => {
+    dispatch(reciveData(types.FILTER_REGISTER, id))
+  }
+}
+
 export function reciveData(aciton, payload) {
   return {
     type: aciton,

@@ -1,7 +1,39 @@
 import React, { Component } from 'react'
-
+// import Moment from 'react-moment';
 class TableRegistrationComponent extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      idtem: '',
+      isFilter:[]
+    }
+  }
+
+  onhandleShow = (id) => {
+    this.props.onDetails(id);
+  }
+
+  onhandleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+    console.log(event);
+  }
+
+  handleShow = (data) => {
+    let dataNew = [];
+    data.map(item => {
+      if (parseInt(item.attributes.team.id) === parseInt(this.props.idtem)) {
+        dataNew = [...dataNew, item]
+      }
+      return item;
+    })
+    return dataNew;
+  }
   render() {
+    let sum = 0;
+    // let { data } = this.props;
+    // console.log(data);
     return (
       <div className="right-content">
         <section className="wrap-container">
@@ -9,131 +41,84 @@ class TableRegistrationComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Bảng Đăng Kí</h3>
+                  <h3 className="heading-3">Quản Lí Đăng Kí</h3>
                 </div>
               </div>
               <div className="menu-list">
-                <div className="search">
-                  <input type="text" />
-                  <a href="/">
-                    <div className="icon">
-                      <i className="fas fa-search" />
-                    </div>
-                  </a>
-                </div>
+                <select className="p-tags" name="idtem" onChange={this.onhandleChange} value={this.state.idtem}>
+                  <option value="all">ALL</option>
+                  {this.props.team.map(data => (
+                    <option value={data.id} key={data.id}>{data.attributes.name}</option>
+                  ))}
+
+                </select>
               </div>
             </div>
             <div className="p-table table-wrapper">
               <table className="table p-scrollbar" id="consumption-data">
                 <thead className="table-header">
                   <tr>
-                    <th>#</th>
-                    <th>User</th>
+                    <th className="sticky-col first-col">#</th>
+                    <th className="sticky-col second-col">User</th>
+                    <th>Team</th>
                     <th>Type</th>
                     <th>Note</th>
                     <th>Status</th>
-                    <th>Requested</th>
-                    <th colSpan="30">Tháng 1</th>
+                    <th>Time</th>
                     <th>At_Time</th>
                     <th>Absence_days</th>
-                    <th>Approve</th>
-                  </tr>
-                  <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                    <th>5</th>
-                    <th>6</th>
-                    <th>7</th>
-                    <th>8</th>
-                    <th>9</th>
-                    <th>10</th>
-                    <th>11</th>
-                    <th>12</th>
-                    <th>13</th>
-                    <th>14</th>
-                    <th>15</th>
-                    <th>16</th>
-                    <th>17</th>
-                    <th>18</th>
-                    <th>19</th>
-                    <th>20</th>
-                    <th>21</th>
-                    <th>22</th>
-                    <th>23</th>
-                    <th>24</th>
-                    <th>25</th>
-                    <th>26</th>
-                    <th>27</th>
-                    <th>28</th>
-                    <th>29</th>
-                    <th>30</th>
-                    <th>
-                    </th>
-                    <th></th>
-                    <th></th>
-                    
+                    <th>Sum</th>
+                    {/* <th>Approve</th> */}
+                    <th>Requested</th>
+                    <th>Details</th>
                   </tr>
                 </thead>
-                <tbody className="results">
-                  {this.props.data.map(data => (
-                    <tr key={data.id}>
-                      <td className="description">{data.id}</td>
-                      <td className="description">{data.attributes.user.email}</td>
-                      <td className="description">
-                        {data.attributes.type.name}
-                      </td>
-                      <td className="description">{data.attributes.note}</td>
-                      <td className="description">{data.attributes.status}</td>
-                      <td className="description">{data.attributes.requested_date}</td>
-                      <td colSpan="30">
-                        {/* {data.attributes.time.map(item => (
-                          <span className="current"
-                            key={item.id} >
-                            <Moment format="YYYY/MM/DD">
-                              {item.time_details}
+                <tbody className=" results">
+                  {this.props.data.map(data => {
+                    sum = 0;
+                    return (
+                      <tr key={data.id}>
+                        <td className="description sticky-col first-col">{data.id}</td>
+                        <td className="description sticky-col second-col">{data.attributes.user.email}</td>
+                        <td className="description ">{data.attributes.user.team}</td>
+                        <td className="description ">{data.attributes.type.name}</td>
+                        <td className="description">{data.attributes.note}</td>
+                        <td className="description">{data.attributes.status}</td>
+                        <td className="description">
+                          {data.attributes.time.map(data => (
+                            <span key={data.id}>
+                              {data.time_details}
+                              <hr />
+                            </span>
+                          ))}
 
-                            </Moment>
-                            <hr />
-                          </span>
-                        ))} */}
-                        {/* <td className="description">{data.attributes.requested_date}</td>
+                        </td>
+                        <td className="description">
+                          {data.attributes.time.map(data => (
+                            <span key={data.id}>
+                              {data.at_time}
+                              <hr />
+                            </span>
+                          ))}
+                        </td>
+                        <td className="description">
+                          {data.attributes.time.map(item => {
+                            sum += parseFloat(item.absence_days)
+                            return (
+                              <span key={item.id}>
+                                {item.absence_days}
+                                <hr />
+                              </span>
+                            )
+                          })}
+                        </td>
+                        <td className="description">{sum}</td>
+                        {/* <td className="description">{data.attributes.approver_id.name}</td> */}
                         <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td>
-                        <td className="description">{data.attributes.requested_date}</td> */}
-                      </td>
-                      <td className="description">
-                        {data.attributes.time.map(data => (
-                          <span key={data.id}>
-                            {data.at_time}
-                            <hr />
-                          </span>
-                        ))}
-                      </td>
-                      <td className="description">
-                        {data.attributes.time.map(data => (
-                          <span key={data.id}>
-                            {data.absence_days}
-                            <hr />
-                          </span>
-                        ))}
-                      </td>
-                      <td className="description">{data.attributes.approver_id.name}</td>
-                    </tr>
-                  ))}
+                        <td className="description" onClick={this.onhandleShow.bind(this, data.id)}><button className="btn"><i className="fas fa-calendar-day" style={{ color: "blue", fontSize: "18px" }}></i></button></td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>

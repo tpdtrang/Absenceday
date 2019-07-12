@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Modal } from 'antd';
+import { Modal } from 'antd';
 class TableTeamComponent extends Component {
   constructor(props, context) {
     super(props, context);
@@ -41,7 +41,7 @@ class TableTeamComponent extends Component {
     })
     this.onReset();
   }
-  onReset() {
+  onReset = () => {
     this.setState({
       name: '',
       description: ''
@@ -67,8 +67,6 @@ class TableTeamComponent extends Component {
   }
 
   render() {
-    // console.log(this.props.data);
-
     return (
       <div className="right-content">
         <section className="wrap-container">
@@ -76,18 +74,18 @@ class TableTeamComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Table Teams</h3>
+                  <h3 className="heading-3">Quản Lí Teams</h3>
                 </div>
               </div>
               <div className="menu-list">
-                <div className="search">
+                {/* <div className="search">
                   <input type="text" />
                   <a href="/">
                     <div className="icon">
                       <i className="fas fa-search" />
                     </div>
                   </a>
-                </div>
+                </div> */}
               </div>
               <div className="menu-list">
                 <div className="add">
@@ -115,11 +113,18 @@ class TableTeamComponent extends Component {
                       <td className="description">{data.id}</td>
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
-                      <td className="description"><button className="btn" onClick={this.onDelete.bind(this, data.id)}><i className="far fa-trash-alt" style={{color:"red", fontSize:"18px"}}></i></button></td>
-                      <td className="description"><button className="btn" onClick={this.onEdit.bind(this, data.id)}><i className="far fa-edit" style={{color:"blue", fontSize:"18px"}}></i></button></td>
+                      <td className="description">
+                        <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
+                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
+                        </button>
+                      </td>
+                      <td className="description">
+                        <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
+                          <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
-
                 </tbody>
               </table>
             </div>

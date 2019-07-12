@@ -76,18 +76,18 @@ class TablePositionComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Bảng Vị Trí</h3>
+                  <h3 className="heading-3">Quản Lí Vị Trí</h3>
                 </div>
               </div>
               <div className="menu-list">
-                <div className="search">
+                {/* <div className="search">
                   <a href="/">
                     <input type="text" />
                     <div className="icon">
                       <i className="fas fa-search" />
                     </div>
                   </a>
-                </div>
+                </div> */}
               </div>
               <div className="menu-list">
                 <div className="add">
@@ -115,8 +115,16 @@ class TablePositionComponent extends Component {
                       <td className="description">{data.id}</td>
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
-                      <td className="description"><button className="btn" onClick={this.onDelete.bind(this, data.id)}><i className="far fa-trash-alt" style={{color:"red", fontSize:"18px"}}></i></button></td>
-                      <td className="description"><button className="btn" onClick={this.onEdit.bind(this, data.id)}><i className="far fa-edit" style={{color:"blue", fontSize:"18px"}}></i></button></td>
+                      <td className="description">
+                        <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
+                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
+                        </button>
+                      </td>
+                      <td className="description">
+                        <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
+                          <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

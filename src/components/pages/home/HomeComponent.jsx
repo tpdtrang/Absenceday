@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 // import {Redirect} from 'react-router-dom'
 import { HeaderLayout, MenuLayout } from '../../layouts/home';
 import { ListComponent, ListQueueComponent, ListAcceptComponent, ListDisAcceptComponent } from '../../shared/home';

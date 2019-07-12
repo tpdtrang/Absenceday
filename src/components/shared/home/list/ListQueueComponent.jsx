@@ -151,7 +151,6 @@ class ListComponent extends Component {
                     .props
                     .data
                     .map(data => (
-
                       <tr key={data.id}>
                         <td className="name-item">{data.id}</td>
                         <td className="name-item">{dateFormatDate(data.attributes.created_at, "dd-mm-yyyy HH:MM")}</td>

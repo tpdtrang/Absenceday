@@ -10,19 +10,27 @@ import AdminTeam from './adminteam'
 import AdminPosition from './adminpositon';
 import AdminRegistration from './adminregistration';
 import ListDisAccept from './listdisaccept';
+import AdminTrack from './admintrack';
 import ListMail from './listmail';
+import DateToDate from './admindatetodate';
+import SearchMonth from "./adminmonth";
+import SearchYear from './adminyear'
 const rootReducer = combineReducers({
-  dayoff: DayoffReducer,
-  login: LoginReducer,
-  typedayoff: TypeDayOff,
-  lead: LeadReducer,
-  mail: ListMail,
-  listqueue: ListQueue,
-  listaccept: ListAccept,
-  stores: StoreAdminReducer,
-  team: AdminTeam,
-  position: AdminPosition,
-  registration: AdminRegistration,
-  disaccept: ListDisAccept
+    dayoff: DayoffReducer,
+    login: LoginReducer,
+    typedayoff: TypeDayOff,
+    lead: LeadReducer,
+    mail: ListMail,
+    listqueue: ListQueue,
+    listaccept: ListAccept,
+    stores: StoreAdminReducer,
+    team: AdminTeam,
+    position: AdminPosition,
+    registration: AdminRegistration,
+    disaccept: ListDisAccept,
+    track: AdminTrack,
+    statistical: DateToDate,
+    searchmonth: SearchMonth,
+    searchyear: SearchYear
 });
 export default rootReducer;

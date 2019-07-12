@@ -10,7 +10,7 @@ class HeaderAdLayout extends Component {
           </div>
           <div className="p-user-profile">
             <ul className="profile">
-              <li className="item-profile"><a href="@" className="link-profile"><i className="fas fa-sort-down" /></a></li>
+              {/* <li className="item-profile"><a href="@" className="link-profile"><i className="fas fa-sort-down" /></a></li> */}
             </ul>
           </div>
         </div>

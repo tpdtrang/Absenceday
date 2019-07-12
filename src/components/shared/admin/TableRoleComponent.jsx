@@ -13,14 +13,14 @@ class TableRoleComponent extends Component {
                 </div>
               </div>
               <div className="menu-list">
-                <div className="search">
+                {/* <div className="search">
                   <a href="/">
                     <input type="text" />
                     <div className="icon">
                       <i className="fas fa-search" />
                     </div>
                   </a>
-                </div>
+                </div> */}
               </div>
               <div className="menu-list">
                 <div className="add">
