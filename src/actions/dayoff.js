@@ -18,7 +18,7 @@ export function requestGetDayOff() {
       }).then(function (response) {
         dispatch(reciveData(types.REQUEST_GET_DAYOFF, response.data.data));
       }).catch(function (error) {
-        console.log(error);
+      
       })
     }
   } else {
@@ -34,7 +34,7 @@ export function requestGetDayOff() {
       }).then(function (response) {
         dispatch(reciveData(types.REQUEST_GET_DISDAYOFF, response));
       }).catch(function (error) {
-        console.log(error);
+    
       })
     }
   }
@@ -52,7 +52,7 @@ export function requestGetListQueue() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_LIST_QUEUE, response.data.data));
     }).catch(function (error) {
-      console.log(error);
+      
     })
   }
 }
@@ -69,7 +69,7 @@ export function requestGetListDisAccept() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_LIST_DISACCEPT, response.data.data));
     }).catch(function (error) {
-      console.log(error);
+    
     })
   }
 }
@@ -108,7 +108,7 @@ export function requestGetListAccept() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_LIST_ACCEPT, response.data.data));
     }).catch(function (error) {
-      console.log(error);
+
     })
   }
 }
@@ -166,10 +166,8 @@ export function requestGetMail() {
         "Content-Type": "application/json",
         "Authorization": `${'bearer' + cookies.get('token')}`
       }
-    }).then(function (response) {
-      if (response.data.data.length > 0) {
-        dispatch(reciveData(types.REQUEST_GET_MAIL, response.data.data))
-      }
+    }).then(function (response){
+      dispatch(reciveData(types.REQUEST_GET_MAIL, response.data.data))
     }).catch(function (error) {
       console.log(error);
     })
@@ -238,8 +236,6 @@ export function requestCreateDayOff(data) {
       type: 'Chọn ngày'
     }
   }
-  console.log(dayoff);
-
   return (dispatch) => {
     return axios.request({
       method: 'POST',
@@ -289,11 +285,10 @@ export function requestUpdateDay(data) {
       time_start: data.time_start,
       time_end: data.time_end,
       note: data.note,
-      type: 'Từ ngày đến ngày'
+      type: 'Từ ngày đến hết ngày'
     }
   }
-  console.log(paramData);
-
+  console.log(paramData)
   return (dispatch) => {
     return axios.request({
       method: 'PUT',

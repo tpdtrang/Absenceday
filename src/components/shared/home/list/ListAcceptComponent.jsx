@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { Modal, DatePicker } from 'antd';
 import moment from 'moment';
 var dateFormatDate = require('dateformat');
-// var cookies = new Cookies();
+const monthFormat = 'YYYY-MM';
+const {MonthPicker} = DatePicker;
 var now = new Date();
 const dateFormat = 'YYYY-MM-DD';
 class ListComponent extends Component {
@@ -19,6 +20,11 @@ class ListComponent extends Component {
       checkSearch: "1",
       id: '',
     }
+  }
+  onChangeMonth = (date, dateString) =>{
+    this.setState({
+      month: dateString,
+    })
   }
   onClose = (e) => {
     e.preventDefault();
@@ -147,7 +153,8 @@ class ListComponent extends Component {
             {
               this.state.checkSearch === "2" ?
                 <form className="form-search" onSubmit={this.onSearchMonth}>
-                  <input onChange={this.onChanger} placeholder="Tìm kiếm theo tháng..." type="text" value={this.state.month} name="month" className="b-search"></input>
+                  {/* <input onChange={this.onChanger} placeholder="Tìm kiếm theo tháng..." type="text" value={this.state.month} name="month" className="b-search"></input> */}
+                  <MonthPicker placeholder="Select month" defaultValue={moment(now,monthFormat)} style={{ "margin": "0 6px" }} onChange={this.onChangeMonth} name="month"></MonthPicker>
                   <button className="btn-search"><i className="fas fa-search" ></i></button>
                 </form>
                 :
@@ -250,7 +257,7 @@ class ListComponent extends Component {
             <form className="b-form">
               <div className="form-group">
                 <p className="b-text">Comment :</p>
-                <textarea onChange={this.onChanger} className="b-comment" name="message" value={this.state.message} required></textarea>
+                <textarea onChange={this.onChanger} className="b-comment" name="message" value={this.state.message} />
               </div>
               <div className="b-btn">
                 <button className="btn-save" onClick={this.onSendAccept}>Gửi</button>

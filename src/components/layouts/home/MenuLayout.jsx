@@ -50,14 +50,15 @@ class MenuLayout extends Component {
         self.setState({
           id: this.props.dataEdit.id,
           visible: this.props.edit,
-          time_start: data.time[0].type === "Từ ngày đến hết ngày" ? dateFormatDate(data.time[0].time_details, 'yyyy-mm-dd') : '',
-          time_end: data.time[0].type === "Từ ngày đến hết ngày" ? dateFormatDate(data.time[0].time_details, 'yyyy-mm-dd') : '',
+          time_start: data.time_start,
+          time_end: data.time_end,
           checkType: data.time[0].type === "Chọn ngày" ? true : false,
           at_time: data.time[0].type === "Chọn ngày" ? data.time[0].at_time : 'Buổi Sáng',
           note: data.note,
-          type: data.time.length > 0 ? data.time[0].type : '',
-          date: data.time[0].type === "Chọn ngày" ? dateFormatDate(data.time[0].time_details, 'yyyy-mm-dd') : '',
+          type: data.checkType === true ? "Chọn ngày" : "Từ ngày đến hết ngày",
+          date:  data.date,
           typeday: data.type.id,
+          // arrayNew: data.time[0].type === "Chọn ngày" ? data.time[0].arrayNew : '',
         })
       } else {
         this.onReset();
@@ -452,7 +453,7 @@ class MenuLayout extends Component {
                   </div>
 
                   <div className="form-group">
-                    <p className="text">Lý do</p>
+                    <p className="text">Lý do:</p>
                     <textarea
                       className="b-area"
                       onChange={this.onChanger}
