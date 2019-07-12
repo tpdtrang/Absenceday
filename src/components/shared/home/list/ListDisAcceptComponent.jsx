@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { DatePicker } from 'antd';
 import moment from 'moment';
 import Cookies from 'universal-cookie';
+const monthFormat = 'YYYY-MM';
+const {MonthPicker} = DatePicker;
 var dateFormatDate = require('dateformat');
 var cookies = new Cookies();
 var now = new Date();
@@ -17,6 +19,11 @@ class ListComponent extends Component {
       search: '',
       checkSearch: "1",
     }
+  }
+  onChangeMonth = (date, dateString) =>{
+    this.setState({
+      month: dateString,
+    })
   }
   onChanger = (event) => {
     const name = event.target.name;
@@ -96,7 +103,8 @@ class ListComponent extends Component {
             {
               this.state.checkSearch === "2" ?
                 <form className="form-search" onSubmit={this.onSearchMonth}>
-                  <input onChange={this.onChanger} placeholder="Tìm kiếm theo tháng..." type="text" value={this.state.month} name="month" className="b-search"></input>
+                  {/* <input onChange={this.onChanger} placeholder="Tìm kiếm theo tháng..." type="text" value={this.state.month} name="month" className="b-search"></input> */}
+                  <MonthPicker placeholder="Select month" defaultValue={moment(now,monthFormat)} style={{ "margin": "0 6px" }} onChange={this.onChangeMonth} name="month"></MonthPicker>
                   <button className="btn-search"><i className="fas fa-search" ></i></button>
                 </form>
                 :

@@ -18,7 +18,7 @@ export function requestGetDayOff() {
       }).then(function (response) {
         dispatch(reciveData(types.REQUEST_GET_DAYOFF, response.data.data));
       }).catch(function (error) {
-        console.log(error);
+      
       })
     }
   } else {
@@ -34,7 +34,7 @@ export function requestGetDayOff() {
       }).then(function (response) {
         dispatch(reciveData(types.REQUEST_GET_DISDAYOFF, response));
       }).catch(function (error) {
-        console.log(error);
+    
       })
     }
   }
@@ -52,7 +52,7 @@ export function requestGetListQueue() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_LIST_QUEUE, response.data.data));
     }).catch(function (error) {
-      console.log(error);
+      
     })
   }
 }
@@ -69,7 +69,7 @@ export function requestGetListDisAccept() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_LIST_DISACCEPT, response.data.data));
     }).catch(function (error) {
-      console.log(error);
+    
     })
   }
 }
@@ -108,7 +108,7 @@ export function requestGetListAccept() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_LIST_ACCEPT, response.data.data));
     }).catch(function (error) {
-      console.log(error);
+
     })
   }
 }
@@ -166,10 +166,8 @@ export function requestGetMail() {
         "Content-Type": "application/json",
         "Authorization": `${'bearer' + cookies.get('token')}`
       }
-    }).then(function (response) {
-      if (response.data.data.length > 0) {
-        dispatch(reciveData(types.REQUEST_GET_MAIL, response.data.data))
-      }
+    }).then(function (response){
+      dispatch(reciveData(types.REQUEST_GET_MAIL, response.data.data))
     }).catch(function (error) {
       console.log(error);
     })
@@ -238,8 +236,6 @@ export function requestCreateDayOff(data) {
       type: 'Chọn ngày'
     }
   }
-  console.log(dayoff);
-
   return (dispatch) => {
     return axios.request({
       method: 'POST',
@@ -292,8 +288,7 @@ export function requestUpdateDay(data) {
       type: 'Từ ngày đến hết ngày'
     }
   }
-  console.log(paramData);
-
+  console.log(paramData)
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
@@ -305,6 +300,8 @@ export function requestUpdateDay(data) {
         'Authorization': `${'bearer ' + cookies.get('token')}`
       },
     }).then(function (response) {
+      console.log(response.data.data);
+      
       message.success("Bạn đã sửa thành công!")
       dispatch(reciveData(types.REQUEST_UPDATE_DAYOFF, response.data.data));
     }).catch(function (error) {
