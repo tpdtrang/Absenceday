@@ -23,13 +23,7 @@ class MenuListComponent extends Component {
             <button className="btn tag" onClick={this.onHome}>Home</button>
           </div>
           <div className="p-menu">
-            <button className="btn tag" onClick={this.onDay}>Date To Date</button>
-          </div>
-          <div className="p-menu">
-            <button className="btn tag" onClick={this.onMonth}>Month</button>
-          </div>
-          <div className="p-menu">
-            <button className="btn tag" onClick={this.onYear}> Year</button>
+            <button className="btn tag" onClick={this.onDay}>Search</button>
           </div>
         </div>
       </div>

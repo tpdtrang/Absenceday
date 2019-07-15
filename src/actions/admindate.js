@@ -12,13 +12,13 @@ export function requestGetYearStore() {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      dispatch(reciveData(types.GET_YEAR, response.data.data))
+      dispatch(reciveData(types.GET_DATE, response.data.data))
     }).catch(function (error) {
       console.log(error);
     })
   }
 }
-
+//SEARCH YEAR
 export function requestSearchYearStore(data) {
   let params = {
     'year': data.year
@@ -33,32 +33,38 @@ export function requestSearchYearStore(data) {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      dispatch(reciveData(types.SEARCH_YEAR, response.data))
+      
+      dispatch(reciveData(types.SEARCH_DATE, response.data))
     }).catch(function (error) {
       console.log(error);
 
     })
   }
 }
-
-//month
-export function requestGetMonthStore() {
+//SEARCH DATETODATE
+export function requestSearchDatetodate(data) {
+  let params ={
+    'from':data.from,
+    'to':data.to
+  }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/timeabsence`,
+      url: `${API.API}/statistical`,
+      params,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      dispatch(reciveData(types.GET_MONTH, response.data.data))
-    }).catch(function (error) {
+      console.log(response);
+      dispatch(reciveData(types.SEARCH_DATE,response.data))
+    }).catch(function(error){
       console.log(error);
     })
   }
 }
-
+//SEARCH MONTH
 export function requestSearchMonthStore(data) {
   let params = {
     'month': data.month
@@ -73,7 +79,8 @@ export function requestSearchMonthStore(data) {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      dispatch(reciveData(types.SEARCH_MONTH, response.data))
+      console.log( response.data);
+      dispatch(reciveData(types.SEARCH_DATE, response.data))
     }).catch(function (error) {
       console.log(error);
     })

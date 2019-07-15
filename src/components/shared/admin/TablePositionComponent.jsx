@@ -76,7 +76,7 @@ class TablePositionComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Quản Lí Vị Trí</h3>
+                  <h3 className="heading-3">Quản lí vị trí</h3>
                 </div>
               </div>
               <div className="menu-list">
@@ -103,24 +103,21 @@ class TablePositionComponent extends Component {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Delete</th>
-                    <th>Edit</th>
+                    <th>Tên</th>
+                    <th>Mô tả</th>
+                    <th>Hoạt động</th>
                   </tr>
                 </thead>
                 <tbody>
                   {this.props.data.map(data => (
                     <tr key={data.id}>
-                      <td className="description">{data.id}</td>
+                      <td className="description sticky-col first-col">{data.id}</td>
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
                       <td className="description">
                         <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
                           <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
                         </button>
-                      </td>
-                      <td className="description">
                         <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
                           <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                         </button>
@@ -133,22 +130,22 @@ class TablePositionComponent extends Component {
             <Modal visible={this.state.show} footer={null} onCancel={this.onhandleClose} >
               <div className="p-modal">
                 <div className="title-form">
-                  <h3 className="heading-3">Form Positions</h3>
+                  <h3 className="heading-3">Thêm vị trí</h3>
                 </div>
                 <hr />
                 <div className="p-content">
                   <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                      <label className="form-text">Name:</label>
+                      <label className="form-text">Tên:</label>
                       <input type="text" className="form-search" name="name" onChange={this.onhandleChange} value={this.state.name} />
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Description:</label>
+                      <label className="form-text">Mô tả:</label>
                       <input type="text" className="form-search" name="description" onChange={this.onhandleChange} value={this.state.description} />
                     </div>
                     <div className="btn-wrap">
                       <button type="submit" className="btn" variant="primary">
-                        Save</button>
+                        Lưu</button>
                     </div>
                   </form>
                 </div>

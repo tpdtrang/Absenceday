@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 class TableTrackComponent extends Component {
+
+
   render() {
     return (
       <section className="wrap-container">
@@ -8,9 +10,10 @@ class TableTrackComponent extends Component {
           <div className="p-title">
             <div className="menu-list">
               <div className="title">
-                <h3 className="heading-3">Quản Lí thống kê</h3>
+                <h3 className="heading-3">Quản lý thống kê</h3>
               </div>
             </div>
+
           </div>
           <div className="p-table table-wrapper">
             <table className="table p-scrollbar">
@@ -18,26 +21,25 @@ class TableTrackComponent extends Component {
                 <tr>
                   <th rowSpan="2" className="sticky-col first-col">#</th>
                   {/* <th>Team</th> */}
-                  <th rowSpan="2" className="sticky-col second-col">User</th>
-                  <th rowSpan="2">Year</th>
-                  <th rowSpan="2">annual_leave_total</th>
-                  <th rowSpan="2">annual_leave_unused</th>
-                  <th colSpan="12">Month</th>
-                  <th rowSpan="2">Total holidays</th>
+                  <th rowSpan="2" className="sticky-col second-col">Người dùng</th>
+                  <th rowSpan="2">Năm</th>
+                  <th rowSpan="2">Tổng phép năm</th>
+                  <th rowSpan="2">Tổng phép còn</th>
+                  <th colSpan="12">Tháng</th>
                 </tr>
                 <tr>
-                  <th>January</th>
-                  <th>February</th>
-                  <th>March</th>
-                  <th>April</th>
-                  <th>May</th>
-                  <th>June</th>
-                  <th>July</th>
-                  <th>August</th>
-                  <th>September</th>
-                  <th>October</th>
-                  <th>November</th>
-                  <th>December</th>
+                  <th>Tháng 1</th>
+                  <th>Tháng 2</th>
+                  <th>Tháng 3</th>
+                  <th>Tháng 4</th>
+                  <th>Tháng 5</th>
+                  <th>Tháng 6</th>
+                  <th>Tháng 7</th>
+                  <th>Tháng 8</th>
+                  <th>Tháng 9</th>
+                  <th>Tháng 10</th>
+                  <th>Tháng 11</th>
+                  <th>Tháng 12</th>
                 </tr>
               </thead>
               <tbody>
@@ -61,7 +63,6 @@ class TableTrackComponent extends Component {
                     <td className="description">{data.attributes.October}</td>
                     <td className="description">{data.attributes.November}</td>
                     <td className="description">{data.attributes.December}</td>
-                    <td className="description">123</td>
                   </tr>
                 ))}
               </tbody>

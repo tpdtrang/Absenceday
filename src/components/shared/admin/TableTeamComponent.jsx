@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import { Modal } from 'antd';
+import Pagination from '../../../feature/Pagination'
 class TableTeamComponent extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       show: false,
       name: '',
-      description: ''
+      description: '',
+      pagOfItem: []
     }
+  }
+
+  onChangePage = (pageOfItems) => {
+    this.setState({
+      pagOfItem: pageOfItems
+    })
   }
   onhandleShow = () => {
     this.setState({
@@ -74,7 +82,7 @@ class TableTeamComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Quản Lí Teams</h3>
+                  <h3 className="heading-3">Quản lý nhóm</h3>
                 </div>
               </div>
               <div className="menu-list">
@@ -101,24 +109,21 @@ class TableTeamComponent extends Component {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Delete</th>
-                    <th>Edit</th>
+                    <th>Tên</th>
+                    <th>Mô tả</th>
+                    <th>Hoạt động</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.data.map(data => (
+                  {this.state.pagOfItem.map(data => (
                     <tr key={data.id}>
-                      <td className="description">{data.id}</td>
+                      <td className="description sticky-col first-col">{data.id}</td>
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
                       <td className="description">
                         <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
                           <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
                         </button>
-                      </td>
-                      <td className="description">
                         <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
                           <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                         </button>
@@ -127,20 +132,21 @@ class TableTeamComponent extends Component {
                   ))}
                 </tbody>
               </table>
+              <Pagination items={this.props.data} onChangePage={this.onChangePage}></Pagination>
             </div>
             <Modal visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
               <div className="p-modal">
                 <div className="title-form">
-                  <h3 className="heading-3">Form Teams</h3>
+                  <h3 className="heading-3">Thêm nhóm</h3>
                 </div>
                 <hr />
                 <div className="p-content">
                   <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                      <label className="form-text">Name:</label>
+                      <label className="form-text">Tên:</label>
                       <input type="text" className="form-search" name="name" onChange={this.onhandleChange} value={this.state.name} /></div>
                     <div className="form-group">
-                      <label className="form-text">Desciption:</label>
+                      <label className="form-text">Mô tả:</label>
                       <input type="text" className="form-search" name="description" onChange={this.onhandleChange} value={this.state.description} /></div>
                     <div className="btn-wrap">
                       <button type="submit" className="btn">

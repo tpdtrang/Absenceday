@@ -28,7 +28,8 @@ export function requestAddUserStore(data) {
     address: data.address,
     first_workday: data.first_workday,
     email: data.email,
-    role: data.role
+    role: data.role,
+    password:123456
   }
   console.log(store);
   return (dispatch) => {
@@ -99,7 +100,7 @@ export function requestGetTeamStore() {
   return (dispatch) => {
     return axios({
       method: 'GET',
-      url: `${API.API_AD}/team`,
+      url: `${API.API}/team`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -122,7 +123,7 @@ export function requestAddTeamStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'POST',
-      url: `${API.API_AD}/team`,
+      url: `${API.API}/team`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -139,7 +140,7 @@ export function requestDeleteTeamStore(id) {
   return (dispatch) => {
     return axios.request({
       method: 'DELETE',
-      url: `${API.API_AD}/team/${id}`,
+      url: `${API.API}/team/${id}`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -160,7 +161,7 @@ export function requestUpdateTeamStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API_AD}/team/${data.id}`,
+      url: `${API.API}/team/${data.id}`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -178,7 +179,7 @@ export function requestGetPositionStore() {
   return (dispatch) => {
     return axios({
       method: 'GET',
-      url: `${API.API_AD}/position`,
+      url: `${API.API}/position`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -199,7 +200,7 @@ export function requestAddPositionStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'POST',
-      url: `${API.API_AD}/position`,
+      url: `${API.API}/position`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -216,7 +217,7 @@ export function requestDeletePositionStore(id) {
   return (dispatch) => {
     return axios.request({
       method: 'DELETE',
-      url: `${API.API_AD}/position/${id}`,
+      url: `${API.API}/position/${id}`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -238,7 +239,7 @@ export function requestUpdatePositionStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API_AD}/position/${data.id}`,
+      url: `${API.API}/position/${data.id}`,
       headers: {
         "Accept": "application/json",
         "Content-type": "application/json"
@@ -257,7 +258,7 @@ export function requestGetPermissionStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_AD}/position`,
+      url: `${API.API}/position`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -275,7 +276,7 @@ export function requestGetRoleStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_AD}/role`,
+      url: `${API.API}/role`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'

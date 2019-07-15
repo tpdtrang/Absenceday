@@ -72,13 +72,17 @@
             .description {
               white-space: nowrap;
               overflow: hidden;
-              max-width: 150px;
+              max-width: 120px;
               text-overflow: ellipsis;
               color: #000;
               font-family: "Roboto";
               min-width: 80px;
               border: 1px solid #999;
             }
+          }
+          td{
+            font-family: 'Roboto-Light';
+            color: #02a959;
           }
         }
         .p-scrollbar {
@@ -188,14 +192,32 @@
 }
 .btn-s{
   background-color: #02a959;
+  margin-bottom:5px;
+  color: #fff;
+  outline: none;
+  &:hover{
+    background-color: #fff;
+    border: 1px solid #02a959;
+    color: #000;
+  }
 }
 .p-search{
-  border: 1px solid #000;
-  border-radius: 5px;
-  padding: 5px;
-  margin-right: 10px;
+  border-radius: 3px;
+  margin-top:5px;
+  .op-search{
+    padding: 5px;
+    margin-bottom:5px;
+    border:1px solid #02a959;
+  }
+  .f-search{
+    display: inline-block;
+    margin: 2px;
+    input{
+      border: 1px solid #999;
+      padding: 4px;
+    }
+  }
 }
 .first-col{
-  min-width: 10px;
-  left: 0;
+  width: 20px;
 }

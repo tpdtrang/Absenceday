@@ -48,11 +48,8 @@ export const ADD_STORE = "ADD_STORE";
 export const GET_STORE = "GET_STORE";
 export const DELETE_STORE = "DELETE_STORE";
 export const UPDATE_STORE = "UPDATE_STORE";
-export const GET_DATETODATE = "GET_DATETODATE";
-export const SEARCH_DATETODATE = "SEARCH_DATETODATE";
-export const GET_YEAR = "GET_YEAR";
-export const SEARCH_YEAR = "SEARCH_YEAR";
-export const GET_MONTH = "GET_MONTH";
-export const SEARCH_MONTH = "SEARCH_MONTH";
+export const GET_DATE = "GET_DATE";
+export const SEARCH_DATE = "SEARCH_DATE";
+
 // FILTER
 export const FILTER_REGISTER = "FILTER_REGISTER"

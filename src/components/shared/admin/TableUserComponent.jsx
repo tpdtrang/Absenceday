@@ -16,9 +16,9 @@ class TableUserComponent extends Component {
       address: '',
       email: '',
       first_workday: '',
-      role: '',
-      users: [],
-      categories: {},
+      // role: '',
+      // users: [],
+      // categories: {},
       idtem: '',
       isFilter: false
     }
@@ -52,6 +52,8 @@ class TableUserComponent extends Component {
         isFilter: true
       })
     }
+    console.log(this.state);
+    
   }
   // listData = (listData) => {
   //   if (listData !== null && listData.length > 0) {
@@ -122,7 +124,7 @@ class TableUserComponent extends Component {
           email: this.props.dataEdit.attributes.email,
           address: this.props.dataEdit.attributes.address,
           first_workday: this.props.dataEdit.attributes.first_workday,
-          role: this.props.dataEdit.attributes.roles
+          // role: this.props.dataEdit.attributes.roles
         }
       )
     }
@@ -189,9 +191,9 @@ class TableUserComponent extends Component {
                     <th>Địa chỉ</th>
                     <th>Email</th>
                     <th>Ngày đi làm đầu tiên</th>
-                    <th>Vị trí</th>
+                    {/* <th>Vị trí</th> */}
                     <th>Hoạt động</th>
-                   
+
                   </tr>
                 </thead>
                 <tbody>
@@ -207,8 +209,8 @@ class TableUserComponent extends Component {
                           <td className="description">{data.attributes.address}</td>
                           <td className="description">{data.attributes.email}</td>
                           <td className="description">{data.attributes.first_workday}</td>
-                          <td className="description">{data.attributes.roles}</td>
-                          <td className="description">  
+                          {/* <td className="description">{data.attributes.roles}</td> */}
+                          <td className="description">
                             <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
                               <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
                             </button>
@@ -229,7 +231,7 @@ class TableUserComponent extends Component {
                           <td className="description">{data.attributes.address}</td>
                           <td className="description">{data.attributes.email}</td>
                           <td className="description">{data.attributes.first_workday}</td>
-                          <td className="description">{data.attributes.roles}</td>
+                          {/* <td className="description">{data.attributes.roles}</td> */}
                           <td className="description">
                             <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
                               <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
@@ -244,16 +246,16 @@ class TableUserComponent extends Component {
                 </tbody>
               </table>
             </div>
-            <Modal visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
+            <Modal maskClosable={false} visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
               <div className="p-modal">
                 <div className="title-form">
-                  <h3 className="heading-3">Form User</h3>
+                  <h3 className="heading-3">Thêm người dùng</h3>
                 </div>
                 <hr />
                 <div className="p-content">
                   <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                      <label className="form-text">Team:</label>
+                      <label className="form-text">Nhóm:</label>
                       <select className="op-team" onChange={this.onhandleChange} value={this.state.team_id} name="team_id">
                         {
                           this.props.team.map(data => (
@@ -263,7 +265,7 @@ class TableUserComponent extends Component {
                       </select>
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Position:</label>
+                      <label className="form-text">Vị trí:</label>
                       <select className="op-team" onChange={this.onhandleChange} value={this.state.position_id} name="position_id">
                         {
                           this.props.position.map(data => (
@@ -273,17 +275,17 @@ class TableUserComponent extends Component {
                       </select>
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Name:</label>
+                      <label className="form-text">Tên:</label>
                       <input type="text" className="form-search" name="name"
                         onChange={this.onhandleChange} value={this.state.name} />
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Phone:</label>
+                      <label className="form-text">Sđt:</label>
                       <input type="text" className="form-search" name="phone"
                         onChange={this.onhandleChange} value={this.state.phone} />
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Address:</label>
+                      <label className="form-text">Địa chỉ:</label>
                       <input type="text" className="form-search" name="address"
                         onChange={this.onhandleChange} value={this.state.address} />
                     </div>
@@ -293,7 +295,7 @@ class TableUserComponent extends Component {
                         onChange={this.onhandleChange} value={this.state.email} />
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Firstday:</label>
+                      <label className="form-text">Ngày đầu làm việc:</label>
                       <DatePicker
                         style={{ "width": "100%" }}
                         onChange={this.onChangeDate}
@@ -301,7 +303,7 @@ class TableUserComponent extends Component {
                       </DatePicker>
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Roles:</label>
+                      <label className="form-text">Vị trí:</label>
                       <input type="text" className="form-search" name="role" onChange={this.onhandleChange} value={this.state.role} />
                     </div>
                     <div className="btn-wrap">
