@@ -1,12 +1,13 @@
 import axios from 'axios';
 import * as API from '../constants/actionAPI';
 import * as types from '../constants/actionTypes';
+import { message } from 'antd';
 
 export function requestGetYearStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/timeabsence`,
+      url: `${API.API}/time_absences`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -33,19 +34,21 @@ export function requestSearchYearStore(data) {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      
-      dispatch(reciveData(types.SEARCH_DATE, response.data))
+      if (response.data && response.data.data.length > 0) {
+        dispatch(reciveData(types.SEARCH_DATE, response.data))
+      } else {
+        message.error("Không có thời gian đăng ki nghỉ trong những ngày này")
+      }
     }).catch(function (error) {
       console.log(error);
-
     })
   }
 }
 //SEARCH DATETODATE
 export function requestSearchDatetodate(data) {
-  let params ={
-    'from':data.from,
-    'to':data.to
+  let params = {
+    'from': data.from,
+    'to': data.to
   }
   return (dispatch) => {
     return axios.request({
@@ -57,9 +60,12 @@ export function requestSearchDatetodate(data) {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response);
-      dispatch(reciveData(types.SEARCH_DATE,response.data))
-    }).catch(function(error){
+      if (response.data && response.data.data.length > 0) {
+        dispatch(reciveData(types.SEARCH_DATE, response.data))
+      } else {
+        message.error("Không có thời gian đăng ki nghỉ trong những ngày này")
+      }
+    }).catch(function (error) {
       console.log(error);
     })
   }
@@ -79,8 +85,12 @@ export function requestSearchMonthStore(data) {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      console.log( response.data);
-      dispatch(reciveData(types.SEARCH_DATE, response.data))
+      if (response.data && response.data.data.length > 0) {
+        dispatch(reciveData(types.SEARCH_DATE, response.data))
+      } else {
+        message.error("Không có thời gian đăng ki nghỉ trong tháng này")
+      }
+
     }).catch(function (error) {
       console.log(error);
     })

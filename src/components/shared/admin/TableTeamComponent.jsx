@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
 import { Modal } from 'antd';
-import Pagination from '../../../feature/Pagination'
+import Pagination from '../../../feature/Pagination';
 class TableTeamComponent extends Component {
   constructor(props, context) {
     super(props, context);
+    this.cancelRef = React.createRef();
+    this.state = { showDialog: false };
+    this.open = () => this.setState({ showDialog: true });
+    this.close = () => this.setState({ showDialog: false });
     this.state = {
       show: false,
       name: '',
       description: '',
-      pagOfItem: []
+      pagOfItem: [],
+      dele: false
+
     }
+  }
+
+  openDele = () => {
+    this.setState({
+      dele: true
+    })
   }
 
   onChangePage = (pageOfItems) => {
@@ -27,7 +39,8 @@ class TableTeamComponent extends Component {
     this.props.onClose();
     this.onReset();
     this.setState({
-      show: false
+      show: false,
+      dele: false
     })
   }
   onhandleChange = (event) => {
@@ -57,6 +70,10 @@ class TableTeamComponent extends Component {
   }
   onDelete(id) {
     this.props.onDelete(id);
+    this.setState({
+      show: false,
+      dele: false
+    })
   }
   onEdit(id) {
     this.props.onEdit(id);
@@ -121,10 +138,17 @@ class TableTeamComponent extends Component {
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
                       <td className="description">
-                        <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
-                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
-                        </button>
-                        <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
+                        {/* <div className="alert btn-confirm"> */}
+                        <button className="btn" type="submit" onClick={this.openDele} >
+                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
+                        <Modal style={{textAlign:"center"}} maskClosable={false}
+                         visible={this.state.dele} onCancel={this.onhandleClose} footer={null} >
+                          <p>Bạn có muốn xóa?</p>
+                          <button className="btn btn-primary" onClick={this.onDelete.bind(this, data.id)}>Yes</button>{"   "}
+                          <button className="btn btn-danger" onClick={this.onhandleClose}>No</button>
+                        </Modal>
+                        {/* </div> */}
+                        <button className="btn btn-confirm" onClick={this.onEdit.bind(this, data.id)}>
                           <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                         </button>
                       </td>
@@ -134,7 +158,7 @@ class TableTeamComponent extends Component {
               </table>
               <Pagination items={this.props.data} onChangePage={this.onChangePage}></Pagination>
             </div>
-            <Modal visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
+            <Modal maskClosable={false} visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
               <div className="p-modal">
                 <div className="title-form">
                   <h3 className="heading-3">Thêm nhóm</h3>
@@ -149,8 +173,8 @@ class TableTeamComponent extends Component {
                       <label className="form-text">Mô tả:</label>
                       <input type="text" className="form-search" name="description" onChange={this.onhandleChange} value={this.state.description} /></div>
                     <div className="btn-wrap">
-                      <button type="submit" className="btn">
-                        Save </button>
+                      <button type="submit" className="btn btn-s">
+                        Lưu </button>
                     </div>
                   </form>
                 </div>

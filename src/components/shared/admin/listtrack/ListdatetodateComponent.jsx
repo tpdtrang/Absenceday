@@ -61,7 +61,6 @@ class ListdatetodateComponent extends Component {
     this.setState({
       month: dateString
     })
-
   }
 
   onhandleSearch = (event) => {

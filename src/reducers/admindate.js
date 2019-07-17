@@ -32,7 +32,7 @@ export default function store(state = INITIAL_STATE, action = {}) {
       })
     case types.SEARCH_DATE:
       return Object.assign({}, state, {
-        all: convertData(action.payload)
+        all: convertData(action.payload.data)
       })
     default:
       return state

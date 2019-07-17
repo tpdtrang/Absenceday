@@ -66,7 +66,6 @@
             text-align: center;
             min-width: 80px;
             border: 1px solid #000;
-            
           }
           tr {
             .description {
@@ -80,8 +79,8 @@
               border: 1px solid #999;
             }
           }
-          td{
-            font-family: 'Roboto-Light';
+          td {
+            font-family: "Roboto-Light";
             color: #02a959;
           }
         }
@@ -142,34 +141,36 @@
   border-radius: 4px;
   box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.15);
 }
-.table-wrapper{
+.table-wrapper {
   position: relative;
   overflow: auto;
   white-space: nowrap;
-  .sticky-col{
+  .sticky-col {
     position: sticky;
     position: -webkit-sticky;
     background: #fff;
   }
-  .first-col{
+  .first-col {
     max-width: 20px;
     left: 0;
+    border: 1px solid #000;
   }
-  .second-col{
+  .second-col {
     width: 100%;
-    left: 80px;
+    left: 80px; 
   }
-  th,td:first-child{
+  th,
+  td:first-child {
     width: 20px;
   }
 }
-.p-tags{
+.p-tags {
   border: 1px solid #000;
   padding: 5px 20px;
   border-radius: 10px;
   outline: none;
   color: #000;
-  option{
+  option {
     color: #000;
   }
 }
@@ -178,46 +179,46 @@
   @include justify-content(white-space);
   @include align-items(center);
   // margin: 10px 10px;
-  .p-menu{
+  .p-menu {
     margin: 10px;
-    .tag{
+    .tag {
       // background-color: #02a959;
       color: #000;
       border: 1px solid #02a959;
-     &:hover{
-      outline: none;
-     }
+      &:hover {
+        outline: none;
+      }
     }
   }
 }
-.btn-s{
+.btn-s {
   background-color: #02a959;
-  margin-bottom:5px;
+  margin-bottom: 5px;
   color: #fff;
   outline: none;
-  &:hover{
+  &:hover {
     background-color: #fff;
     border: 1px solid #02a959;
     color: #000;
   }
 }
-.p-search{
+.p-search {
   border-radius: 3px;
-  margin-top:5px;
-  .op-search{
+  margin-top: 5px;
+  .op-search {
     padding: 5px;
-    margin-bottom:5px;
-    border:1px solid #02a959;
+    margin-bottom: 5px;
+    border: 1px solid #02a959;
   }
-  .f-search{
+  .f-search {
     display: inline-block;
     margin: 2px;
-    input{
+    input {
       border: 1px solid #999;
       padding: 4px;
     }
   }
 }
-.first-col{
+.first-col {
   width: 20px;
 }

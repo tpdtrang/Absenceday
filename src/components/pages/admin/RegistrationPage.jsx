@@ -13,7 +13,8 @@ class RegistrationPage extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      views: 'TABLE'
+      views: 'TABLE',
+      isFilter: false
     }
   }
 
@@ -21,6 +22,13 @@ class RegistrationPage extends Component {
     this.props.dispatch(action.requestGetRegistrationStore());
     this.props.dispatch(action.requestGetUserStore());
     this.props.dispatch(action.requestGetTeamStore());
+  }
+
+  onSearch = (data) => {
+    this.props.dispatch(action.requestSearchRegistrationStore(data));
+    this.setState({
+      isFilter: true
+    })
   }
 
   onhandleShow = (views) => {
@@ -50,18 +58,18 @@ class RegistrationPage extends Component {
       return [];
     }
   }
-  translateAtTime(data) {
-    switch (data) {
-      case "Full":
-        return "Cả ngày"
-      case "Morning":
-        return "Buổi sáng"
-      case "Afternoon":
-        return "Buổi chiều"
-      default:
-        break;
-    }
-  }
+  // translateAtTime(data) {
+  //   switch (data) {
+  //     case "Full":
+  //       return "Cả ngày"
+  //     case "Morning":
+  //       return "Buổi sáng"
+  //     case "Afternoon":
+  //       return "Buổi chiều"
+  //     default:
+  //       break;
+  //   }
+  // }
 
   covertArrayNew(data) {
     let ItemNew = [];
@@ -69,7 +77,7 @@ class RegistrationPage extends Component {
       ItemNew = item.attributes.time.map(timeItem => {
         return {
           id: timeItem.id,
-          title: this.translateAtTime(timeItem.at_time),
+          title: timeItem.at_time,
           date: dateFormat(timeItem.time_details, 'yyyy-mm-dd'),
           email: item.attributes.user.name
         }
@@ -85,21 +93,23 @@ class RegistrationPage extends Component {
       switch (this.state.views) {
         case "CALENDER":
           return (
-            <CalenderComponent data={this.covertArrayNew(this.props.filter)} onhandleShow={this.onhandleShow} ></CalenderComponent>
+            <CalenderComponent data={this.covertArrayNew(this.props.filter)} onhandleShow={this.onhandleShow} />
           )
         case "TABLE":
           return (
-            <TableRegistrationComponent onDetails={this.onDetails} team={this.props.team} onhandleShow={this.onhandleShow} data={this.props.registration} user={this.props.stores}></TableRegistrationComponent>
+            <TableRegistrationComponent onDetails={this.onDetails} team={this.props.team} onhandleShow={this.onhandleShow}
+              data={this.state.isFilter ? this.props.filter : this.props.registration} user={this.props.stores}
+              onSearch={this.onSearch} />
           )
         default:
-          return (<></>)
+          return null
       }
     }
     return (
       <div>
-        <HeaderAdLayout></HeaderAdLayout>
+        <HeaderAdLayout />
         <div className="content">
-          <SideAdLayout></SideAdLayout>
+          <SideAdLayout />
           {mainContent()}
         </div>
       </div>

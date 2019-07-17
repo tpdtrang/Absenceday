@@ -1,6 +1,7 @@
 import * as API from '../constants/actionAPI';
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
+import {message} from 'antd';
 //user
 export function requestGetUserStore() {
   return (dispatch) => {
@@ -28,8 +29,8 @@ export function requestAddUserStore(data) {
     address: data.address,
     first_workday: data.first_workday,
     email: data.email,
-    role: data.role,
-    password:123456
+    // role: data.role,
+    password: 123456
   }
   console.log(store);
   return (dispatch) => {
@@ -42,7 +43,7 @@ export function requestAddUserStore(data) {
       },
       data: store
     }).then(function (response) {
-      console.log(response.data);
+      // console.log(response.data);
       dispatch(reciveData(types.ADD_STORE, response.data.data))
     }).catch(function (error) {
       console.log(error);
@@ -100,7 +101,7 @@ export function requestGetTeamStore() {
   return (dispatch) => {
     return axios({
       method: 'GET',
-      url: `${API.API}/team`,
+      url: `${API.API}/teams`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -123,7 +124,7 @@ export function requestAddTeamStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'POST',
-      url: `${API.API}/team`,
+      url: `${API.API}/teams`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -140,7 +141,7 @@ export function requestDeleteTeamStore(id) {
   return (dispatch) => {
     return axios.request({
       method: 'DELETE',
-      url: `${API.API}/team/${id}`,
+      url: `${API.API}/teams/${id}`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -161,7 +162,7 @@ export function requestUpdateTeamStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API}/team/${data.id}`,
+      url: `${API.API}/teams/${data.id}`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -179,7 +180,7 @@ export function requestGetPositionStore() {
   return (dispatch) => {
     return axios({
       method: 'GET',
-      url: `${API.API}/position`,
+      url: `${API.API}/positions`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -200,7 +201,7 @@ export function requestAddPositionStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'POST',
-      url: `${API.API}/position`,
+      url: `${API.API}/positions`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -217,7 +218,7 @@ export function requestDeletePositionStore(id) {
   return (dispatch) => {
     return axios.request({
       method: 'DELETE',
-      url: `${API.API}/position/${id}`,
+      url: `${API.API}/positions/${id}`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -239,7 +240,7 @@ export function requestUpdatePositionStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API}/position/${data.id}`,
+      url: `${API.API}/positions/${data.id}`,
       headers: {
         "Accept": "application/json",
         "Content-type": "application/json"
@@ -258,7 +259,7 @@ export function requestGetPermissionStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/position`,
+      url: `${API.API}/positions`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -294,7 +295,7 @@ export function requestGetRegistrationStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/absence`,
+      url: `${API.API}/absences`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application'
@@ -304,8 +305,15 @@ export function requestGetRegistrationStore() {
       dispatch(reciveData(types.GET_REGISTRATION, response.data.data))
     }).catch(function (error) {
       console.log(error);
-
     })
+  }
+}
+//--->search name
+export function requestSearchRegistrationStore(data) {
+  return (dispatch) => {
+    console.log(data);
+    
+    dispatch(reciveData(types.SEARCH_REGISTRATION, data))
   }
 }
 //TRACK
@@ -313,7 +321,7 @@ export function requestGetTrackStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/track`,
+      url: `${API.API}/tracks`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'

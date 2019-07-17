@@ -7,7 +7,8 @@ class TableRegistrationComponent extends Component {
     this.state = {
       idtem: '',
       isFilter: false,
-      pagOfItem: []
+      pagOfItem: [],
+      name:''
     }
   }
 
@@ -25,7 +26,6 @@ class TableRegistrationComponent extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    console.log(event);
   }
 
   onhandleChangeFilter = (event) => {
@@ -34,16 +34,22 @@ class TableRegistrationComponent extends Component {
       isFilter: true
     })
   }
-  handleShow = (data) => {
-    let dataNew = [];
-    data.map(item => {
-      if (parseInt(item.attributes.team.id) === parseInt(this.props.idtem)) {
-        dataNew = [...dataNew, item]
-      }
-      return item;
-    })
-    return dataNew;
+  onSubmit=(event)=>{
+    event.preventDefault();
+    console.log(this.data);
+    this.props.onSearch(this.state);
+    
   }
+  // handleShow = (data) => {
+  //   let dataNew = [];
+  //   data.map(item => {
+  //     if (parseInt(item.attributes.team.id) === parseInt(this.props.idtem)) {
+  //       dataNew = [...dataNew, item]
+  //     }
+  //     return item;
+  //   })
+  //   return dataNew;
+  // }
   render() {
     let sum = 0;
     // let { data } = this.props;
@@ -59,13 +65,18 @@ class TableRegistrationComponent extends Component {
                 </div>
               </div>
               <div className="menu-list">
-                <select className="p-tags" name="idtem" onChange={this.onhandleChangeFilter} value={this.state.idtem}>
+                {/* <select className="p-tags" name="idtem" onChange={this.onhandleChangeFilter} value={this.state.idtem}>
                   <option value="all">ALL</option>
                   {this.props.team.map(data => (
                     <option value={data.id} key={data.id}>{data.attributes.name}</option>
                   ))}
 
-                </select>
+                </select> */}
+                
+                <form onSubmit={this.onSubmit} className="f-search">
+                  <input type="text" name="name" className="p-search"  onChange={this.onhandleChange} value={this.state.name}/>
+                  <button type="submit" className="btn btn-s"><i className="fas fa-search" /></button>
+                </form>
               </div>
             </div>
             <div className="p-table table-wrapper">

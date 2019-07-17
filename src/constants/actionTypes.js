@@ -27,7 +27,8 @@ export const DELETE_POSITION = "DELETE_POSITION";
 export const UPDATE_POSITION = "UPDATE_POSITION";
 //export reducer registration
 export const GET_REGISTRATION = "GET_REGISTRATION";
-export const GET_TRACK = "GET_TRACK"
+export const GET_TRACK = "GET_TRACK";
+export const SEARCH_REGISTRATION = "SEARCH_REGISTRATION";
 //export reducer type dayoff
 export const REQUEST_GET_TYPEDAYOFF = "REQUEST_GET_TYPEDAYOFF";
 export const REQUEST_DELETE_TYPEDAYOFF = "REQUEST_DELETE_TYPEDAYOFF";

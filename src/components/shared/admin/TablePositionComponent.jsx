@@ -6,7 +6,8 @@ class TablePositionComponent extends Component {
     this.state = {
       show: false,
       name: '',
-      description: ''
+      description: '',
+      dele: false
     }
   }
   onhandleShow = () => {
@@ -14,12 +15,19 @@ class TablePositionComponent extends Component {
       show: true
     })
   }
+
+  openDele = () => {
+    this.setState({
+      dele: true
+    })
+  }
   onhandleClose = (e) => {
     e.preventDefault();
     this.props.onClose();
     this.onReset();
     this.setState({
-      show: false
+      show: false,
+      dele:false
     })
   }
 
@@ -44,6 +52,10 @@ class TablePositionComponent extends Component {
   }
   onDelete(id) {
     this.props.onDelete(id);
+    this.setState({
+      show:false,
+      dele:false
+    })
   }
   onEdit(id) {
     this.props.onEdit(id);
@@ -115,9 +127,14 @@ class TablePositionComponent extends Component {
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
                       <td className="description">
-                        <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
-                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
-                        </button>
+                        <button className="btn" type="submit" onClick={this.openDele} >
+                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
+                        <Modal style={{ textAlign: "center" }} maskClosable={false}
+                          visible={this.state.dele} onCancel={this.onhandleClose} footer={null} >
+                          <p>Bạn có muốn xóa?</p>
+                          <button className="btn btn-primary" onClick={this.onDelete.bind(this, data.id)}>Yes</button>{"   "}
+                          <button className="btn btn-danger" onClick={this.onhandleClose}>No</button>
+                        </Modal>
                         <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
                           <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                         </button>
@@ -127,7 +144,7 @@ class TablePositionComponent extends Component {
                 </tbody>
               </table>
             </div>
-            <Modal visible={this.state.show} footer={null} onCancel={this.onhandleClose} >
+            <Modal maskClosable={false} visible={this.state.show} footer={null} onCancel={this.onhandleClose} >
               <div className="p-modal">
                 <div className="title-form">
                   <h3 className="heading-3">Thêm vị trí</h3>
@@ -144,7 +161,7 @@ class TablePositionComponent extends Component {
                       <input type="text" className="form-search" name="description" onChange={this.onhandleChange} value={this.state.description} />
                     </div>
                     <div className="btn-wrap">
-                      <button type="submit" className="btn" variant="primary">
+                      <button type="submit" className="btn btn-s" variant="primary">
                         Lưu</button>
                     </div>
                   </form>
