@@ -7,11 +7,12 @@ const cookies = new Cookies();
 export function requestSearchApprovedDay(data) {
   let params = {
     'day': data.day,
+    status: 1
   }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchapproved`,
+      url: `${API.API_URL}/searches`,
       params,
       headers: {
         "Accept": "application/json",
@@ -34,11 +35,12 @@ export function requestSearchApprovedDay(data) {
 export function requestSearchApprovedMonth(data) {
   let params = {
     'month': data.month,
+    status: 1
   }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchapproved`,
+      url: `${API.API_URL}/searches`,
       params,
       headers: {
         "Accept": "application/json",
@@ -60,12 +62,13 @@ export function requestSearchApprovedMonth(data) {
 }
 export function requestSearchApprovedYear(data) {
   let params = {
-    'year': data.year
+    'year': data.year,
+    status: 1
   }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchapproved`,
+      url: `${API.API_URL}/searches`,
       params,
       headers: {
         "Accept": "application/json",
@@ -88,11 +91,12 @@ export function requestSearchApprovedYear(data) {
 export function requestSearchPendingDay(data) {
   let params = {
     'day': data.day,
+    status: 3
   }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchpending`,
+      url: `${API.API_URL}/searches`,
       params,
       headers: {
         "Accept": "application/json",
@@ -114,11 +118,12 @@ export function requestSearchPendingDay(data) {
 export function requestSearchPendingMonth(data) {
   let params = {
     'month': data.month,
+    status: 3
   }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchpending`,
+      url: `${API.API_URL}/searches`,
       params,
       headers: {
         "Accept": "application/json",
@@ -139,12 +144,13 @@ export function requestSearchPendingMonth(data) {
 }
 export function requestSearchPendingYear(data) {
   let params = {
-    'year': data.year
+    'year': data.year,
+    status: 3
   }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchpending`,
+      url: `${API.API_URL}/searches`,
       params,
       headers: {
         "Accept": "application/json",
@@ -165,12 +171,13 @@ export function requestSearchPendingYear(data) {
 }
 export function requestSearchDisApprovedDay(data) {
   let params = {
-    'day': data.day
+    'day': data.day,
+    status: 2
   }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchdisapproved`,
+      url: `${API.API_URL}/searches`,
       params,
       headers: {
         "Accept": "application/json",
@@ -192,11 +199,12 @@ export function requestSearchDisApprovedDay(data) {
 export function requestSearchDisApprovedMonth(data) {
   let params = {
     'month': data.month,
+    status: 2
   }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchdisapproved`,
+      url: `${API.API_URL}/searches`,
       params,
       headers: {
         "Accept": "application/json",
@@ -217,12 +225,13 @@ export function requestSearchDisApprovedMonth(data) {
 }
 export function requestSearchDisApprovedYear(data) {
   let params = {
-    'year': data.year
+    'year': data.year,
+    status: 2
   }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchdisapproved`,
+      url: `${API.API_URL}/searches`,
       params,
       headers: {
         "Accept": "application/json",
@@ -248,7 +257,7 @@ export function requestSearchQueueDay(data) {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchregispending`,
+      url: `${API.API_URL}/search_regispending`,
       params,
       headers: {
         "Accept": "application/json",
@@ -273,7 +282,7 @@ export function requestSearchQueueMonth(data) {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchregispending`,
+      url: `${API.API_URL}/search_regispending`,
       params,
       headers: {
         "Accept": "application/json",
@@ -299,7 +308,7 @@ export function requestSearchQueueYear(data) {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/searchregispending`,
+      url: `${API.API_URL}/search_regispending`,
       params,
       headers: {
         "Accept": "application/json",

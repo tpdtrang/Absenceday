@@ -14,7 +14,7 @@ class ListComponent extends Component {
     super(props);
     this.state = {
       day: dateFormatDate(now, 'yyyy-mm-dd'),
-      month: '',
+      month: dateFormatDate(now,'yyyy-mm'),
       year: '',
       search: '',
       checkSearch: "1",
@@ -104,7 +104,7 @@ class ListComponent extends Component {
               this.state.checkSearch === "2" ?
                 <form className="form-search" onSubmit={this.onSearchMonth}>
                   {/* <input onChange={this.onChanger} placeholder="Tìm kiếm theo tháng..." type="text" value={this.state.month} name="month" className="b-search"></input> */}
-                  <MonthPicker placeholder="Select month" defaultValue={moment(now,monthFormat)} style={{ "margin": "0 6px" }} onChange={this.onChangeMonth} name="month"></MonthPicker>
+                  <MonthPicker defaultValue={moment(now,monthFormat)} style={{ "margin": "0 6px" }} onChange={this.onChangeMonth} name="month"></MonthPicker>
                   <button className="btn-search"><i className="fas fa-search" ></i></button>
                 </form>
                 :

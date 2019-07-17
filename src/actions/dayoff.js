@@ -4,46 +4,39 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { message } from 'antd';
 const cookies = new Cookies();
+var dateFormatDate = require('dateformat');
 export function requestGetDayOff() {
-  if (cookies.get('data') !== undefined) {
-    return (dispatch) => {
-      return axios.request({
-        method: 'GET',
-        url: `${API.API_URL}/information`,
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          'Authorization': `${'bearer' + cookies.get('token')}`
-        },
-      }).then(function (response) {
-        dispatch(reciveData(types.REQUEST_GET_DAYOFF, response.data.data));
-      }).catch(function (error) {
-      
-      })
-    }
-  } else {
-    return (dispatch) => {
-      return axios.request({
-        method: 'GET',
-        url: `${API.API_URL}/information`,
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          'Authorization': `${'bearer' + cookies.get('token')}`
-        },
-      }).then(function (response) {
-        dispatch(reciveData(types.REQUEST_GET_DISDAYOFF, response));
-      }).catch(function (error) {
-    
-      })
-    }
+  let paramData = {};
+  paramData = {
+    status: 3
   }
-}
-export function requestGetListQueue() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/approved`,
+      url: `${API.API_URL}/informations`,
+      params: paramData,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        'Authorization': `${'bearer' + cookies.get('token')}`
+      },
+    }).then(function (response) {
+      dispatch(reciveData(types.REQUEST_GET_DAYOFF, response.data.data));
+    }).catch(function (error) {
+
+    })
+  }
+}
+export function requestGetListQueue() {
+  let paramData = {};
+  paramData = {
+    status: 1
+  }
+  return (dispatch) => {
+    return axios.request({
+      method: 'GET',
+      url: `${API.API_URL}/informations`,
+      params: paramData,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -52,15 +45,20 @@ export function requestGetListQueue() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_LIST_QUEUE, response.data.data));
     }).catch(function (error) {
-      
+
     })
   }
 }
 export function requestGetListDisAccept() {
+  let paramData = {};
+  paramData = {
+    status: 2
+  }
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/disapproved`,
+      url: `${API.API_URL}/informations`,
+      params: paramData,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -69,7 +67,7 @@ export function requestGetListDisAccept() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_LIST_DISACCEPT, response.data.data));
     }).catch(function (error) {
-    
+
     })
   }
 }
@@ -81,7 +79,7 @@ export function requestDisAccept(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API_URL}/updated2/${data.id}`,
+      url: `${API.API_URL}/updated_2/${data.id}`,
       params: paramsData,
       headers: {
         "Accept": "application/json",
@@ -120,7 +118,7 @@ export function requestSendAccept(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API_URL}/updated3/${data.id}`,
+      url: `${API.API_URL}/updated_3/${data.id}`,
       params: paramsData,
       headers: {
         "Accept": "application/json",
@@ -142,7 +140,7 @@ export function requestUpdateAccept(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API_URL}/updated/${data.id}`,
+      url: `${API.API_URL}/updated_1/${data.id}`,
       params: paramsData,
       headers: {
         "Accept": "application/json",
@@ -160,13 +158,13 @@ export function requestGetMail() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/cc`,
+      url: `${API.API_URL}/mails_cc`,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
         "Authorization": `${'bearer' + cookies.get('token')}`
       }
-    }).then(function (response){
+    }).then(function (response) {
       dispatch(reciveData(types.REQUEST_GET_MAIL, response.data.data))
     }).catch(function (error) {
       console.log(error);
@@ -239,7 +237,7 @@ export function requestCreateDayOff(data) {
   return (dispatch) => {
     return axios.request({
       method: 'POST',
-      url: `${API.API_URL}/absence`,
+      url: `${API.API_URL}/absences`,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -253,6 +251,27 @@ export function requestCreateDayOff(data) {
       console.log(error);
       message.error(" Đăng ký không thành công!")
     })
+  }
+}
+export function requestGetDay() {
+  return (dispatch) => {
+    return axios.request({
+      method: 'GET',
+      url: `${API.API}/absences`,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application',
+      }
+    }).then(function (response) {
+      dispatch(reciveData(types.REQUEST_GET_REGISTRATION, response.data.data))
+    }).catch(function (error) {
+      console.log(error);
+    })
+  }
+}
+export function requestFilterDay(id) {
+  return (dispatch) => {
+    dispatch(reciveData(types.REQUEST_FILTER_REGIS, id))
   }
 }
 export function requestUpdateDay(data) {
@@ -282,8 +301,8 @@ export function requestUpdateDay(data) {
   } else {
     paramData = {
       type_id: data.typeday,
-      time_start: data.time_start,
-      time_end: data.time_end,
+      time_start: dateFormatDate(data.time_start, 'yyyy-mm-dd'),
+      time_end: dateFormatDate(data.time_end, 'yyyy-mm-dd'),
       note: data.note,
       type: 'Từ ngày đến hết ngày'
     }
@@ -292,7 +311,7 @@ export function requestUpdateDay(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API_URL}/absence/${data.id}`,
+      url: `${API.API_URL}/absences/${data.id}`,
       params: paramData,
       headers: {
         "Accept": "application/json",

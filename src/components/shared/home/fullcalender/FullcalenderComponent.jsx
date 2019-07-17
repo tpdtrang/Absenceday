@@ -9,47 +9,50 @@ import allLocales from '@fullcalendar/core/locales-all';
 // import Cookies from 'universal-cookie';
 // const cookies = new Cookies();
 var dateFormat = require('dateformat');
-var now = new Date()
 class FullcalenderComponent extends Component {
-    calendarComponentRef = React.createRef();
-    constructor(props){
-        super(props);
-        this.state = {
-            datenow: now,
-            show: false,
+    calendarComponentRef = React.createRef()
+    componentDidMount() {
+        if (this.props.data.length > 0) {
+            let calendarApi = this.calendarComponentRef.current.getApi()
+            calendarApi.gotoDate(dateFormat(this.props.data[0].date, 'yyyy-mm-dd'))
         }
     }
-    onEvent = (info) =>{
-        this.setState({
-            show: true,
-            title: info.event.title,
-            daystart: dateFormat(info.event.start,"dddd ,  dd mmmm yyyy"),
-            dayend: dateFormat(info.event.end,"dddd ,  dd mmmm yyyy"),
-            user: info.event.extendedProps.userId,
-            id: info.event.id
-        })
+    onShowTable = () =>{
+        this.props.onShowTable();
     }
     render() {
         return (
             <div className="b-fullcalendar">
+                <div className="b-title">
+                    <h1 className="title">Chi Tiết Đăng ký Nghỉ</h1>
+                </div>
+                <div className="b-back">
+                    <button className="btn-back" onClick={this.onShowTable}><i className="fas fa-arrow-left"></i>Quay về</button>
+                </div>
                 <FullCalendar
-                    schedulerLicenseKey={'GPL-My-Project-Is-Open-Source'}                
+                    schedulerLicenseKey={'GPL-My-Project-Is-Open-Source'}
+                    defaultView="dayGridMonth"
                     header={{
                         right: 'custom prev,next today',
                         center: 'title ',
-                        left: 'dayGridMonth',
-                    }}     
-                    eventClick={this.onEvent}             
+                        left: 'dayGridMonth,timeGridWeek',
+                    }}
+                    customButtons={{
+                        myCustomButton: {
+                          theme: 'true',
+                          text: this.props.data !== undefined ? this.props.data[0].email : "abc"
+                        }
+                      }}
                     height={'parent'}
                     timeZone={'local'}
                     contentHeight={480}
                     aspectRatio={1}
                     plugins={[rrulePlugin, dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-                    ref ={this.calendarComponentRef}                 
+                    ref={this.calendarComponentRef}
                     locales={allLocales}
                     locale={'vi'}
-                    events = {
-                       this.props.data
+                    events={
+                        this.props.data
                     }
                     eventTextColor={'#FEFEF9'}
                     eventBorderColor={'rgba(0,0,0,1.5)'}

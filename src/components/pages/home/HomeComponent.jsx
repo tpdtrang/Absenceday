@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 // import {Redirect} from 'react-router-dom'
 import { HeaderLayout, MenuLayout } from '../../layouts/home';
-import { ListComponent, ListQueueComponent, ListAcceptComponent, ListDisAcceptComponent } from '../../shared/home';
+import { ListComponent, ListQueueComponent, ListAcceptComponent, ListDisAcceptComponent, ListRegistrantion, FullCalenderComponent } from '../../shared/home';
 import * as action_dayoff from '../../../actions/dayoff';
 import * as action_typedayoff from '../../../actions/typeday';
 import * as action_search from '../../../actions/search';
 // import {message} from 'antd'
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
+var dateFormat = require('dateformat');
 const cookies = new Cookies();
 class HomeComponent extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class HomeComponent extends Component {
     this.props.dispatch(action_dayoff.requestGetListQueue());
     this.props.dispatch(action_dayoff.requestGetListAccept());
     this.props.dispatch(action_dayoff.requestGetListDisAccept());
+    this.props.dispatch(action_dayoff.requestGetDay());
   }
   onViews = () => {
     this.setState({ views: "2" })
@@ -44,6 +46,9 @@ class HomeComponent extends Component {
   }
   onList = () => {
     this.setState({ views: "3" })
+  }
+  onStatistical = () => {
+    this.setState({ views: "5" })
   }
   onAccept = (data) => {
     this.props.dispatch(action_dayoff.requestUpdateAccept(data));
@@ -103,6 +108,32 @@ class HomeComponent extends Component {
   onSearchQueueAcceptYear = (data) => {
     this.props.dispatch(action_search.requestSearchQueueYear(data));
   }
+  onDetails = (id) => {
+    this.setState({
+      views: "6"
+    })
+    this.props.dispatch(action_dayoff.requestFilterDay(id))
+  }
+  onShowTable = () => {
+    this.setState({
+      views: "5"
+    })
+  }
+  covertArrayNew(data) {
+    let ItemNew = [];
+    data.map(item => {
+      ItemNew = item.attributes.time.map(timeItem => {
+        return {
+          id: timeItem.id,
+          title: timeItem.at_time,
+          date: dateFormat(timeItem.time_details, 'yyyy-mm-dd'),
+          email: item.attributes.user.name
+        }
+      })
+      return [];
+    })
+    return ItemNew;
+  }
   render() {
     const mainContent = () => {
       if (this.state.views === "1") {
@@ -131,7 +162,9 @@ class HomeComponent extends Component {
       if (this.state.views === "3") {
         return (
           <ListAcceptComponent
-            data={this.props.listaccept}
+            data={cookies.get('data') !== undefined
+              ? this.props.listaccept
+              : ''}
             onAccept={this.onAccept}
             onDisAccept={this.onDisAccept}
             onSendAccept={this.onSendAccept}
@@ -149,6 +182,16 @@ class HomeComponent extends Component {
             onSearchDay={this.onSearchDisApprovedDay}
             onSearchMonth={this.onSearchDisApprovedMonth}
             onSearchYear={this.onSearchDisApprovedYear}></ListDisAcceptComponent>
+        )
+      }
+      if (this.state.views === "5") {
+        return (
+          <ListRegistrantion data={this.props.listregis} onDetails={this.onDetails}></ListRegistrantion>
+        )
+      }
+      if (this.state.views === "6") {
+        return (
+          <FullCalenderComponent data={this.covertArrayNew(this.props.filter)} onShowTable={this.onShowTable}></FullCalenderComponent>
         )
       }
     }
@@ -173,6 +216,7 @@ class HomeComponent extends Component {
               onViews={this.onViews}
               onListQueue={this.onListQueue}
               onList={this.onList}
+              onStatistical={this.onStatistical}
               typedayoff={this.props.typedayoff}
               onAddDayOff={this.onAddDayOff}></MenuLayout>
             {mainContent()
@@ -193,7 +237,9 @@ function mapStateToProps(state) {
     listaccept: state.listaccept.all,
     disaccept: state.disaccept.all,
     mail: state.mail.all,
-    isList: state.dayoff.isList
+    isList: state.dayoff.isList,
+    listregis: state.listregisday.all,
+    filter: state.listregisday.filter
   }
 }
 export default connect(mapStateToProps, null)(HomeComponent);

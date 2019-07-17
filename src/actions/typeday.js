@@ -6,7 +6,7 @@ export function requestGetTypeDayOff() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/type`,
+      url: `${API.API_URL}/types`,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -23,7 +23,7 @@ export function requestGetLead() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/to`,
+      url: `${API.API_URL}/mails_to`,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"

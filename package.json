@@ -34,7 +34,8 @@
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
     "rrule": "^2.6.0",
-    "universal-cookie": "^4.0.0"
+    "universal-cookie": "^4.0.0",
+    "validator": "^11.1.0"
   },
   "scripts": {
     "start": "set port=2019 &&  react-scripts start",

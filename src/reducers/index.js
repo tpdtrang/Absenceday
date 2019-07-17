@@ -5,6 +5,7 @@ import TypeDayOff from './typedayoff';
 import LeadReducer from './teamlead';
 import ListQueue from './listqueue';
 import ListAccept from './listaccept';
+import ListRegisDay from './listregisday'
 import StoreAdminReducer from './adminreducer';
 import AdminTeam from './adminteam'
 import AdminPosition from './adminpositon';
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
     registration: AdminRegistration,
     disaccept: ListDisAccept,
     track: AdminTrack,
-    searchdate: SearchDate
+    searchdate: SearchDate,
+    listregisday: ListRegisDay
 });
 export default rootReducer;

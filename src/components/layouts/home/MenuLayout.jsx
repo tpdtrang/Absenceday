@@ -50,18 +50,26 @@ class MenuLayout extends Component {
         self.setState({
           id: this.props.dataEdit.id,
           visible: this.props.edit,
-          time_start: data.time_start,
-          time_end: data.time_end,
-          checkType: data.time[0].type === "Chọn ngày" ? true : false,
-          at_time: data.time[0].type === "Chọn ngày" ? data.time[0].at_time : 'Buổi Sáng',
+          // time_start:  data.time.length > 0 ?  dateFormatDate(data.time_start, 'yyyy-mm-dd') : '',
+          // time_end:  data.time.length > 0 ? dateFormatDate(data.time_end, 'yyyy-mm-dd') : '',
+          // checkType: data.time[0].type === "Chọn ngày" ? true : false,
+          // at_time: data.time[0].type === "Chọn ngày" ? data.time[0].at_time : 'Buổi Sáng',
+          // note: data.note,
+          // type: data.time.length > 0 ? data.time[0].registration_id : '',
+          // date:  dateFormatDate(data.date, 'yyyy-mm-dd'),
+          // typeday: data.type.id,
+          // arrayNew: this.state.arrayNew,
+          time_start: dateFormatDate(data.time_start, 'yyyy-mm-dd'),
+          time_end: dateFormatDate(data.time_end, 'yyyy-mm-dd'),
+          at_time: data.time[0].at_time,
+          checkType: data.time[0].type === 'Từ ngày đến hết ngày' ? false : true,
           note: data.note,
-          type: data.checkType === true ? "Chọn ngày" : "Từ ngày đến hết ngày",
-          date:  data.date,
+          type:  data.checkType !== null ? data.time[0].type : 'Từ ngày đến hết ngày',
+          date: dateFormatDate(data.date, 'yyyy-mm-dd'),
           typeday: data.type.id,
-          // arrayNew: data.time[0].type === "Chọn ngày" ? data.time[0].arrayNew : '',
+          arrayNew: data.type !== null ? this.state.arrayNew : ''
         })
       } else {
-        this.onReset();
         this.setState({
           visible: this.props.visible
         })
@@ -74,12 +82,6 @@ class MenuLayout extends Component {
     } else {
       message.error("Bạn cần đăng nhập để đăng ký!")
     }
-  }
-  onViews = () => {
-    this.props.onViews();
-  }
-  onListQueue = () => {
-    this.props.onListQueue();
   }
   onChanger = (event) => {
     const name = event.target.name;
@@ -296,11 +298,20 @@ class MenuLayout extends Component {
       day: dateString,
     })
   }
+  onViews = () => {
+    this.props.onViews();
+  }
+  onListQueue = () => {
+    this.props.onListQueue();
+  }
   onDisAccept = () => {
     this.props.onDisAccept();
   }
   onList = () => {
     this.props.onList();
+  }
+  onStatistical = () =>{
+    this.props.onStatistical();
   }
   render() {
     const contentUser = () => {
@@ -335,6 +346,7 @@ class MenuLayout extends Component {
           <button className="btn-list" onClick={this.onViews}>DS Đợi Duyệt</button>
           <button className="btn-list" onClick={this.onDisAccept}>DS Không Duyệt</button>
           <button className="btn-list" onClick={this.onList}>DS Duyệt </button>
+          <button className="btn-list" onClick={this.onStatistical}>Thống kê</button>
         </div>
         <Modal
           style={{

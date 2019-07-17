@@ -14,7 +14,7 @@ class ListComponent extends Component {
     super(props);
     this.state = {
       day: dateFormatDate(now, 'yyyy-mm-dd'),
-      month: '',
+      month: dateFormatDate(now, 'yyyy-mm'),
       year: '',
       search: '',
       checkSearch: "1",
