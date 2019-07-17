@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import Pagination from '../../../../feature/Pagination';
-import { DatePicker } from 'antd';
+import { DatePicker, Form } from 'antd';
 import moment from 'moment';
 import Cookies from 'universal-cookie';
 var dateFormatDate = require('dateformat');
@@ -8,13 +8,13 @@ var cookies = new Cookies();
 var now = new Date();
 const dateFormat = 'YYYY-MM-DD';
 const monthFormat = 'YYYY-MM';
-const {MonthPicker} = DatePicker;
+const { MonthPicker } = DatePicker;
 class ListComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       day: dateFormatDate(now, 'yyyy-mm-dd'),
-      month: '',
+      month: dateFormatDate(now, 'yyyy-mm'),
       year: '',
       search: '',
       checkSearch: "1",
@@ -42,7 +42,11 @@ class ListComponent extends Component {
   }
   onSearchYear = (event) => {
     event.preventDefault();
-    this.props.onSearchYear(this.state);
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.props.onSearchYear(this.state);
+      }
+    });
   }
   onChangeSearch = (event) => {
     const name = event.target.name;
@@ -68,12 +72,13 @@ class ListComponent extends Component {
       }
     }
   }
-  onChangeMonth = (date, dateString) =>{
+  onChangeMonth = (date, dateString) => {
     this.setState({
       month: dateString,
     })
   }
   render() {
+    // const { getFieldDecorator } = this.props.form;
     return (
       <section className="b-table-container">
         <div className="b-table">
@@ -105,7 +110,7 @@ class ListComponent extends Component {
               this.state.checkSearch === "2" ?
                 <form className="form-search" onSubmit={this.onSearchMonth}>
                   {/* <input onChange={this.onChanger} placeholder="Tìm kiếm theo tháng..." type="text" value={this.state.month} name="month" className="b-search"></input> */}
-                  <MonthPicker placeholder="Select month" defaultValue={moment(now,monthFormat)} style={{ "margin": "0 6px" }} onChange={this.onChangeMonth} name="month"></MonthPicker>
+                  <MonthPicker defaultValue={moment(now, monthFormat)} style={{ "margin": "0 6px" }} onChange={this.onChangeMonth} name="month"></MonthPicker>
                   <button className="btn-search"><i className="fas fa-search" ></i></button>
                 </form>
                 :
@@ -117,6 +122,21 @@ class ListComponent extends Component {
                   <input onChange={this.onChanger} placeholder="Tìm kiếm theo năm..." type="text" value={this.state.year} name="year" className="b-search"></input>
                   <button className="btn-search"><i className="fas fa-search" ></i></button>
                 </form>
+                // <Form  className="form-search" onSubmit={this.onSearchYear}>
+                //   <Form.Item>
+                //     {getFieldDecorator('year', {
+                //       rules: [
+                //         {
+                //           required: true,
+                //           message: 'Bạn hãy nhập số!'
+                //         },
+                //       ],
+                //     })(
+                //       <Input onChange={this.onChanger} placeholder="Tìm kiếm theo năm..." type="number" name="year" className="b-search"/>
+                //     )}
+                //     <button className="btn-search"><i className="fas fa-search" ></i></button>
+                //   </Form.Item>
+                // </Form>
                 :
                 <></>
             }
@@ -186,5 +206,5 @@ class ListComponent extends Component {
     );
   }
 }
-
+ListComponent = Form.create({})(ListComponent)
 export default ListComponent;

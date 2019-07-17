@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
-// import Cookies from 'universal-cookie';
-import { Modal, DatePicker } from 'antd';
+import Cookies from 'universal-cookie';
+import { Modal, DatePicker, Form, Button, Input } from 'antd';
 import moment from 'moment';
 var dateFormatDate = require('dateformat');
 const monthFormat = 'YYYY-MM';
-const {MonthPicker} = DatePicker;
+const { MonthPicker } = DatePicker;
 var now = new Date();
 const dateFormat = 'YYYY-MM-DD';
+const cookies = new Cookies();
 class ListComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.initialState  = {
       showModal: false,
       message: '',
       day: dateFormatDate(now, 'yyyy-mm-dd'),
-      month: '',
+      month: dateFormatDate(now,'yyyy-mm'),
       year: '',
       search: '',
       checkSearch: "1",
       id: '',
-    }
+    };
+    this.state = this.initialState ;
   }
-  onChangeMonth = (date, dateString) =>{
+  onChangeMonth = (date, dateString) => {
     this.setState({
       month: dateString,
     })
@@ -33,7 +35,7 @@ class ListComponent extends Component {
     })
     this.onReset();
   }
-  onReset() {
+  onReset = () => {
     this.setState({
       message: ''
     })
@@ -53,34 +55,49 @@ class ListComponent extends Component {
   }
   onAccept = (e) => {
     e.preventDefault();
-    this.props.onAccept(this.state);
-    this.setState({
-      showModal: false
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        values.id = this.state.id;
+        this.props.onAccept(values);
+        this.setState({
+          showModal: false,
+        });
+        this.props.form.resetFields()
+      }
     })
-    this.onReset();
   }
   onDisAccept = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    this.props.onDisAccept(this.state);
-    this.setState({
-      showModal: false
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        values.id = this.state.id;
+        this.props.onDisAccept(values);
+        this.setState({
+          showModal: false,
+        });
+        this.props.form.resetFields()
+      }
     })
-    this.onReset();
   }
   onSendAccept = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    this.props.onSendAccept(this.state);
-    this.setState({
-      showModal: false
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        values.id = this.state.id;
+        this.props.onSendAccept(values);
+        this.setState({
+          showModal: false,
+        });
+        this.props.form.resetFields()
+      }
     })
-    this.onReset();
+    
   }
   onChanger = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
+    
   }
   onChangeDay = (date, dateString) => {
     this.setState({
@@ -124,6 +141,7 @@ class ListComponent extends Component {
     }
   }
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
       <section className="b-table-container">
         <div className="b-table">
@@ -153,8 +171,7 @@ class ListComponent extends Component {
             {
               this.state.checkSearch === "2" ?
                 <form className="form-search" onSubmit={this.onSearchMonth}>
-                  {/* <input onChange={this.onChanger} placeholder="Tìm kiếm theo tháng..." type="text" value={this.state.month} name="month" className="b-search"></input> */}
-                  <MonthPicker placeholder="Select month" defaultValue={moment(now,monthFormat)} style={{ "margin": "0 6px" }} onChange={this.onChangeMonth} name="month"></MonthPicker>
+                  <MonthPicker placeholder="Select month" defaultValue={moment(now, monthFormat)} style={{ "margin": "0 6px" }} onChange={this.onChangeMonth} name="month"></MonthPicker>
                   <button className="btn-search"><i className="fas fa-search" ></i></button>
                 </form>
                 :
@@ -197,7 +214,7 @@ class ListComponent extends Component {
             </thead>
             <tbody>
               {
-
+                cookies.get('data') !== undefined ?
                 this
                   .props
                   .data
@@ -231,7 +248,8 @@ class ListComponent extends Component {
                       </td>
                     </tr>
                   ))
-
+                  :
+                  <></>
               }
             </tbody>
           </table>
@@ -254,22 +272,38 @@ class ListComponent extends Component {
                 <i className="fas fa-times"></i>
               </button>
             </div>
-            <form className="b-form">
+            <Form className="b-form" id="reset-form">
               <div className="form-group">
-                <p className="b-text">Comment :</p>
-                <textarea onChange={this.onChanger} className="b-comment" name="message" value={this.state.message} />
+                <p className="b-text">Thông báo :</p>
               </div>
-              <div className="b-btn">
-                <button className="btn-save" onClick={this.onSendAccept}>Gửi</button>
-                <button className="btn-accept" onClick={this.onAccept}>Duyệt</button>
-                <button className="btn-disaccept" onClick={this.onDisAccept}>Không duyệt</button>
-              </div>
-            </form>
+              <Form.Item>
+                {getFieldDecorator('message', {
+                  initialValue: this.state.message,
+                  rules: [
+                    { 
+                      required: true, 
+                      message: 'Bạn hãy nhập để gửi thông báo!' 
+                    },
+                    {
+                      min: 10,
+                      message: 'Bạn hãy nhập hơn 10 ký tự!'
+                    }
+                  ],
+                })(
+                  <Input className="b-comment"/>,
+                )}
+                <div className="b-btn">
+                  <Button className="btn-save" onClick={this.onSendAccept}>Gửi</Button>
+                  <Button className="btn-accept" onClick={this.onAccept}>Duyệt</Button>
+                  <Button className="btn-disaccept" onClick={this.onDisAccept}>Không duyệt</Button>
+                </div>
+              </Form.Item>
+            </Form>
           </div>
         </Modal>
       </section>
     );
   }
 }
-
+ListComponent = Form.create({})(ListComponent);
 export default ListComponent;

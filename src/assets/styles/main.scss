@@ -378,8 +378,17 @@
           color: #fff;
           border-right: 1px solid #fff;
           background-color: #2962ff;
+          &.second-col{
+            width: 10%;
+          }
+          &.details{
+            width: 8%;
+          }
           &.time {
             border-bottom: 1px solid #fff;
+          }
+          &.at-time{
+            width: 10%;
           }
           &:last-child {
             border-right: none;
@@ -405,6 +414,8 @@
     .name-item {
       text-align: center;
       border-right: 1px solid rgb(224, 220, 220);
+      font-weight: 400;
+      color: #000;
       .type {
         @include flexbox();
         @include justify-content(space-around);
@@ -448,6 +459,31 @@
       }
       
     }
+    .description{
+      text-align: center;
+      font-size: 14px;
+      font-weight: 400;
+      color: #000;
+      border-right: 1px solid rgb(247, 245, 245);;
+      background-color: 000;
+      .btn-edit{
+        border: none;
+        cursor: pointer;
+        background-color: #fff;
+        color: #2962ff;
+        border: 1px solid #2962ff;
+        padding: 5px;
+        font-weight: 500;
+        border-radius: 2px;
+        &:hover{
+          background-color: #2962ff;
+          color: #fff;
+        }
+      }
+      &.details{
+        width: 15%;
+      }
+    }
   }
 }
 
@@ -490,10 +526,18 @@
       font-weight: 500;
     }
     .b-comment{
-      height: 100px;
-      width: 350px;
+      position: relative;
+      height: 120px;
+      width: 75%;
       margin-top: 20px;
       outline: none;
+    
+    }
+    .validation {
+      text-align: center;
+      font-weight:400;
+      font-size:13px;
+      color: #DE5959;
     }
     .b-btn{
       text-align: center;
@@ -534,6 +578,40 @@
           color: #fff;
           background: #2962ff;
         }
+      }
+    }
+  }
+}
+.b-fullcalendar{
+  .b-title{
+    text-align: center;
+    .title{
+      font-size: 25px;
+        font-weight: 700;
+        color: #2962ff;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 10px 0;
+    }
+  }
+  .b-back{
+    text-align: right;
+    margin: 0 15px;
+    margin-top: -55px;
+    margin-bottom: 15px;
+    .btn-back{
+      color: #2962ff;
+      border: 1px solid #2962ff;
+      background: #fff;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-weight: 500;
+      &:hover{
+        color: #fff;
+        background: #2962ff;
+      }
+      i{
+        padding: 0 5px;
       }
     }
   }
