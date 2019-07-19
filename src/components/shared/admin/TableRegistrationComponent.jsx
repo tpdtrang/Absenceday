@@ -74,7 +74,7 @@ class TableRegistrationComponent extends Component {
                 </select> */}
                 
                 <form onSubmit={this.onSubmit} className="f-search">
-                  <input type="text" name="name" className="p-search"  onChange={this.onhandleChange} value={this.state.name}/>
+                  <input type="text" name="name" className="p-search" placeholder="Tìm kiếm theo nhóm..."  onChange={this.onhandleChange} value={this.state.name}/>
                   <button type="submit" className="btn btn-s"><i className="fas fa-search" /></button>
                 </form>
               </div>

@@ -16,6 +16,12 @@
         padding: 5px 20px;
         .menu-list {
           position: relative;
+          .p-absence {
+            .far {
+              font-size: 18px;
+              color: #02a959;
+            }
+          }
           .title {
             margin-top: 10px;
             .heading-3 {
@@ -157,7 +163,7 @@
   }
   .second-col {
     width: 100%;
-    left: 80px; 
+    left: 80px;
   }
   th,
   td:first-child {
@@ -180,11 +186,10 @@
   @include align-items(center);
   // margin: 10px 10px;
   .p-menu {
-    margin: 10px;
+    margin: 5px;
     .tag {
-      // background-color: #02a959;
-      color: #000;
-      border: 1px solid #02a959;
+      color: #02a959;
+      font-size: 18px;
       &:hover {
         outline: none;
       }
@@ -221,4 +226,8 @@
 }
 .first-col {
   width: 20px;
+}
+.p-search {
+  border: 1px solid #999;
+  padding: 4px;
 }

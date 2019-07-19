@@ -22,7 +22,7 @@ export function requestGetYearStore() {
 //SEARCH YEAR
 export function requestSearchYearStore(data) {
   let params = {
-    'year': data.year
+    'year': data.year,
   }
   return (dispatch) => {
     return axios.request({
@@ -90,10 +90,58 @@ export function requestSearchMonthStore(data) {
       } else {
         message.error("Không có thời gian đăng ki nghỉ trong tháng này")
       }
-
     }).catch(function (error) {
       console.log(error);
     })
+  }
+}
+
+//chon ngay nghi
+export function requestGetDisLicense() {
+  let paramData = {
+    absences: 0
+  }
+  return (dispatch) => {
+    return axios.request({
+      method: 'GET',
+      url: `${API.API}/statistical`,
+      params: paramData,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(reciveData(types.GET_DISLICENSEDATE, response.data.data))
+    }).catch(function (error) {
+      console.log(error);
+    })
+  }
+}
+
+export function requestGetLicense() {
+  let paramData = {
+    absences: 1
+  }
+  return (dispatch) => {
+    return axios.request({
+      method: 'GET',
+      url: `${API.API}/statistical`,
+      params: paramData,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(reciveData(types.GET_LICENSEDATE, response.data.data))
+    }).catch(function (error) {
+      console.log(error);
+    })
+  }
+}
+
+export function requestFilterDate(data) {
+  return (dispatch) => {
+    dispatch(reciveData(types.FILTER_REGISTRATION, data))
   }
 }
 function reciveData(action, payload) {

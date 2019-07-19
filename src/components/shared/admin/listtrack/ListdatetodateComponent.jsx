@@ -63,6 +63,14 @@ class ListdatetodateComponent extends Component {
     })
   }
 
+  onDislicenseDate = () => {
+    this.props.onDislicenseDate();
+  }
+
+  onLicenseDate = () => {
+    this.props.onLicenseDate();
+  }
+
   onhandleSearch = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -72,13 +80,28 @@ class ListdatetodateComponent extends Component {
         [name]: value
       })
     }
+
     if (value === "2") {
+      var month = dateFormatDate(new Date(), 'mm');
+      let object = {
+        isDate: "Month",
+        value: month
+      }
+      this.props.onFilter(object);
       this.setState({
         checksearch: "2",
         [name]: value
       })
     }
+
     if (value === "3") {
+      var tempYear = new Date();
+      var year = tempYear.getFullYear();
+      let object = {
+        isDate: "Year",
+        value: year
+      }
+      this.props.onFilter(object);
       this.setState({
         checksearch: "3",
         [name]: value
@@ -87,6 +110,8 @@ class ListdatetodateComponent extends Component {
   }
 
   render() {
+    console.log(this.props.data);
+
     return (
       <div >
         <section className="wrap-container">
@@ -94,9 +119,16 @@ class ListdatetodateComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Từ ngày đến ngày</h3>
+                  <h3 className="heading-3">Thống kê theo ngày-tháng-năm</h3>
                 </div>
               </div>
+              {/* <div className="menu-list">
+                <div className="p-absence">
+                  <button onClick={this.onLicenseDate} className="btn"><i className="far fa-calendar-check"></i></button>{" "}
+                  <button onClick={this.onDislicenseDate} className="btn"><i className="far fa-calendar-times"></i></button>
+                </div>
+
+              </div> */}
               <div className="p-search">
                 {this.state.checksearch === "1" ?
                   <form className="f-search" onSubmit={this.onSubmit}>
@@ -147,16 +179,14 @@ class ListdatetodateComponent extends Component {
                   <option value="2">Tháng</option>
                   <option value="3">Năm</option>
                 </select>
-
               </div>
-
             </div>
-
             <div className="p-table">
-              <table className="table">
+              <table className="table" id="table-to-excel">
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>User</th>
                     <th>Type</th>
                     <th>Time_details</th>
                     <th>At_time</th>
@@ -168,7 +198,8 @@ class ListdatetodateComponent extends Component {
                   {this.state.pagOfItem.map(data => (
                     <tr key={data.id}>
                       <td className="description">{data.id}</td>
-                      <td className="description">{data.attributes.type}</td>
+                      <td className="description">{data.attributes.user.name}</td>
+                      <td className="description">{data.attributes.type.type}</td>
                       <td className="description">
                         {
                           Array.isArray(data.attributes.time_details) ?

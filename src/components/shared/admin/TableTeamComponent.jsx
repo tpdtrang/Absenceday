@@ -141,8 +141,8 @@ class TableTeamComponent extends Component {
                         {/* <div className="alert btn-confirm"> */}
                         <button className="btn" type="submit" onClick={this.openDele} >
                           <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
-                        <Modal style={{textAlign:"center"}} maskClosable={false}
-                         visible={this.state.dele} onCancel={this.onhandleClose} footer={null} >
+                        <Modal style={{ textAlign: "center" }} maskClosable={false}
+                          visible={this.state.dele} onCancel={this.onhandleClose} footer={null} >
                           <p>Bạn có muốn xóa?</p>
                           <button className="btn btn-primary" onClick={this.onDelete.bind(this, data.id)}>Yes</button>{"   "}
                           <button className="btn btn-danger" onClick={this.onhandleClose}>No</button>

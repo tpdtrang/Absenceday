@@ -100,7 +100,6 @@ class TableUserComponent extends Component {
       address: '',
       email: '',
       first_workday: '',
-      role: ''
     })
   }
 

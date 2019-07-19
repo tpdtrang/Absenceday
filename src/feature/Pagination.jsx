@@ -36,9 +36,9 @@ class Pagination extends Component {
     var { items, pageSize } = this.props;
     var pager = this.state.pager;
 
-    if (page < 1 || page > pager.totalPages) {
-      return;
-    }
+    // if (page < 1 || page > pager.totalPages) {
+    //   return;
+    // }
 
     // get new pager object for specified page
     pager = this.getPager(items.length, page, pageSize);

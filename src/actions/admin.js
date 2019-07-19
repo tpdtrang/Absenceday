@@ -1,7 +1,7 @@
 import * as API from '../constants/actionAPI';
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
-import {message} from 'antd';
+// import { message } from 'antd'
 //user
 export function requestGetUserStore() {
   return (dispatch) => {
@@ -20,6 +20,8 @@ export function requestGetUserStore() {
   }
 }
 export function requestAddUserStore(data) {
+  console.log(data);
+
   let store = null;
   store = {
     team_id: data.team_id,
@@ -30,7 +32,7 @@ export function requestAddUserStore(data) {
     first_workday: data.first_workday,
     email: data.email,
     // role: data.role,
-    password: 123456
+    password: '1121212'
   }
   console.log(store);
   return (dispatch) => {
@@ -311,9 +313,9 @@ export function requestGetRegistrationStore() {
 //--->search name
 export function requestSearchRegistrationStore(data) {
   return (dispatch) => {
-    console.log(data);
-    
     dispatch(reciveData(types.SEARCH_REGISTRATION, data))
+
+
   }
 }
 //TRACK
@@ -333,6 +335,79 @@ export function requestGetTrackStore() {
     })
   }
 }
+export function requestGetDisLicense() {
+  let paramData = {
+    absences: 0
+  }
+  return (dispatch) => {
+    return axios.request({
+      method: 'GET',
+      url: `${API.API}/update_all_users`,
+      params: paramData,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(reciveData(types.GET_DISLICENSE, response.data.data))
+    }).catch(function (error) {
+      console.log(error);
+    })
+  }
+}
+
+export function requestGetLicense() {
+  let paramData = {
+    absences: 1
+  }
+  return (dispatch) => {
+    return axios.request({
+      method: 'GET',
+      url: `${API.API}/update_all_users`,
+      params: paramData,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(reciveData(types.GET_LICENSE, response.data.data))
+    }).catch(function (error) {
+      console.log(error);
+    })
+  }
+}
+// export function requestGetUpdatetrackStore() {
+//   return (dispatch) => {
+//     return axios.request({
+//       method: 'POST',
+//       url: `${API.API}/update_all_users`,
+//       headers: {
+//         "Accept": "application/json",
+//         'Content-type': 'application/json'
+//       }
+//     }).then(function (response) {
+//       dispatch(reciveData(types.GET_UPDATE_TRACK))
+//     }).catch(function (error) {
+//       console.log(error);
+
+//     })
+//   }
+// }
+export function requestAddTrackStore(data) {
+  return (dispatch) => {
+    return axios.request({
+      method: 'POST',
+      url: `${API.API}/tracks`,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+
+    })
+  }
+}
+
 export function requestFilterRegister(id) {
   return (dispatch) => {
     dispatch(reciveData(types.FILTER_REGISTER, id))
