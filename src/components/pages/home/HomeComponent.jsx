@@ -201,7 +201,7 @@ class HomeComponent extends Component {
         <div className="b-content">
           <div className="b-right-content">
             <MenuLayout
-              listaccept={this.props.listaccept}
+              dayoff={this.props.dayoff}
               data={this.props.leader}
               leadmail={this.props.mail}
               onDisAccept

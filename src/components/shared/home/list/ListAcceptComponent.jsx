@@ -285,8 +285,8 @@ class ListComponent extends Component {
                       message: 'Bạn hãy nhập để gửi thông báo!' 
                     },
                     {
-                      min: 10,
-                      message: 'Bạn hãy nhập hơn 10 ký tự!'
+                      min: 5,
+                      message: 'Bạn hãy nhập hơn 5 ký tự!'
                     }
                   ],
                 })(

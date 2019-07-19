@@ -158,7 +158,7 @@ export function requestGetMail() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_URL}/mails_cc`,
+      url: `${API.API_URL}/get_mails`,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -188,12 +188,12 @@ export function requestCreateDayOff(data) {
   let dataLead = "";
   data.arrayLead.map((item, i) => {
     if (data.arrayLead.length === 1) {
-      dataLead = `${item.namelead}`
+      dataLead = `${item}`
     } else {
       if (i === data.arrayLead.length - 1) {
-        dataLead += `${item.namelead}`
+        dataLead += `${item}`
       } else {
-        dataLead += `${item.namelead},`
+        dataLead += `${item},`
       }
     }
     return [];
@@ -201,12 +201,12 @@ export function requestCreateDayOff(data) {
   let dataMail = "";
   data.arrayMail.map((item, i) => {
     if (data.arrayMail.length === 1) {
-      dataMail = `${item.namemail}`
+      dataMail = `${item}`
     } else {
       if (i === data.arrayMail.length - 1) {
-        dataMail += `${item.namemail}`
+        dataMail += `${item}`
       } else {
-        dataMail += `${item.namemail},`
+        dataMail += `${item},`
       }
     }
     return [];
@@ -226,7 +226,7 @@ export function requestCreateDayOff(data) {
   } else {
     dayoff = {
       user_id: cookies.get('data').id,
-      emails: dataLead,
+      emails:  dataLead,
       cc: dataMail,
       type_id: data.typeday,
       date: dataArrray,
@@ -244,11 +244,10 @@ export function requestCreateDayOff(data) {
         'Authorization': `${'bearer' + cookies.get('token')}`
       },
       data: dayoff
-    }).then(function (response) {
+    }).then(function (response) {  
       message.success("Bạn đã đăng ký thành công!")
       dispatch(reciveData(types.REQUEST_ADD_DAYOFF, response.data.data))
     }).catch(function (error) {
-      console.log(error);
       message.error(" Đăng ký không thành công!")
     })
   }
@@ -278,7 +277,7 @@ export function requestUpdateDay(data) {
   let paramData = {}
   if (data.checkType === true) {
     let dataArrray = "";
-    if (data.type !== null) {
+    if (data.date !== null) {
       data.arrayNew.map((item, i) => {
         if (data.arrayNew.length === 1) {
           dataArrray = `${item.date},${item.at_time}`
@@ -296,7 +295,7 @@ export function requestUpdateDay(data) {
       type_id: data.typeday,
       date: dataArrray,
       note: data.note,
-      type: 'Chọn ngày'
+      type: data.type
     }
   } else {
     paramData = {
@@ -304,10 +303,9 @@ export function requestUpdateDay(data) {
       time_start: dateFormatDate(data.time_start, 'yyyy-mm-dd'),
       time_end: dateFormatDate(data.time_end, 'yyyy-mm-dd'),
       note: data.note,
-      type: 'Từ ngày đến hết ngày'
+      type: data.type
     }
   }
-  console.log(paramData)
   return (dispatch) => {
     return axios.request({
       method: 'PUT',

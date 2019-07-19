@@ -160,6 +160,19 @@
         width: 120px;
         margin: 0 2px;
       }
+      .b-option{
+        padding: 15px 0;
+        .form-group{
+          float: left;
+          .b-text{
+            width: 80px;
+            margin: 0 5px;
+          }
+        }
+        .b-slt{
+          width: 75%;
+        }
+      }
       .b-area {
         margin-top: 10px;
         width: 77%;
