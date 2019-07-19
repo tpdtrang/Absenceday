@@ -1,6 +1,7 @@
 import * as API from '../constants/actionAPI';
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
+// import { message } from 'antd'
 //user
 export function requestGetUserStore() {
   return (dispatch) => {
@@ -19,6 +20,8 @@ export function requestGetUserStore() {
   }
 }
 export function requestAddUserStore(data) {
+  console.log(data);
+
   let store = null;
   store = {
     team_id: data.team_id,
@@ -28,7 +31,8 @@ export function requestAddUserStore(data) {
     address: data.address,
     first_workday: data.first_workday,
     email: data.email,
-    role: data.role
+    // role: data.role,
+    password: '1121212'
   }
   console.log(store);
   return (dispatch) => {
@@ -41,7 +45,7 @@ export function requestAddUserStore(data) {
       },
       data: store
     }).then(function (response) {
-      console.log(response.data);
+      // console.log(response.data);
       dispatch(reciveData(types.ADD_STORE, response.data.data))
     }).catch(function (error) {
       console.log(error);
@@ -99,7 +103,7 @@ export function requestGetTeamStore() {
   return (dispatch) => {
     return axios({
       method: 'GET',
-      url: `${API.API_AD}/team`,
+      url: `${API.API}/teams`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -122,7 +126,7 @@ export function requestAddTeamStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'POST',
-      url: `${API.API_AD}/team`,
+      url: `${API.API}/teams`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -139,7 +143,7 @@ export function requestDeleteTeamStore(id) {
   return (dispatch) => {
     return axios.request({
       method: 'DELETE',
-      url: `${API.API_AD}/team/${id}`,
+      url: `${API.API}/teams/${id}`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -160,7 +164,7 @@ export function requestUpdateTeamStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API_AD}/team/${data.id}`,
+      url: `${API.API}/teams/${data.id}`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -178,7 +182,7 @@ export function requestGetPositionStore() {
   return (dispatch) => {
     return axios({
       method: 'GET',
-      url: `${API.API_AD}/position`,
+      url: `${API.API}/positions`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -199,7 +203,7 @@ export function requestAddPositionStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'POST',
-      url: `${API.API_AD}/position`,
+      url: `${API.API}/positions`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -216,7 +220,7 @@ export function requestDeletePositionStore(id) {
   return (dispatch) => {
     return axios.request({
       method: 'DELETE',
-      url: `${API.API_AD}/position/${id}`,
+      url: `${API.API}/positions/${id}`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -238,7 +242,7 @@ export function requestUpdatePositionStore(data) {
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
-      url: `${API.API_AD}/position/${data.id}`,
+      url: `${API.API}/positions/${data.id}`,
       headers: {
         "Accept": "application/json",
         "Content-type": "application/json"
@@ -257,7 +261,7 @@ export function requestGetPermissionStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_AD}/position`,
+      url: `${API.API}/positions`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -275,7 +279,7 @@ export function requestGetRoleStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API_AD}/role`,
+      url: `${API.API}/role`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -293,7 +297,7 @@ export function requestGetRegistrationStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/absence`,
+      url: `${API.API}/absences`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application'
@@ -303,8 +307,15 @@ export function requestGetRegistrationStore() {
       dispatch(reciveData(types.GET_REGISTRATION, response.data.data))
     }).catch(function (error) {
       console.log(error);
-
     })
+  }
+}
+//--->search name
+export function requestSearchRegistrationStore(data) {
+  return (dispatch) => {
+    dispatch(reciveData(types.SEARCH_REGISTRATION, data))
+
+
   }
 }
 //TRACK
@@ -312,7 +323,7 @@ export function requestGetTrackStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/track`,
+      url: `${API.API}/tracks`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -324,6 +335,79 @@ export function requestGetTrackStore() {
     })
   }
 }
+export function requestGetDisLicense() {
+  let paramData = {
+    absences: 0
+  }
+  return (dispatch) => {
+    return axios.request({
+      method: 'GET',
+      url: `${API.API}/update_all_users`,
+      params: paramData,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(reciveData(types.GET_DISLICENSE, response.data.data))
+    }).catch(function (error) {
+      console.log(error);
+    })
+  }
+}
+
+export function requestGetLicense() {
+  let paramData = {
+    absences: 1
+  }
+  return (dispatch) => {
+    return axios.request({
+      method: 'GET',
+      url: `${API.API}/update_all_users`,
+      params: paramData,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(reciveData(types.GET_LICENSE, response.data.data))
+    }).catch(function (error) {
+      console.log(error);
+    })
+  }
+}
+// export function requestGetUpdatetrackStore() {
+//   return (dispatch) => {
+//     return axios.request({
+//       method: 'POST',
+//       url: `${API.API}/update_all_users`,
+//       headers: {
+//         "Accept": "application/json",
+//         'Content-type': 'application/json'
+//       }
+//     }).then(function (response) {
+//       dispatch(reciveData(types.GET_UPDATE_TRACK))
+//     }).catch(function (error) {
+//       console.log(error);
+
+//     })
+//   }
+// }
+export function requestAddTrackStore(data) {
+  return (dispatch) => {
+    return axios.request({
+      method: 'POST',
+      url: `${API.API}/tracks`,
+      headers: {
+        "Accept": "application/json",
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+
+    })
+  }
+}
+
 export function requestFilterRegister(id) {
   return (dispatch) => {
     dispatch(reciveData(types.FILTER_REGISTER, id))

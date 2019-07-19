@@ -3,7 +3,9 @@
     height: 7px;
 }
 ::-webkit-scrollbar-track{
-    background-color: rgb(124, 250, 162) !important;
+    // background-color: rgb(124, 250, 162) !important;
+    background-color: #fff !important;
+
 }
 ::-webkit-scrollbar-thumb{
     border-radius: 7px !important;

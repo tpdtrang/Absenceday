@@ -6,20 +6,26 @@ import {
 import {
   TableTrackComponent,
   ListdatetodateComponent,
-  MenuListComponent,
-  ListYearComponent,
-  ListMonthComponent
+  MenuListComponent
 } from '../../shared/admin/listtrack';
 import { connect } from 'react-redux';
 import * as action from '../../../actions/admin';
-import * as actionDate from '../../../actions/datetodate';
-import * as actionYear from '../../../actions/adyear';
+import * as actionYear from '../../../actions/admindate';
+// const today = new Date();
 class TrackPage extends Component {
   constructor(props, context) {
     super(props, context);
+    // var today = new Date(),
+    //         date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    // var tempDate = new Date();
+    // var date = tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate() + ' '
+    //   + tempDate.getHours() + ':' + tempDate.getMinutes() + ':' + tempDate.getSeconds();
+    // console.log(date);
+
     this.state = {
       view: '1',
-      main: false
+      isFilter: false,
+      // date: date
     }
   }
 
@@ -28,68 +34,79 @@ class TrackPage extends Component {
       view: '2'
     })
   }
-  onYear = () => {
-    this.setState({
-      view: '4'
-    })
-  }
   onHome = () => {
     this.setState({
       view: '1'
     })
   }
-  onMonth = () => {
+
+
+  onFilter = (data) => {
+    this.props.dispatch(actionYear.requestFilterDate(data));
     this.setState({
-      view: '3'
+      isFilter: true
     })
   }
 
   componentDidMount() {
     this.props.dispatch(action.requestGetTrackStore());
-    this.props.dispatch(actionDate.requestGetDatetodate());
     this.props.dispatch(actionYear.requestGetYearStore());
-    this.props.dispatch(actionYear.requestGetMonthStore());
   }
-  onSearchDate = (data) => {
-    this.props.dispatch(actionDate.requestSearchDatetodate(data));
+
+  onDislicense = () => {
+    this.props.dispatch(action.requestGetDisLicense());
+    this.props.dispatch(actionYear.requestGetDisLicense());
     this.setState({
-      view: '2'
+      view: '1'
     })
+  }
+  onLicense = () => {
+    this.props.dispatch(action.requestGetLicense());
+    this.props.dispatch(actionYear.requestGetLicense());
+  }
+
+  onLicenseDate = () => {
+    this.props.dispatch(actionYear.requestGetLicense());
+  }
+
+  onDislicenseDate = () => {
+    this.props.dispatch(actionYear.requestGetDisLicense());
+
+
+  }
+
+  onSearchDate = (data) => {
+    this.props.dispatch(actionYear.requestSearchDatetodate(data));
   }
 
   onSearchYear = (data) => {
     this.props.dispatch(actionYear.requestSearchYearStore(data));
-    this.setState({
-      view: '4'
-    })
+    console.log(data);
   }
 
   onSearchMonth = (data) => {
     this.props.dispatch(actionYear.requestSearchMonthStore(data));
-    this.setState({
-      view: '3'
-    })
   }
+
   render() {
     const contentMain = () => {
       if (this.state.view === "1") {
         return (
-          <TableTrackComponent data={this.props.track} />
+          <TableTrackComponent data={this.props.track} onDislicense={this.onDislicense} onLicense={this.onLicense} />
         )
       }
       if (this.state.view === "2") {
         return (
-          <ListdatetodateComponent data={this.props.statistical} onSearchDate={this.onSearchDate} />
-        )
-      }
-      if (this.state.view === "3") {
-        return (
-          <ListMonthComponent data={this.props.searchmonth} onSearch={this.onSearchMonth} />
-        )
-      }
-      if (this.state.view === "4") {
-        return (
-          <ListYearComponent data={this.props.searchyear} onSearch={this.onSearchYear} />
+          <ListdatetodateComponent
+            data={this.state.isFilter ? this.props.filter : this.props.searchdate}
+            onSearchDate={this.onSearchDate}
+            onSearchYear={this.onSearchYear}
+            onSearch={this.onSearchMonth}
+            onFilter={this.onFilter}
+            onDislicenseDate={this.onDislicenseDate}
+            onLicenseDate={this.onLicenseDate}
+
+          />
         )
       }
     }
@@ -100,7 +117,7 @@ class TrackPage extends Component {
         <div className="content">
           <SideAdLayout />
           <div className="right-content">
-            <MenuListComponent onDay={this.onDay} onYear={this.onYear} onHome={this.onHome} onMonth={this.onMonth} />
+            <MenuListComponent onDay={this.onDay} onHome={this.onHome} />
             {contentMain()}
           </div>
         </div>
@@ -111,9 +128,8 @@ class TrackPage extends Component {
 function mapPropsToState(state) {
   return {
     track: state.track.all,
-    statistical: state.statistical.all,
-    searchyear: state.searchyear.all,
-    searchmonth: state.searchmonth.all
+    searchdate: state.searchdate.all,
+    filter: state.searchdate.filter
   }
 }
 export default connect(mapPropsToState)(TrackPage);

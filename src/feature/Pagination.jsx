@@ -9,7 +9,7 @@ const propTypes = {
 
 const defaultProps = {
   initialPage: 1,
-  pageSize: 9
+  pageSize: 10
 }
 
 class Pagination extends Component {
@@ -36,9 +36,9 @@ class Pagination extends Component {
     var { items, pageSize } = this.props;
     var pager = this.state.pager;
 
-    if (page < 1 || page > pager.totalPages) {
-      return;
-    }
+    // if (page < 1 || page > pager.totalPages) {
+    //   return;
+    // }
 
     // get new pager object for specified page
     pager = this.getPager(items.length, page, pageSize);
@@ -58,13 +58,13 @@ class Pagination extends Component {
     currentPage = currentPage || 1;
 
     // default page size is 10
-    pageSize = pageSize || 10;
+    pageSize = pageSize || 11;
 
     // calculate total pages
     var totalPages = Math.ceil(totalItems / pageSize);
 
     var startPage, endPage;
-    if (totalPages <= 10) {
+    if (totalPages <= 11) {
       // less than 10 total pages so show all
       startPage = 1;
       endPage = totalPages;

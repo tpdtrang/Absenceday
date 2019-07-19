@@ -13,9 +13,7 @@ import AdminRegistration from './adminregistration';
 import ListDisAccept from './listdisaccept';
 import AdminTrack from './admintrack';
 import ListMail from './listmail';
-import DateToDate from './admindatetodate';
-import SearchMonth from "./adminmonth";
-import SearchYear from './adminyear'
+import SearchDate from './admindate';
 const rootReducer = combineReducers({
     dayoff: DayoffReducer,
     login: LoginReducer,
@@ -30,9 +28,7 @@ const rootReducer = combineReducers({
     registration: AdminRegistration,
     disaccept: ListDisAccept,
     track: AdminTrack,
-    statistical: DateToDate,
-    searchmonth: SearchMonth,
-    searchyear: SearchYear,
+    searchdate: SearchDate,
     listregisday: ListRegisDay
 });
 export default rootReducer;

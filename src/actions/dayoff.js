@@ -317,6 +317,8 @@ export function requestUpdateDay(data) {
         'Authorization': `${'bearer ' + cookies.get('token')}`
       },
     }).then(function (response) {
+      console.log(response.data.data);
+      
       message.success("Bạn đã sửa thành công!")
       dispatch(reciveData(types.REQUEST_UPDATE_DAYOFF, response.data.data));
     }).catch(function (error) {

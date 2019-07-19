@@ -16,11 +16,12 @@ class TableUserComponent extends Component {
       address: '',
       email: '',
       first_workday: '',
-      role: '',
-      users: [],
-      categories: {},
-      idtem: '',
-      isFilter: false
+      // role: '',
+      // users: [],
+      // categories: {},
+      // idtem: '',
+      isFilter: false,
+      dele: false
     }
   }
   onhandleShow = () => {
@@ -28,19 +29,29 @@ class TableUserComponent extends Component {
       show: true
     })
   }
+
+  openDele = () => {
+    this.setState({
+      dele: true
+    })
+  }
+
   onhandleClose = (e) => {
     e.preventDefault();
     this.props.onClose();
     this.onReset();
     this.setState({
-      show: false
+      show: false,
+      dele: false
     })
   }
+
   onhandleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     })
   }
+
   onhandleChangeFilter = (event) => {
     if (event.target.value === 'all') {
       this.setState({
@@ -89,7 +100,6 @@ class TableUserComponent extends Component {
       address: '',
       email: '',
       first_workday: '',
-      role: ''
     })
   }
 
@@ -122,7 +132,7 @@ class TableUserComponent extends Component {
           email: this.props.dataEdit.attributes.email,
           address: this.props.dataEdit.attributes.address,
           first_workday: this.props.dataEdit.attributes.first_workday,
-          role: this.props.dataEdit.attributes.roles
+          // role: this.props.dataEdit.attributes.roles
         }
       )
     }
@@ -154,7 +164,7 @@ class TableUserComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Quản Lí Users</h3>
+                  <h3 className="heading-3">Quản lí người dùng</h3>
                 </div>
               </div>
               <div className="menu-list">
@@ -182,16 +192,16 @@ class TableUserComponent extends Component {
                 <thead>
                   <tr>
                     <th className="first-col">#</th>
-                    <th>Team</th>
-                    <th>Position</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Address</th>
+                    <th>Nhóm</th>
+                    <th>Vị trí</th>
+                    <th>Tên</th>
+                    <th>Sđt</th>
+                    <th>Địa chỉ</th>
                     <th>Email</th>
-                    <th>Firstday</th>
-                    <th>Roles</th>
-                    <th>Xóa</th>
-                   
+                    <th>Ngày đi làm đầu tiên</th>
+                    {/* <th>Vị trí</th> */}
+                    <th>Hoạt động</th>
+
                   </tr>
                 </thead>
                 <tbody>
@@ -207,11 +217,16 @@ class TableUserComponent extends Component {
                           <td className="description">{data.attributes.address}</td>
                           <td className="description">{data.attributes.email}</td>
                           <td className="description">{data.attributes.first_workday}</td>
-                          <td className="description">{data.attributes.roles}</td>
-                          <td className="description">  
-                            <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
-                              <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
-                            </button>
+                          {/* <td className="description">{data.attributes.roles}</td> */}
+                          <td className="description">
+                            <button className="btn" type="submit" onClick={this.openDele} >
+                              <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
+                            <Modal style={{ textAlign: "center" }} maskClosable={false}
+                              visible={this.state.dele} onCancel={this.onhandleClose} footer={null} >
+                              <p>Bạn có muốn xóa?</p>
+                              <button className="btn btn-primary" onClick={this.onDelete.bind(this, data.id)}>Yes</button>{"   "}
+                              <button className="btn btn-danger" onClick={this.onhandleClose}>No</button>
+                            </Modal>
                             <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
                               <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                             </button>
@@ -229,11 +244,16 @@ class TableUserComponent extends Component {
                           <td className="description">{data.attributes.address}</td>
                           <td className="description">{data.attributes.email}</td>
                           <td className="description">{data.attributes.first_workday}</td>
-                          <td className="description">{data.attributes.roles}</td>
+                          {/* <td className="description">{data.attributes.roles}</td> */}
                           <td className="description">
-                            <button className="btn" onClick={this.onDelete.bind(this, data.id)}>
-                              <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
-                            </button>
+                            <button className="btn" type="submit" onClick={this.openDele} >
+                              <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
+                            <Modal style={{ textAlign: "center" }} maskClosable={false}
+                              visible={this.state.dele} onCancel={this.onhandleClose} footer={null} >
+                              <p>Bạn có muốn xóa?</p>
+                              <button className="btn btn-primary" onClick={this.onDelete.bind(this, data.id)}>Yes</button>{"   "}
+                              <button className="btn btn-danger" onClick={this.onhandleClose}>No</button>
+                            </Modal>
                             <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
                               <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                             </button>
@@ -244,16 +264,16 @@ class TableUserComponent extends Component {
                 </tbody>
               </table>
             </div>
-            <Modal visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
+            <Modal maskClosable={false} visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
               <div className="p-modal">
                 <div className="title-form">
-                  <h3 className="heading-3">Form User</h3>
+                  <h3 className="heading-3">Thêm người dùng</h3>
                 </div>
                 <hr />
                 <div className="p-content">
                   <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                      <label className="form-text">Team:</label>
+                      <label className="form-text">Nhóm:</label>
                       <select className="op-team" onChange={this.onhandleChange} value={this.state.team_id} name="team_id">
                         {
                           this.props.team.map(data => (
@@ -263,7 +283,7 @@ class TableUserComponent extends Component {
                       </select>
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Position:</label>
+                      <label className="form-text">Vị trí:</label>
                       <select className="op-team" onChange={this.onhandleChange} value={this.state.position_id} name="position_id">
                         {
                           this.props.position.map(data => (
@@ -273,17 +293,17 @@ class TableUserComponent extends Component {
                       </select>
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Name:</label>
+                      <label className="form-text">Tên:</label>
                       <input type="text" className="form-search" name="name"
                         onChange={this.onhandleChange} value={this.state.name} />
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Phone:</label>
+                      <label className="form-text">Sđt:</label>
                       <input type="text" className="form-search" name="phone"
                         onChange={this.onhandleChange} value={this.state.phone} />
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Address:</label>
+                      <label className="form-text">Địa chỉ:</label>
                       <input type="text" className="form-search" name="address"
                         onChange={this.onhandleChange} value={this.state.address} />
                     </div>
@@ -293,19 +313,19 @@ class TableUserComponent extends Component {
                         onChange={this.onhandleChange} value={this.state.email} />
                     </div>
                     <div className="form-group">
-                      <label className="form-text">Firstday:</label>
+                      <label className="form-text">Ngày đầu làm việc:</label>
                       <DatePicker
                         style={{ "width": "100%" }}
                         onChange={this.onChangeDate}
                         defaultValue={moment(now, dateFormat)}>
                       </DatePicker>
                     </div>
-                    <div className="form-group">
-                      <label className="form-text">Roles:</label>
+                    {/* <div className="form-group">
+                      <label className="form-text">Vị trí:</label>
                       <input type="text" className="form-search" name="role" onChange={this.onhandleChange} value={this.state.role} />
-                    </div>
+                    </div> */}
                     <div className="btn-wrap">
-                      <button type="submit" className="btn" variant="primary"> Save </button>
+                      <button type="submit" className="btn btn-s" variant="primary"> Lưu </button>
                     </div>
                   </form>
                 </div>
