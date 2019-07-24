@@ -60,12 +60,12 @@ export default function store(state = INITIAL_STATE, action = {}) {
     case types.GET_LICENSEDATE:
       console.log(state.list);
       return Object.assign({}, state, {
-        list: convertData(action.payload)
+        filter: convertData(action.payload)
       })
     case types.GET_DISLICENSEDATE:
       console.log(action.payload);
       return Object.assign({}, state, {
-        list: convertData(action.payload)
+        filter: convertData(action.payload)
       })
     default:
       return state

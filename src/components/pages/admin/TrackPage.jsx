@@ -62,13 +62,14 @@ class TrackPage extends Component {
     // this.props.dispatch(actionYear.requestGetLicense());
   }
 
-  // onLicenseDate = () => {
-  //   this.props.dispatch(actionYear.requestGetLicense());
-  // }
+  onLicenseDate = (data) => {
+    this.props.dispatch(actionYear.requestGetLicense(data));
+  }
 
-  // onDislicenseDate = () => {
-  //   this.props.dispatch(actionYear.requestGetDisLicense());
-  // }
+  onDislicenseDate = (data) => {
+    this.props.dispatch(actionYear.requestGetDisLicense(data));
+
+  }
 
   onSearchDate = (data) => {
     this.props.dispatch(actionYear.requestSearchDatetodate(data));

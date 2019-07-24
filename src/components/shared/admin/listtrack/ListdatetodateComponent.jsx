@@ -47,22 +47,24 @@ class ListdatetodateComponent extends Component {
 
   onChanger = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      type: 'year'
     })
   }
 
   onChangeMonth = (date, dateString) => {
     this.setState({
-      month: dateString
+      month: dateString,
+      type: 'month'
     })
   }
 
   onDislicenseDate = () => {
-    this.props.dispatch(actionYear.requestGetDisLicense());
+    this.props.dispatch(actionYear.requestGetDisLicense(this.state));
   }
 
   onLicenseDate = () => {
-    this.props.dispatch(actionYear.requestGetLicense());
+    this.props.dispatch(actionYear.requestGetLicense(this.state));
   }
 
   onhandleSearch = (event) => {
@@ -191,7 +193,7 @@ class ListdatetodateComponent extends Component {
                     <th>Thời gian nghỉ</th>
                     <th>Buổi</th>
                     <th>Tổng</th>
-                    <th>Năm</th>
+                    {/* <th>Năm</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -225,7 +227,7 @@ class ListdatetodateComponent extends Component {
                         }
                       </td>
                       <td className="description">{data.attributes.absence_days}</td>
-                      <td className="description">{data.attributes.current_year}</td>
+                      {/* <td className="description">{data.attributes.current_year}</td> */}
                     </tr>
                   ))}
                 </tbody>

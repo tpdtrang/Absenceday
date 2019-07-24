@@ -98,10 +98,20 @@ export function requestSearchMonthStore(data) {
 }
 
 //chon ngay nghi
-export function requestGetDisLicense() {
-  let paramData = {
-    absences: 0
+export function requestGetDisLicense(data) {
+  let paramData = {}
+  if (data.type === 'year') {
+    paramData = {
+      absences: 0,
+      year: data.year
+    }
+  } else {
+    paramData = {
+      absences: 0,
+      month: data.month
+    }
   }
+
   return (dispatch) => {
     return axios.request({
       method: 'GET',
@@ -119,9 +129,18 @@ export function requestGetDisLicense() {
   }
 }
 
-export function requestGetLicense() {
-  let paramData = {
-    absences: 1
+export function requestGetLicense(data) {
+  let paramData = {}
+  if (data.type === 'year') {
+    paramData = {
+      absences: 1,
+      year: data.year
+    }
+  } else {
+    paramData = {
+      absences: 1,
+      month: data.month
+    }
   }
   return (dispatch) => {
     return axios.request({
