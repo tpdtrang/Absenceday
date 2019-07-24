@@ -13,6 +13,7 @@ export function requestGetYearStore() {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
+      // console.log(response.data.data);
       dispatch(reciveData(types.GET_DATE, response.data.data))
     }).catch(function (error) {
       console.log(error);
@@ -144,6 +145,7 @@ export function requestFilterDate(data) {
     dispatch(reciveData(types.FILTER_REGISTRATION, data))
   }
 }
+
 function reciveData(action, payload) {
   return {
     type: action,

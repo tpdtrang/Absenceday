@@ -335,6 +335,7 @@ export function requestGetTrackStore() {
     })
   }
 }
+
 export function requestGetDisLicense() {
   let paramData = {
     absences: 0
@@ -393,21 +394,39 @@ export function requestGetLicense() {
 //     })
 //   }
 // }
-export function requestAddTrackStore(data) {
+// export function requestAddTrackStore(data) {
+//   return (dispatch) => {
+//     return axios.request({
+//       method: 'POST',
+//       url: `${API.API}/tracks`,
+//       headers: {
+//         "Accept": "application/json",
+//         'Content-type': 'application/json'
+//       }
+//     }).then(function (response) {
+
+//     })
+//   }
+// }
+//excel
+export function requestGetFileExcel() {
   return (dispatch) => {
     return axios.request({
-      method: 'POST',
-      url: `${API.API}/tracks`,
+      method: 'GET',
+      url: `${API.API}/exports`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
       }
     }).then(function (response) {
+      console.log(response.data);
+      dispatch(reciveData(types.GET_EXCEL, response.data))
+    }).catch(function (error) {
+      console.log(error);
 
     })
   }
 }
-
 export function requestFilterRegister(id) {
   return (dispatch) => {
     dispatch(reciveData(types.FILTER_REGISTER, id))

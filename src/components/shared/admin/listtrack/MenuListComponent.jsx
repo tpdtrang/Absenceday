@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import ReactToExcel from 'react-html-table-to-excel'
+import ReactToExcel from 'react-html-table-to-excel';
 
 class MenuListComponent extends Component {
   onYear = () => {
@@ -33,9 +32,11 @@ class MenuListComponent extends Component {
               filename="excelFile"
               sheet="sheet 1"
               className="btn"
-              buttonText={<i className=" tag fas fa-file-excel"></i>}
+              buttonText=""
             >
-            </ReactToExcel>
+             </ReactToExcel>
+            {/* <button  ><i className=" tag fas fa-file-excel"></i></button> */}
+
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ class TableRegistrationComponent extends Component {
       idtem: '',
       isFilter: false,
       pagOfItem: [],
-      name:''
+      name: ''
     }
   }
 
@@ -34,11 +34,11 @@ class TableRegistrationComponent extends Component {
       isFilter: true
     })
   }
-  onSubmit=(event)=>{
+  onSubmit = (event) => {
     event.preventDefault();
     console.log(this.data);
     this.props.onSearch(this.state);
-    
+
   }
   // handleShow = (data) => {
   //   let dataNew = [];
@@ -61,7 +61,7 @@ class TableRegistrationComponent extends Component {
             <div className="p-title">
               <div className="menu-list">
                 <div className="title">
-                  <h3 className="heading-3">Quản lý đăng kí</h3>
+                  <h3 className="heading-3">Quản lý đăng ký</h3>
                 </div>
               </div>
               <div className="menu-list">
@@ -72,9 +72,9 @@ class TableRegistrationComponent extends Component {
                   ))}
 
                 </select> */}
-                
+
                 <form onSubmit={this.onSubmit} className="f-search">
-                  <input type="text" name="name" className="p-search" placeholder="Tìm kiếm theo nhóm..."  onChange={this.onhandleChange} value={this.state.name}/>
+                  <input type="text" name="name" className="p-search" placeholder="Tìm kiếm theo nhóm..." onChange={this.onhandleChange} value={this.state.name} />
                   <button type="submit" className="btn btn-s"><i className="fas fa-search" /></button>
                 </form>
               </div>
@@ -89,7 +89,7 @@ class TableRegistrationComponent extends Component {
                     <th>TG đăng ký</th>
                     <th>Thể loại</th>
                     <th>Lý do</th>
-                    <th>Status</th>
+                    <th>Trạng thái</th>
                     <th>Buổi</th>
                     <th>Số buổi nghỉ</th>
                     <th>Tổng</th>

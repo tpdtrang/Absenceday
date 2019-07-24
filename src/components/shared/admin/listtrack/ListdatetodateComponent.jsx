@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { DatePicker } from 'antd';
 import moment from 'moment';
-import Pagination from '../../../../feature/Pagination';
+import * as actionYear from '../../../../actions/admindate';
+import { connect } from 'react-redux';
 const dateFormat = 'YYYY/MM/DD';
 var now = new Date();
 var dateFormatDate = require('dateformat');
 const { MonthPicker } = DatePicker;
-const monthFormat = 'YYYY/MM'
+const monthFormat = 'YYYY/MM';
 class ListdatetodateComponent extends Component {
   constructor(props) {
     super(props);
@@ -15,15 +16,8 @@ class ListdatetodateComponent extends Component {
       to: dateFormatDate(now, 'yyyy-mm-dd'),
       checksearch: '1',
       month: '',
-      year: '',
-      pagOfItem: []
+      year: ''
     }
-  }
-
-  onChangePage = (pageOfItems) => {
-    this.setState({
-      pagOfItem: pageOfItems
-    })
   }
 
   onChangeDate = (date, dateString) => {
@@ -64,16 +58,23 @@ class ListdatetodateComponent extends Component {
   }
 
   onDislicenseDate = () => {
-    this.props.onDislicenseDate();
+    this.props.dispatch(actionYear.requestGetDisLicense());
   }
 
   onLicenseDate = () => {
-    this.props.onLicenseDate();
+    this.props.dispatch(actionYear.requestGetLicense());
   }
 
   onhandleSearch = (event) => {
     const name = event.target.name;
     const value = event.target.value;
+    function getMonday(d) {
+      d = new Date(d);
+      var day = d.getDay(),
+        diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+      return new Date(d.setDate(diff));
+    }
+    getMonday(new Date());
     if (value === "1") {
       this.setState({
         checksearch: "1",
@@ -111,7 +112,6 @@ class ListdatetodateComponent extends Component {
 
   render() {
     console.log(this.props.data);
-
     return (
       <div >
         <section className="wrap-container">
@@ -122,13 +122,13 @@ class ListdatetodateComponent extends Component {
                   <h3 className="heading-3">Thống kê theo ngày-tháng-năm</h3>
                 </div>
               </div>
-              {/* <div className="menu-list">
+              <div className="menu-list">
                 <div className="p-absence">
                   <button onClick={this.onLicenseDate} className="btn"><i className="far fa-calendar-check"></i></button>{" "}
                   <button onClick={this.onDislicenseDate} className="btn"><i className="far fa-calendar-times"></i></button>
                 </div>
 
-              </div> */}
+              </div>
               <div className="p-search">
                 {this.state.checksearch === "1" ?
                   <form className="f-search" onSubmit={this.onSubmit}>
@@ -186,16 +186,16 @@ class ListdatetodateComponent extends Component {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>User</th>
-                    <th>Type</th>
-                    <th>Time_details</th>
-                    <th>At_time</th>
-                    <th>Absence_day</th>
-                    <th>Year</th>
+                    <th>Người dùng</th>
+                    <th>Lí do</th>
+                    <th>Thời gian nghỉ</th>
+                    <th>Buổi</th>
+                    <th>Tổng</th>
+                    <th>Năm</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.pagOfItem.map(data => (
+                  {this.props.data.map(data => (
                     <tr key={data.id}>
                       <td className="description">{data.id}</td>
                       <td className="description">{data.attributes.user.name}</td>
@@ -230,7 +230,6 @@ class ListdatetodateComponent extends Component {
                   ))}
                 </tbody>
               </table>
-              <Pagination items={this.props.data} onChangePage={this.onChangePage}></Pagination>
             </div>
           </div>
         </section>
@@ -238,5 +237,10 @@ class ListdatetodateComponent extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    list: state.searchdate.list
+  }
+}
 
-export default ListdatetodateComponent;
+export default connect(mapStateToProps, null)(ListdatetodateComponent);

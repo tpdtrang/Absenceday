@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 }
 const filetItems = (array, query) => {
   return array.filter(
-    el => el.attributes.user.team.toLowerCase().indexOf(query.toLowerCase()) > -1
+    el => el.attributes.user.name.toLowerCase().indexOf(query.toLowerCase()) > -1
   )
 }
 export default function store(state = INITIAL_STATE, action = {}) {

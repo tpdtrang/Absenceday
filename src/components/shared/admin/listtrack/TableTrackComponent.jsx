@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
 import { Modal } from 'antd';
 class TableTrackComponent extends Component {
+
   constructor(props, context) {
     super(props, context);
     this.state = {
       show: false,
       name: '',
-      description: ''
+      description: '',
     }
   }
+
   onhandleShow = () => {
     this.setState({
       show: true
     })
   }
+
   onhandleClose = () => {
     this.setState({
       show: false
     })
   }
+
   onSubmit = (event) => {
     event.preventDefault();
     console.log(this.state);
@@ -27,12 +31,18 @@ class TableTrackComponent extends Component {
     })
   }
 
+  onPrev = () => {
+    this.props.onPrev();
+  }
+
   onDislicense = () => {
     this.props.onDislicense();
   }
+
   onLicense = () => {
     this.props.onLicense();
   }
+
   onhandleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -49,16 +59,9 @@ class TableTrackComponent extends Component {
                 <h3 className="heading-3">Quản lý thống kê</h3>
               </div>
             </div>
-            {/* <div className="menu-list">
-              <div className="add">
-                <button type="submit" className="btn" onClick={this.onhandleShow} style={{ fontSize: "13px", color: "#fff", backgroundColor: " #02a959" }} >
-                  <i className="fas fa-plus" style={{ fontSize: "13px", color: "#fff", paddingRight: "5px" }} />
-                  Create New
-                  </button>
-              </div>
-            </div> */}
             <div className="menu-list">
               <div className="p-absence">
+                <button onClick={this.onPrev} className="btn"><i className="fas fa-arrow-circle-left"></i></button>{" "}
                 <button onClick={this.onLicense} className="btn"><i className="far fa-calendar-check"></i></button>{" "}
                 <button onClick={this.onDislicense} className="btn"><i className="far fa-calendar-times"></i></button>
               </div>

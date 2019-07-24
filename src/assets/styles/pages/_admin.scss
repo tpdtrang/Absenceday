@@ -251,3 +251,13 @@
 //   }
 //  }
 // }
+#button-download-as-xls{
+    &::after{
+    font-family: "Font Awesome 5 Free";
+    content: "\f56e";
+    font-weight: 600;
+    font-size: 18px;
+    color: #02a959;
+    }
+  
+}
