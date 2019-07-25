@@ -16,13 +16,13 @@ class PositionPage extends Component {
     this.props.dispatch(action.requestGetPositionStore())
   }
   onAdd = (data) => {
-    this.props.dispatch(action.requestAddPositionStore(data));
+    this.props.dispatch(action.requestAddPositionStore(data))
     this.setState({
       edit: false
     })
   }
   onDelete = (id) => {
-    this.props.dispatch(action.requestDeletePositionStore(id));
+    this.props.dispatch(action.requestDeletePositionStore(id))
   }
   onUpdate = (data) => {
     this.props.dispatch(action.requestUpdatePositionStore(data))
@@ -46,10 +46,19 @@ class PositionPage extends Component {
   render() {
     return (
       <div>
-        <HeaderAdLayout></HeaderAdLayout>
+        <HeaderAdLayout />
         <div className="content">
-          <SideAdLayout></SideAdLayout>
-          <TablePositionComponent data={this.props.data} onAdd={this.onAdd} onDelete={this.onDelete} onEdit={this.onEdit} edit={this.state.edit} dataEdit={this.state.dataEdit} onUpdate={this.onUpdate} onClose={this.onClose}></TablePositionComponent>
+          <SideAdLayout />
+          <TablePositionComponent
+            data={this.props.data}
+            onAdd={this.onAdd}
+            onDelete={this.onDelete}
+            onEdit={this.onEdit}
+            edit={this.state.edit}
+            dataEdit={this.state.dataEdit}
+            onUpdate={this.onUpdate}
+            onClose={this.onClose}
+          />
         </div>
       </div>
     );

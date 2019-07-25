@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 const dateFormat = 'YYYY/MM/DD';
 var now = new Date();
 var dateFormatDate = require('dateformat');
-const { MonthPicker } = DatePicker;
+const { MonthPicker, WeekPicker } = DatePicker;
 const monthFormat = 'YYYY/MM';
 class ListdatetodateComponent extends Component {
   constructor(props) {
@@ -16,7 +16,8 @@ class ListdatetodateComponent extends Component {
       to: dateFormatDate(now, 'yyyy-mm-dd'),
       checksearch: '1',
       month: '',
-      year: ''
+      year: '',
+      week: ''
     }
   }
 
@@ -32,17 +33,22 @@ class ListdatetodateComponent extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.onSearchDate(this.state);
+    this.props.onSearchDate(this.state)
   }
 
   onSubmitMonth = (event) => {
     event.preventDefault();
-    this.props.onSearch(this.state);
+    this.props.onSearch(this.state)
   }
 
   onSubmitYear = (event) => {
     event.preventDefault();
-    this.props.onSearchYear(this.state);
+    this.props.onSearchYear(this.state)
+  }
+
+  onSubmitWeek = (event) => {
+    event.preventDefault();
+    this.props.onSearchWeek(this.state)
   }
 
   onChanger = (event) => {
@@ -59,24 +65,24 @@ class ListdatetodateComponent extends Component {
     })
   }
 
+  onChangeWeek = (dataString) => {
+    this.setState({
+      week: dateFormatDate(dataString, 'yyyy-mm-dd'),
+      type: 'week'
+    })
+  }
+
   onDislicenseDate = () => {
-    this.props.dispatch(actionYear.requestGetDisLicense(this.state));
+    this.props.dispatch(actionYear.requestGetDisLicense(this.state))
   }
 
   onLicenseDate = () => {
-    this.props.dispatch(actionYear.requestGetLicense(this.state));
+    this.props.dispatch(actionYear.requestGetLicense(this.state))
   }
 
   onhandleSearch = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    function getMonday(d) {
-      d = new Date(d);
-      var day = d.getDay(),
-        diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
-      return new Date(d.setDate(diff));
-    }
-    getMonday(new Date());
     if (value === "1") {
       this.setState({
         checksearch: "1",
@@ -85,12 +91,6 @@ class ListdatetodateComponent extends Component {
     }
 
     if (value === "2") {
-      var month = dateFormatDate(new Date(), 'mm');
-      let object = {
-        isDate: "Month",
-        value: month
-      }
-      this.props.onFilter(object);
       this.setState({
         checksearch: "2",
         [name]: value
@@ -98,11 +98,10 @@ class ListdatetodateComponent extends Component {
     }
 
     if (value === "3") {
-      var tempYear = new Date();
-      var year = tempYear.getFullYear();
+      var month = dateFormatDate(new Date(), 'mm')
       let object = {
-        isDate: "Year",
-        value: year
+        isDate: "Month",
+        value: month
       }
       this.props.onFilter(object);
       this.setState({
@@ -110,10 +109,24 @@ class ListdatetodateComponent extends Component {
         [name]: value
       })
     }
+
+    if (value === "4") {
+      var tempYear = new Date();
+      var year = tempYear.getFullYear()
+      let object = {
+        isDate: "Year",
+        value: year
+      }
+      this.props.onFilter(object);
+      this.setState({
+        checksearch: "4",
+        [name]: value
+      })
+    }
   }
 
   render() {
-    console.log(this.props.data);
+    console.log(this.props.data)
     return (
       <div >
         <section className="wrap-container">
@@ -126,8 +139,12 @@ class ListdatetodateComponent extends Component {
               </div>
               <div className="menu-list">
                 <div className="p-absence">
-                  <button onClick={this.onLicenseDate} className="btn"><i className="far fa-calendar-check"></i></button>{" "}
-                  <button onClick={this.onDislicenseDate} className="btn"><i className="far fa-calendar-times"></i></button>
+                  <button onClick={this.onLicenseDate} className="btn">
+                    <i className="far fa-calendar-check" />
+                  </button>{" "}
+                  <button onClick={this.onDislicenseDate} className="btn">
+                    <i className="far fa-calendar-times" />
+                  </button>
                 </div>
 
               </div>
@@ -146,40 +163,68 @@ class ListdatetodateComponent extends Component {
                       defaultValue={moment(now, dateFormat)}
                       name="to"
                     />
-                    <button className="btn btn-s" type="submit"><i className="fas fa-search"></i></button>
+                    <button className="btn btn-s" type="submit">
+                      <i className="fas fa-search" />
+                    </button>
                   </form>
                   :
-                  <></>
+                  <React.Fragment />
                 }
                 {
                   this.state.checksearch === "2" ?
-                    <form className="f-search" onSubmit={this.onSubmitMonth}>
-                      {/* <input type="text" className="p-search" name="month" value={this.state.month} onChange={this.onChanger} /> */}
-                      <MonthPicker placeholder="Select month" name="month" defaultValue={moment(now, monthFormat)} onChange={this.onChangeMonth} />
+                    <form className="f-search" onSubmit={this.onSubmitWeek}>
+                      <WeekPicker
+                        placeholder="Select Week"
+                        name="week"
+                        onChange={this.onChangeWeek}
+                      />
                       <button className="btn btn-s" type="submit"><i className="fas fa-search"></i></button>
                     </form>
                     :
-                    <></>
+                    <React.Fragment />
                 }
                 {
                   this.state.checksearch === "3" ?
-                    <form className="f-search" onSubmit={this.onSubmitYear}>
-                      <input type="text" className="p-search" name="year" placeholder="Tìm kiếm theo năm..." value={this.state.year} onChange={this.onChanger} />
-                      {/* <DatePicker
-                  className="ip-date"
-                  onChange={this.onChangeDate}
-                  defaultValue={moment(now, dateFormat)}
-                  name="from"
-                /> */}
-                      <button className="btn btn-s" type="submit"><i className="fas fa-search"></i></button>
+                    <form className="f-search" onSubmit={this.onSubmitMonth}>
+                      {/* <input type="text" className="p-search" name="month" value={this.state.month} onChange={this.onChanger} /> */}
+                      <MonthPicker
+                        placeholder="Select month"
+                        name="month"
+                        defaultValue={moment(now, monthFormat)}
+                        onChange={this.onChangeMonth} />
+                      <button className="btn btn-s" type="submit">
+                        <i className="fas fa-search" />
+                      </button>
                     </form>
                     :
-                    <></>
+                    <React.Fragment />
                 }
-                <select className="f-search op-search" onChange={this.onhandleSearch} name="search" vulue={this.state.search}>
+                {
+                  this.state.checksearch === "4" ?
+                    <form className="f-search" onSubmit={this.onSubmitYear}>
+                      <input
+                        type="text"
+                        className="p-search"
+                        name="year"
+                        placeholder="Tìm kiếm theo năm..."
+                        value={this.state.year}
+                        onChange={this.onChanger} />
+                      <button className="btn btn-s" type="submit">
+                        <i className="fas fa-search" />
+                      </button>
+                    </form>
+                    :
+                    <React.Fragment />
+                }
+                <select
+                  className="f-search op-search"
+                  onChange={this.onhandleSearch}
+                  name="search"
+                  vulue={this.state.search}>
                   <option value="1">Ngày</option>
-                  <option value="2">Tháng</option>
-                  <option value="3">Năm</option>
+                  <option value="2">Tuần</option>
+                  <option value="3">Tháng</option>
+                  <option value="4">Năm</option>
                 </select>
               </div>
             </div>

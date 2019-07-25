@@ -5,22 +5,9 @@ class TableTrackComponent extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      show: false,
       name: '',
       description: '',
     }
-  }
-
-  onhandleShow = () => {
-    this.setState({
-      show: true
-    })
-  }
-
-  onhandleClose = () => {
-    this.setState({
-      show: false
-    })
   }
 
   onSubmit = (event) => {
@@ -132,7 +119,12 @@ class TableTrackComponent extends Component {
               </tbody>
             </table>
           </div>
-          <Modal maskClosable={false} visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
+          <Modal
+            maskClosable={false}
+            visible={this.state.show}
+            style={{ "top": "3%" }}
+            footer={null}
+            onCancel={this.onhandleClose}>
             <div className="p-modal">
               <div className="title-form">
                 <h3 className="heading-3">Thêm nhóm</h3>
@@ -142,10 +134,22 @@ class TableTrackComponent extends Component {
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group">
                     <label className="form-text">Tên:</label>
-                    <input type="text" className="form-search" name="name" onChange={this.onhandleChange} value={this.state.name} /></div>
+                    <input
+                      type="text"
+                      className="form-search"
+                      name="name"
+                      onChange={this.onhandleChange}
+                      value={this.state.name} />
+                  </div>
                   <div className="form-group">
                     <label className="form-text">Mô tả:</label>
-                    <input type="text" className="form-search" name="description" onChange={this.onhandleChange} value={this.state.description} /></div>
+                    <input
+                      type="text"
+                      className="form-search"
+                      name="description"
+                      onChange={this.onhandleChange}
+                      value={this.state.description} />
+                  </div>
                   <div className="btn-wrap">
                     <button type="submit" className="btn btn-s">
                       Lưu </button>
