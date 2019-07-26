@@ -1,7 +1,6 @@
 import * as types from '../constants/actionTypes';
 const INITIAL_STATE = {
   all: [],
-  list: [],
   filter: []
 }
 export default function store(state = INITIAL_STATE, action = {}) {

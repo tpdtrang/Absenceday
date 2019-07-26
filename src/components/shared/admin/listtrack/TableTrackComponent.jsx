@@ -103,7 +103,18 @@ class TableTrackComponent extends Component {
                     <td className="description">{data.attributes.April}</td>
                     <td className="description">{data.attributes.May}</td>
                     <td className="description">{data.attributes.June}</td>
-                    <td className="description">{data.attributes.July}</td>
+                    <td className="description">
+                      {
+                        Array.isArray(data.attributes.July) ?
+                          data.attributes.July.map((item, index) => (
+                            <span key={index} style={{ display: 'block' }} >
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.July
+                      }
+                    </td>
                     <td className="description">{data.attributes.August}</td>
                     <td className="description">{data.attributes.September}</td>
                     <td className="description">{data.attributes.October}</td>

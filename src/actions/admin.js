@@ -99,7 +99,7 @@ export function requestUpdateUserStore(data) {
   }
 }
 //team
-export function requestGetTeamStore() {
+export function requestGetTeam() {
   return (dispatch) => {
     return axios({
       method: 'GET',
@@ -117,7 +117,7 @@ export function requestGetTeamStore() {
     })
   }
 }
-export function requestAddTeamStore(data) {
+export function requestAddTeam(data) {
   let store = null;
   store = {
     name: data.name,
@@ -139,7 +139,7 @@ export function requestAddTeamStore(data) {
     })
   }
 }
-export function requestDeleteTeamStore(id) {
+export function requestDeleteTeam(id) {
   return (dispatch) => {
     return axios.request({
       method: 'DELETE',
@@ -155,7 +155,7 @@ export function requestDeleteTeamStore(id) {
     })
   }
 }
-export function requestUpdateTeamStore(data) {
+export function requestUpdateTeam(data) {
   let store = null;
   store = {
     name: data.name,
@@ -323,7 +323,7 @@ export function requestGetTrackStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/tracks`,
+      url: `${API.API}/update_all_users`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'

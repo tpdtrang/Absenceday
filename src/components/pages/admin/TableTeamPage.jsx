@@ -13,24 +13,24 @@ class TableTeamPage extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(action.requestGetTeamStore());
+    this.props.dispatch(action.requestGetTeam());
   }
   onAdd = (data) => {
-    this.props.dispatch(action.requestAddTeamStore(data));
+    this.props.dispatch(action.requestAddTeam(data));
     this.setState({
       edit: false
     })
   }
   onDelete = (id) => {
-    this.props.dispatch(action.requestDeleteTeamStore(id));
+    this.props.dispatch(action.requestGetTeam(id));
   }
   onUpdate = (data) => {
-    this.props.dispatch(action.requestUpdateTeamStore(data));
+    this.props.dispatch(action.requestUpdateTeam(data));
     this.setState({
       edit: false
     })
   }
-  onEdit = (id) => {  
+  onEdit = (id) => {
     let item = [...this.props.team].filter(item => item.id === id)
     if (item.length > 0) {
       this.setState({
@@ -42,16 +42,25 @@ class TableTeamPage extends Component {
   }
   onClose = () => {
     this.setState({
-      edit: false 
+      edit: false
     })
   }
   render() {
     return (
       <div>
-        <HeaderAdLayout></HeaderAdLayout>
+        <HeaderAdLayout />
         <div className="content">
-          <SideAdLayout></SideAdLayout>
-          <TableTeamComponent data={this.props.team} onAdd={this.onAdd} dataEdit={this.state.dataEdit} onUpdate={this.onUpdate} edit={this.state.edit} onDelete={this.onDelete} onEdit={this.onEdit} onClose={this.onClose}></TableTeamComponent>
+          <SideAdLayout />
+          <TableTeamComponent
+            data={this.props.team}
+            onAdd={this.onAdd}
+            dataEdit={this.state.dataEdit}
+            onUpdate={this.onUpdate}
+            edit={this.state.edit}
+            onDelete={this.onDelete}
+            onEdit={this.onEdit}
+            onClose={this.onClose}
+          />
         </div>
       </div>
     );
