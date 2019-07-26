@@ -15,7 +15,7 @@ class ListRegistrantion extends Component {
               <thead>
                 <tr>
                   <th rowSpan="2" className="sticky-col first-col">#</th>
-                  <th rowSpan="2" className="sticky-col second-col">Người dùng</th>
+                  <th rowSpan="2" className="sticky-col second-col">Người Đăng Ký</th>
                   <th rowSpan="2">Năm</th>
                   <th rowSpan="2">Tổng phép năm</th>
                   <th rowSpan="2">Tổng phép còn</th>

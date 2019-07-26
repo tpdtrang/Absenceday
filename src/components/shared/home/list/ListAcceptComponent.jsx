@@ -290,7 +290,7 @@ class ListComponent extends Component {
                     }
                   ],
                 })(
-                  <Input className="b-comment"/>,
+                  <Input className="b-comment" autoComplete="off"/>,
                 )}
                 <div className="b-btn">
                   <Button className="btn-save" onClick={this.onSendAccept}>Gửi</Button>
