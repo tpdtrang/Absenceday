@@ -102,9 +102,20 @@ class TableTrackComponent extends Component {
                     <td className="description">{data.attributes.March}</td>
                     <td className="description">{data.attributes.April}</td>
                     <td className="description">{data.attributes.May}</td>
-                    <td className="description">{data.attributes.June}</td>
-                    <td className="description">
+                    <td className="description p-hoverdate">{data.attributes.June}
                       {
+                        Array.isArray(data.attributes.dateDetails.June) ?
+                          data.attributes.dateDetails.June.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.July}
+                      {/* {
                         Array.isArray(data.attributes.July) ?
                           data.attributes.July.map((item, index) => (
                             <span key={index} style={{ display: 'block' }} >
@@ -113,6 +124,21 @@ class TableTrackComponent extends Component {
                           ))
                           :
                           data.attributes.July
+                      } */}
+                      {/* {data.attributes.dateDetails.map(item => (
+                        <span key={item.id}>
+                          {item.July}
+                        </span>
+                      ))} */}
+                      {
+                        Array.isArray(data.attributes.dateDetails.July) ?
+                          data.attributes.dateDetails.July.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
                       }
                     </td>
                     <td className="description">{data.attributes.August}</td>

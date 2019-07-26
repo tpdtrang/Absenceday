@@ -323,7 +323,7 @@ export function requestGetTrackStore() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/update_all_users`,
+      url: `${API.API}/tracks`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
@@ -343,7 +343,7 @@ export function requestGetDisLicense() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/update_all_users`,
+      url: `${API.API}/filters`,
       params: paramData,
       headers: {
         "Accept": "application/json",
@@ -364,7 +364,7 @@ export function requestGetLicense() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/update_all_users`,
+      url: `${API.API}/filters`,
       params: paramData,
       headers: {
         "Accept": "application/json",

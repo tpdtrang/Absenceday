@@ -231,3 +231,18 @@
   border: 1px solid #999;
   padding: 4px;
 }
+.p-hoverdate {
+  .hover-date {
+    visibility: hidden;
+    overflow: 0;
+    // background-color: #02a959;
+    transition: all 0.2s ease-in-out;
+  }
+  &:hover {
+    cursor: pointer;
+    .hover-date {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}

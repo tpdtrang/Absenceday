@@ -41,7 +41,7 @@ export default function store(state = INITIAL_STATE, action = {}) {
     case types.SEARCH_DATE:
       console.log(action.payload.data);
       return Object.assign({}, state, {
-        filter: convertData(action.payload.data)
+        all: convertData(action.payload.data)
         // filter: action.payload.data
       })
     case types.FILTER_REGISTRATION:
