@@ -1,12 +1,12 @@
-import * as API from '../constants/actionAPI';
-import * as types from '../constants/actionTypes';
-import axios from 'axios';
-import Cookies from 'universal-cookie';
-import { message } from 'antd';
+import * as API from '../constants/actionAPI'
+import * as types from '../constants/actionTypes'
+import axios from 'axios'
+import Cookies from 'universal-cookie'
+import { message } from 'antd'
 const cookies = new Cookies();
-var dateFormatDate = require('dateformat');
+var dateFormatDate = require('dateformat')
 export function requestGetDayOff() {
-  let paramData = {};
+  let paramData = {}
   paramData = {
     status: 3
   }
@@ -28,7 +28,7 @@ export function requestGetDayOff() {
   }
 }
 export function requestGetListQueue() {
-  let paramData = {};
+  let paramData = {}
   paramData = {
     status: 1
   }
@@ -43,14 +43,14 @@ export function requestGetListQueue() {
         'Authorization': `${'bearer' + cookies.get('token')}`
       },
     }).then(function (response) {
-      dispatch(reciveData(types.REQUEST_LIST_QUEUE, response.data.data));
+      dispatch(reciveData(types.REQUEST_LIST_QUEUE, response.data.data))
     }).catch(function (error) {
 
     })
   }
 }
 export function requestGetListDisAccept() {
-  let paramData = {};
+  let paramData = {}
   paramData = {
     status: 2
   }
@@ -65,14 +65,14 @@ export function requestGetListDisAccept() {
         'Authorization': `${'bearer' + cookies.get('token')}`
       },
     }).then(function (response) {
-      dispatch(reciveData(types.REQUEST_LIST_DISACCEPT, response.data.data));
+      dispatch(reciveData(types.REQUEST_LIST_DISACCEPT, response.data.data))
     }).catch(function (error) {
 
     })
   }
 }
 export function requestDisAccept(data) {
-  let paramsData = "";
+  let paramsData = ""
   paramsData = {
     message: data.message
   }
@@ -87,7 +87,7 @@ export function requestDisAccept(data) {
         "Authorization": `${'bearer' + cookies.get('token')}`
       },
     }).then(function (response) {
-      dispatch(reciveData(types.REQUEST_UPDATE_DISACCEPT, response.data.data));
+      dispatch(reciveData(types.REQUEST_UPDATE_DISACCEPT, response.data.data))
     }).catch(function (error) {
       console.log(error);
     })
@@ -104,14 +104,14 @@ export function requestGetListAccept() {
         'Authorization': `${'bearer' + cookies.get('token')}`
       },
     }).then(function (response) {
-      dispatch(reciveData(types.REQUEST_LIST_ACCEPT, response.data.data));
+      dispatch(reciveData(types.REQUEST_LIST_ACCEPT, response.data.data))
     }).catch(function (error) {
 
     })
   }
 }
 export function requestSendAccept(data) {
-  let paramsData = "";
+  let paramsData = ""
   paramsData = {
     message: data.message
   }
@@ -126,9 +126,9 @@ export function requestSendAccept(data) {
         "Authorization": `${'bearer' + cookies.get('token')}`
       },
     }).then(function (response) {
-      dispatch(reciveData(types.REQUEST_SEND_ACCEPT, response.data.data));
+      dispatch(reciveData(types.REQUEST_SEND_ACCEPT, response.data.data))
     }).catch(function (error) {
-      console.log(error);
+      console.log(error)
     })
   }
 }
@@ -150,7 +150,7 @@ export function requestUpdateAccept(data) {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_UPDATE_ACCEPT, response.data.data));
     }).catch(function (error) {
-      console.log(error);
+      console.log(error)
     })
   }
 }
@@ -167,7 +167,7 @@ export function requestGetMail() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_GET_MAIL, response.data.data))
     }).catch(function (error) {
-      console.log(error);
+      console.log(error)
     })
   }
 }
@@ -183,9 +183,9 @@ export function requestCreateDayOff(data) {
         dataArrray += `${item.date},${item.at_time};`
       }
     }
-    return [];
+    return []
   })
-  let dataLead = "";
+  let dataLead = ""
   data.arrayLead.map((item, i) => {
     if (data.arrayLead.length === 1) {
       dataLead = `${item}`
@@ -196,9 +196,9 @@ export function requestCreateDayOff(data) {
         dataLead += `${item},`
       }
     }
-    return [];
+    return []
   })
-  let dataMail = "";
+  let dataMail = ""
   data.arrayMail.map((item, i) => {
     if (data.arrayMail.length === 1) {
       dataMail = `${item}`
@@ -218,8 +218,8 @@ export function requestCreateDayOff(data) {
       emails: dataLead,
       cc: dataMail,
       type_id: data.typeday,
-      time_start: data.time_start,
-      time_end: data.time_end,
+      time_start: dateFormatDate(data.time_start, 'yyyy-mm-dd'),
+      time_end:dateFormatDate(data.time_end, 'yyyy-mm-dd'),
       note: data.note,
       type: 'Từ ngày đến hết ngày'
     }
@@ -248,7 +248,11 @@ export function requestCreateDayOff(data) {
       message.success("Bạn đã đăng ký thành công!")
       dispatch(reciveData(types.REQUEST_ADD_DAYOFF, response.data.data))
     }).catch(function (error) {
-      message.error(" Đăng ký không thành công!")
+      if(error.response.data.errors[0].detail === "Time registration has been matched."){
+        message.error("Bạn đã đăng ký ngày này!!")
+      }else{
+        message.error(" Đăng ký không thành công!")
+      }
     })
   }
 }
@@ -256,21 +260,17 @@ export function requestGetDay() {
   return (dispatch) => {
     return axios.request({
       method: 'GET',
-      url: `${API.API}/absences`,
+      url: `${API.API}/user/tracks`,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application',
+        'Authorization': `${'bearer' + cookies.get('token')}`
       }
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_GET_REGISTRATION, response.data.data))
     }).catch(function (error) {
-      console.log(error);
+      console.log(error)
     })
-  }
-}
-export function requestFilterDay(id) {
-  return (dispatch) => {
-    dispatch(reciveData(types.REQUEST_FILTER_REGIS, id))
   }
 }
 export function requestUpdateDay(data) {
@@ -295,7 +295,8 @@ export function requestUpdateDay(data) {
       type_id: data.typeday,
       date: dataArrray,
       note: data.note,
-      type: data.type
+      type: data.type,
+      _method: 'PUT'
     }
   } else {
     paramData = {
@@ -303,31 +304,32 @@ export function requestUpdateDay(data) {
       time_start: dateFormatDate(data.time_start, 'yyyy-mm-dd'),
       time_end: dateFormatDate(data.time_end, 'yyyy-mm-dd'),
       note: data.note,
-      type: data.type
+      type: data.type,
+      _method: 'PUT'
     }
   }
   return (dispatch) => {
     return axios.request({
-      method: 'PUT',
+      method: 'POST',
       url: `${API.API_URL}/absences/${data.id}`,
-      params: paramData,
       headers: {
         "Accept": "application/json",
         'Content-Type': 'application/json',
         'Authorization': `${'bearer ' + cookies.get('token')}`
       },
+      data: paramData
     }).then(function (response) {
-      console.log(response.data.data);
-      
       message.success("Bạn đã sửa thành công!")
       dispatch(reciveData(types.REQUEST_UPDATE_DAYOFF, response.data.data));
     }).catch(function (error) {
-      console.log(error);
-      message.error("Sửa không thành công!")
+      if(error.response.data.errors[0].detail === "Time registration has been matched."){
+        message.error("Bạn đã đăng ký ngày này!!")
+      }else{
+        message.error(" Sửa không thành công!")
+      }
     })
   }
 }
-
 export function reciveData(aciton, payload) {
   return {
     type: aciton,

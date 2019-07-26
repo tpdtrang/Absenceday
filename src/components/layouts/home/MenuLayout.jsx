@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, DatePicker, message, Select } from 'antd';
+import { Modal, DatePicker, message, Select, Form, Input } from 'antd';
 import moment from 'moment';
 import 'antd/dist/antd.css';
 import Cookies from 'universal-cookie';
@@ -28,45 +28,43 @@ class MenuLayout extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    var self = this;
     if (this.props.data !== prevProps.data && !this.state.lead && this.props.data.length) {
-      self.setState({
+      this.setState({
         typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
         lead: this.props.data[0].id,
       })
     }
     if (this.props.leadmail !== prevProps.leadmail && !this.state.mailto && this.props.leadmail.length) {
-      self.setState({
+      this.setState({
         mailto: this.props.leadmail[0].id,
       })
     }
+    
     if (prevProps.visible !== this.props.visible) {
-      if (prevProps.edit !== this.props.edit) {
+      if (prevProps.edit !== this.props.edit  && this.props.edit) {
         let data = this.props.dataEdit.attributes;
         let arrayNew = data.time.map(item => {
           return {
             id: item.id,
             at_time: item.at_time,
             date: dateFormatDate(item.time_details, 'yyyy-mm-dd'),
-            type: item.type,
-            registration_id: item.registration_id
           }
         });
-        self.setState({
+        this.setState({
           id: this.props.dataEdit.id,
           visible: this.props.edit,
-          time_start: this.props.dataEdit.attributes.time[0].time_details === dateFormatDate(data.time_start, 'yyyy-mm-dd') ? dateFormatDate(data.time_start, 'yyyy-mm-dd') : '',
-          time_end: this.props.dataEdit.attributes.time[0].time_details === dateFormatDate(data.time_end, 'yyyy-mm-dd') ? dateFormatDate(data.time_end, 'yyyy-mm-dd') : '',
+          time_start: dateFormatDate(data.time[0].time_details, 'yyyy-mm-dd') ,
+          time_end: dateFormatDate(data.time[data.time.length - 1].time_details, 'yyyy-mm-dd'),
           checkType: data.time[0].type === 'Chọn ngày' ? true : false,
-          note: data.note,
-          type: this.props.dataEdit.attributes.time[0].type === "Chọn ngày" ? "Chọn ngày" : "Từ ngày đến hết ngày",
-          typeday: data.type.id,
-          arrayNew: arrayNew
+          note: this.props.edit ? data.note : '',
+          type: data.time[0].type === "Chọn ngày" ? "Chọn ngày" : "Từ ngày đến hết ngày",
+          typeday: data.type_id,
+          arrayNew: data.time[0].type === "Chọn ngày" ? arrayNew : this.state.arrayNew
         })
       } else {
         this.onReset();
         this.setState({
-          visible: this.props.visible
+          visible: this.props.visible,
         })
       }
     }
@@ -122,15 +120,26 @@ class MenuLayout extends Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
-    if (this.props.edit === true) {
-      this.props.onUpdateDay(this.state);
-      this.onReset();
-      this.props.onCheckModal();
-    } else {
-      this.props.onAddDayOff(this.state);
-      this.onReset();
-      this.props.onCheckModal();
-    }
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        if (this.props.edit === true) {
+          this.props.onUpdateDay(this.state);
+          this.setState({
+            visible: false,
+            value: ''
+          })
+          this.props.form.resetFields();
+          this.onReset();
+        } else {
+          this.props.onAddDayOff(this.state);
+          this.setState({
+            visible: false
+          })
+          this.props.form.resetFields();
+          this.onReset();
+        }
+      }
+    })
   }
   onReset() {
     this.setState({
@@ -226,6 +235,11 @@ class MenuLayout extends Component {
       arrayMail
     })
   }
+  onChangeValue = (value) => {
+    this.props.form.setFieldsValue({
+      note: 'Time',
+    });
+  }
   render() {
     const contentUser = () => {
       if (cookies.get("data") !== undefined) {
@@ -260,7 +274,7 @@ class MenuLayout extends Component {
       }
       return [];
     })
-
+    const { getFieldDecorator } = this.props.form;
     return (
       <section className="b-menu-container">
         <div className="b-menu">
@@ -280,7 +294,7 @@ class MenuLayout extends Component {
           onOk={this.handleOk}
           footer={null}
           closable={false}>
-          <form onSubmit={this.onSubmit}>
+          <Form onSubmit={this.onSubmit}>
             <div className="b-form-container">
               <div className="b-form-content">
                 <div className="b-heading">
@@ -294,7 +308,7 @@ class MenuLayout extends Component {
                     <div className="form-group">
                       <label className="b-text ">Loại Hình Nghỉ: </label>
                       <select
-                        className="b-select"
+                        className="b-select select-1"
                         onChange={this.onChangeType}
                         value={this.state.type}
                         name="type">
@@ -312,8 +326,9 @@ class MenuLayout extends Component {
                             <DatePicker
                               className="ip-date"
                               onChange={this.onChangeDateItem}
-                              defaultValue={moment(now, dateFormat)}
-                              name="time_off_beginning"
+                              value={moment(this.state.time_start, dateFormat)}
+                              name="time_start"
+                              allowClear={false}
                             />
                           </div>
                           <div className="form-group">
@@ -321,8 +336,9 @@ class MenuLayout extends Component {
                             <DatePicker
                               className="ip-date"
                               onChange={this.onChangeDate}
-                              defaultValue={moment(now, dateFormat)}
-                              name="time_off_ending"
+                              value={moment(this.state.time_end, dateFormat)}
+                              name="time_end"
+                              allowClear={false}
                             />
                           </div>
                         </div>
@@ -336,6 +352,7 @@ class MenuLayout extends Component {
                               className="sl-date"
                               onChange={this.onChangeDate}
                               defaultValue={moment(now, dateFormat)}
+                              allowClear={false}
                               style={{ "width": "120px" }}
                             />
                             <select
@@ -375,7 +392,7 @@ class MenuLayout extends Component {
                     <div className="form-group">
                       <label className="b-text ">Thể loại:</label>
                       <select
-                        className="b-select"
+                        className="b-select select-1"
                         onChange={this.onChanger}
                         value={this.state.typeday}
                         name="typeday"
@@ -389,11 +406,28 @@ class MenuLayout extends Component {
                     </div>
                     <div className="form-group">
                       <p className="text">Lý do:</p>
-                      <textarea
-                        className="b-area"
-                        onChange={this.onChanger}
-                        value={this.state.note}
-                        name="note" required />
+                      <Form.Item>
+                        {getFieldDecorator('note', {
+                          initialValue: this.state.note,
+                          rules: [
+                            {
+                              required: true,
+                              message: 'Bạn hãy nhập để gửi thông báo!'
+                            },
+                            {
+                              min: 10,
+                              message: 'Bạn hãy nhập hơn 10 ký tự!'
+                            },
+                          ],
+                        })(
+                          <Input
+                            className="b-area"
+                            name="note"
+                            onChange={this.onChanger}
+                            autoComplete ="off"
+                          />,
+                        )}
+                      </Form.Item>
                     </div>
                     {
                       this.props.edit === false ?
@@ -447,11 +481,11 @@ class MenuLayout extends Component {
                 </div>
               </div>
             </div>
-          </form>
+          </Form>
         </Modal>
       </section>
     );
   }
 }
 
-export default MenuLayout;
+export default Form.create({})(MenuLayout);

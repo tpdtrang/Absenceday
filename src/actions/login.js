@@ -55,7 +55,7 @@ export function requestLogout(data) {
   return (dispatch) => {
     return axios.request({
       method: 'POST',
-      url: `${API.API_URL}/auth/logout`,
+      url: `${API.API_URL}/user/auth/logout`,
       headers: {
         "Accept": "application/json",
         'Content-Type': 'application/json',

@@ -127,9 +127,9 @@ class HeaderLayout extends Component {
               </a>
             </div>
             <div className="b-login">
-              <div className="b-admin">
+              {/* <div className="b-admin">
                 <button className="btn-admin" onClick={this.onRedirect}><i className="fas fa-users-cog"></i></button>
-              </div>
+              </div> */}
               {contentLogout()}
               <Modal
                 visible={this.state.showGoogle}
