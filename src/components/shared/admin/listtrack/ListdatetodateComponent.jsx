@@ -17,7 +17,7 @@ class ListdatetodateComponent extends Component {
       checksearch: '1',
       month: '',
       year: '',
-      week: dateFormatDate(now, 'yyyy-mm-dd'),
+      week: ''
     }
   }
 
@@ -66,24 +66,11 @@ class ListdatetodateComponent extends Component {
   }
 
   onChangeWeek = (dataString) => {
-    console.log(dataString);
     this.setState({
       week: dateFormatDate(dataString, 'yyyy-mm-dd'),
       type: 'week'
     })
-
   }
-  // convert = (date) => {
-  //   let curr = new Date(date)
-  //   let week = []
-  //   for (let i = 1; i <= 7; i++) {
-  //     let first = curr.getDate() - curr.getDay() + i
-  //     let day = new Date(curr.setDate(first)).toISOString().slice(0, 10)
-  //     week.push(day)
-
-  //   }
-  //   return week;
-  // }
 
   onDislicenseDate = () => {
     this.props.dispatch(actionYear.requestGetDisLicense(this.state))
@@ -108,11 +95,6 @@ class ListdatetodateComponent extends Component {
         checksearch: "2",
         [name]: value
       })
-      // let week = new Date();
-      // let object = {
-      //   week: dateFormatDate(week)
-      // }
-      // this.props.dispatch(actionYear.requestSearchWeek(object));
     }
 
     if (value === "3") {
@@ -142,6 +124,7 @@ class ListdatetodateComponent extends Component {
       })
     }
   }
+
   render() {
     console.log(this.props.data)
     return (
@@ -196,7 +179,6 @@ class ListdatetodateComponent extends Component {
                         placeholder="Select Week"
                         name="week"
                         onChange={this.onChangeWeek}
-                        defaultValue={moment(now, monthFormat)}
                       />
                       <button className="btn btn-s" type="submit"><i className="fas fa-search"></i></button>
                     </form>
