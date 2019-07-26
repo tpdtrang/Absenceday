@@ -5,8 +5,8 @@ class HomeAdmin extends Component {
   render() {
     return (
       <div>
-        <HeaderAdLayout></HeaderAdLayout>
-        <SideAdLayout></SideAdLayout>
+        <HeaderAdLayout />
+        <SideAdLayout />
       </div>
     );
   }

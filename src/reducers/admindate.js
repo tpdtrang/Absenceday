@@ -2,7 +2,8 @@ import * as types from '../constants/actionTypes';
 var dateFormatDate = require('dateformat');
 const INITIAL_STATE = {
   all: [],
-  filter: []
+  filter: [],
+  list: []
 }
 function convertData(data) {
   return data.map(item => {
@@ -33,14 +34,14 @@ function convertData(data) {
 export default function store(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
     case types.GET_DATE:
-      console.log(action.payload);
+      // console.log(action.payload);
       return Object.assign({}, state, {
         all: action.payload
       })
     case types.SEARCH_DATE:
       console.log(action.payload.data);
       return Object.assign({}, state, {
-        filter: convertData(action.payload.data)
+        all: convertData(action.payload.data)
         // filter: action.payload.data
       })
     case types.FILTER_REGISTRATION:
@@ -57,14 +58,14 @@ export default function store(state = INITIAL_STATE, action = {}) {
         filter: dataNew
       }
     case types.GET_LICENSEDATE:
-      console.log(action.payload);
+      console.log(state.list);
       return Object.assign({}, state, {
-        all: convertData(action.payload)
+        filter: convertData(action.payload)
       })
     case types.GET_DISLICENSEDATE:
       console.log(action.payload);
       return Object.assign({}, state, {
-        all: convertData(action.payload)
+        filter: convertData(action.payload)
       })
     default:
       return state

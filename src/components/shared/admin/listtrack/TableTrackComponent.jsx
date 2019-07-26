@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
 import { Modal } from 'antd';
 class TableTrackComponent extends Component {
+
   constructor(props, context) {
     super(props, context);
     this.state = {
-      show: false,
       name: '',
-      description: ''
+      description: '',
     }
   }
-  onhandleShow = () => {
-    this.setState({
-      show: true
-    })
-  }
-  onhandleClose = () => {
-    this.setState({
-      show: false
-    })
-  }
+
   onSubmit = (event) => {
     event.preventDefault();
     console.log(this.state);
@@ -27,12 +18,18 @@ class TableTrackComponent extends Component {
     })
   }
 
+  onPrev = () => {
+    this.props.onPrev();
+  }
+
   onDislicense = () => {
     this.props.onDislicense();
   }
+
   onLicense = () => {
     this.props.onLicense();
   }
+
   onhandleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -49,16 +46,9 @@ class TableTrackComponent extends Component {
                 <h3 className="heading-3">Quản lý thống kê</h3>
               </div>
             </div>
-            {/* <div className="menu-list">
-              <div className="add">
-                <button type="submit" className="btn" onClick={this.onhandleShow} style={{ fontSize: "13px", color: "#fff", backgroundColor: " #02a959" }} >
-                  <i className="fas fa-plus" style={{ fontSize: "13px", color: "#fff", paddingRight: "5px" }} />
-                  Create New
-                  </button>
-              </div>
-            </div> */}
             <div className="menu-list">
               <div className="p-absence">
+                <button onClick={this.onPrev} className="btn"><i className="fas fa-arrow-circle-left"></i></button>{" "}
                 <button onClick={this.onLicense} className="btn"><i className="far fa-calendar-check"></i></button>{" "}
                 <button onClick={this.onDislicense} className="btn"><i className="far fa-calendar-times"></i></button>
               </div>
@@ -112,8 +102,45 @@ class TableTrackComponent extends Component {
                     <td className="description">{data.attributes.March}</td>
                     <td className="description">{data.attributes.April}</td>
                     <td className="description">{data.attributes.May}</td>
-                    <td className="description">{data.attributes.June}</td>
-                    <td className="description">{data.attributes.July}</td>
+                    <td className="description p-hoverdate">{data.attributes.June}
+                      {
+                        Array.isArray(data.attributes.dateDetails.June) ?
+                          data.attributes.dateDetails.June.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.July}
+                      {/* {
+                        Array.isArray(data.attributes.July) ?
+                          data.attributes.July.map((item, index) => (
+                            <span key={index} style={{ display: 'block' }} >
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.July
+                      } */}
+                      {/* {data.attributes.dateDetails.map(item => (
+                        <span key={item.id}>
+                          {item.July}
+                        </span>
+                      ))} */}
+                      {
+                        Array.isArray(data.attributes.dateDetails.July) ?
+                          data.attributes.dateDetails.July.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
                     <td className="description">{data.attributes.August}</td>
                     <td className="description">{data.attributes.September}</td>
                     <td className="description">{data.attributes.October}</td>
@@ -129,7 +156,12 @@ class TableTrackComponent extends Component {
               </tbody>
             </table>
           </div>
-          <Modal maskClosable={false} visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
+          <Modal
+            maskClosable={false}
+            visible={this.state.show}
+            style={{ "top": "3%" }}
+            footer={null}
+            onCancel={this.onhandleClose}>
             <div className="p-modal">
               <div className="title-form">
                 <h3 className="heading-3">Thêm nhóm</h3>
@@ -139,10 +171,22 @@ class TableTrackComponent extends Component {
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group">
                     <label className="form-text">Tên:</label>
-                    <input type="text" className="form-search" name="name" onChange={this.onhandleChange} value={this.state.name} /></div>
+                    <input
+                      type="text"
+                      className="form-search"
+                      name="name"
+                      onChange={this.onhandleChange}
+                      value={this.state.name} />
+                  </div>
                   <div className="form-group">
                     <label className="form-text">Mô tả:</label>
-                    <input type="text" className="form-search" name="description" onChange={this.onhandleChange} value={this.state.description} /></div>
+                    <input
+                      type="text"
+                      className="form-search"
+                      name="description"
+                      onChange={this.onhandleChange}
+                      value={this.state.description} />
+                  </div>
                   <div className="btn-wrap">
                     <button type="submit" className="btn btn-s">
                       Lưu </button>

@@ -21,7 +21,7 @@ class RegistrationPage extends Component {
   componentDidMount() {
     this.props.dispatch(action.requestGetRegistrationStore());
     this.props.dispatch(action.requestGetUserStore());
-    this.props.dispatch(action.requestGetTeamStore());
+    this.props.dispatch(action.requestGetTeam());
   }
 
   onSearch = (data) => {

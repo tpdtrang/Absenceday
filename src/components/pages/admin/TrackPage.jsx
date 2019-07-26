@@ -10,22 +10,15 @@ import {
 } from '../../shared/admin/listtrack';
 import { connect } from 'react-redux';
 import * as action from '../../../actions/admin';
-import * as actionYear from '../../../actions/admindate';
+import * as actionDate from '../../../actions/admindate';
 // const today = new Date();
 class TrackPage extends Component {
   constructor(props, context) {
     super(props, context);
-    // var today = new Date(),
-    //         date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    // var tempDate = new Date();
-    // var date = tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate() + ' '
-    //   + tempDate.getHours() + ':' + tempDate.getMinutes() + ':' + tempDate.getSeconds();
-    // console.log(date);
-
     this.state = {
       view: '1',
       isFilter: false,
-      // date: date
+      isFiltrack: false
     }
   }
 
@@ -34,65 +27,76 @@ class TrackPage extends Component {
       view: '2'
     })
   }
+
   onHome = () => {
     this.setState({
       view: '1'
     })
   }
 
-
   onFilter = (data) => {
-    this.props.dispatch(actionYear.requestFilterDate(data));
+    this.props.dispatch(actionDate.requestFilterDate(data))
     this.setState({
       isFilter: true
     })
   }
 
   componentDidMount() {
-    this.props.dispatch(action.requestGetTrackStore());
-    this.props.dispatch(actionYear.requestGetYearStore());
+    this.props.dispatch(action.requestGetTrackStore())
+    this.props.dispatch(actionDate.requestGetYearStore())
   }
 
   onDislicense = () => {
-    this.props.dispatch(action.requestGetDisLicense());
-    this.props.dispatch(actionYear.requestGetDisLicense());
+    this.props.dispatch(action.requestGetDisLicense())
+  }
+
+  onPrev = () => {
+    this.props.dispatch(action.requestGetTrackStore())
+
     this.setState({
       view: '1'
     })
   }
+
   onLicense = () => {
     this.props.dispatch(action.requestGetLicense());
-    this.props.dispatch(actionYear.requestGetLicense());
   }
 
-  onLicenseDate = () => {
-    this.props.dispatch(actionYear.requestGetLicense());
+  onLicenseDate = (data) => {
+    this.props.dispatch(actionDate.requestGetLicense(data))
   }
 
-  onDislicenseDate = () => {
-    this.props.dispatch(actionYear.requestGetDisLicense());
-
-
+  onDislicenseDate = (data) => {
+    this.props.dispatch(actionDate.requestGetDisLicense(data))
   }
 
   onSearchDate = (data) => {
-    this.props.dispatch(actionYear.requestSearchDatetodate(data));
+    this.props.dispatch(actionDate.requestSearchDay(data))
   }
 
   onSearchYear = (data) => {
-    this.props.dispatch(actionYear.requestSearchYearStore(data));
+    this.props.dispatch(actionDate.requestSearchYear(data))
     console.log(data);
   }
 
   onSearchMonth = (data) => {
-    this.props.dispatch(actionYear.requestSearchMonthStore(data));
+    this.props.dispatch(actionDate.requestSearchMonth(data))
+  }
+
+  onSearchWeek = (data) => {
+    this.props.dispatch(actionDate.requestSearchWeek(data))
   }
 
   render() {
+    // console.log(this.state.view);
     const contentMain = () => {
       if (this.state.view === "1") {
         return (
-          <TableTrackComponent data={this.props.track} onDislicense={this.onDislicense} onLicense={this.onLicense} />
+          <TableTrackComponent
+            data={this.props.track}
+            onPrev={this.onPrev}
+            onDislicense={this.onDislicense}
+            onLicense={this.onLicense} />
         )
       }
       if (this.state.view === "2") {
@@ -105,7 +109,7 @@ class TrackPage extends Component {
             onFilter={this.onFilter}
             onDislicenseDate={this.onDislicenseDate}
             onLicenseDate={this.onLicenseDate}
-
+            onSearchWeek={this.onSearchWeek}
           />
         )
       }

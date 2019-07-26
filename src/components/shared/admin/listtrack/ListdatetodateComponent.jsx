@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { DatePicker } from 'antd';
 import moment from 'moment';
-import Pagination from '../../../../feature/Pagination';
+import * as actionYear from '../../../../actions/admindate';
+import { connect } from 'react-redux';
 const dateFormat = 'YYYY/MM/DD';
 var now = new Date();
 var dateFormatDate = require('dateformat');
-const { MonthPicker } = DatePicker;
-const monthFormat = 'YYYY/MM'
+const { MonthPicker, WeekPicker } = DatePicker;
+const monthFormat = 'YYYY/MM';
 class ListdatetodateComponent extends Component {
   constructor(props) {
     super(props);
@@ -16,14 +17,8 @@ class ListdatetodateComponent extends Component {
       checksearch: '1',
       month: '',
       year: '',
-      pagOfItem: []
+      week: dateFormatDate(now, 'yyyy-mm-dd'),
     }
-  }
-
-  onChangePage = (pageOfItems) => {
-    this.setState({
-      pagOfItem: pageOfItems
-    })
   }
 
   onChangeDate = (date, dateString) => {
@@ -38,37 +33,64 @@ class ListdatetodateComponent extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.onSearchDate(this.state);
+    this.props.onSearchDate(this.state)
   }
 
   onSubmitMonth = (event) => {
     event.preventDefault();
-    this.props.onSearch(this.state);
+    this.props.onSearch(this.state)
   }
 
   onSubmitYear = (event) => {
     event.preventDefault();
-    this.props.onSearchYear(this.state);
+    this.props.onSearchYear(this.state)
+  }
+
+  onSubmitWeek = (event) => {
+    event.preventDefault();
+    this.props.onSearchWeek(this.state)
   }
 
   onChanger = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      type: 'year'
     })
   }
 
   onChangeMonth = (date, dateString) => {
     this.setState({
-      month: dateString
+      month: dateString,
+      type: 'month'
     })
   }
 
+  onChangeWeek = (dataString) => {
+    console.log(dataString);
+    this.setState({
+      week: dateFormatDate(dataString, 'yyyy-mm-dd'),
+      type: 'week'
+    })
+
+  }
+  // convert = (date) => {
+  //   let curr = new Date(date)
+  //   let week = []
+  //   for (let i = 1; i <= 7; i++) {
+  //     let first = curr.getDate() - curr.getDay() + i
+  //     let day = new Date(curr.setDate(first)).toISOString().slice(0, 10)
+  //     week.push(day)
+
+  //   }
+  //   return week;
+  // }
+
   onDislicenseDate = () => {
-    this.props.onDislicenseDate();
+    this.props.dispatch(actionYear.requestGetDisLicense(this.state))
   }
 
   onLicenseDate = () => {
-    this.props.onLicenseDate();
+    this.props.dispatch(actionYear.requestGetLicense(this.state))
   }
 
   onhandleSearch = (event) => {
@@ -82,24 +104,22 @@ class ListdatetodateComponent extends Component {
     }
 
     if (value === "2") {
-      var month = dateFormatDate(new Date(), 'mm');
-      let object = {
-        isDate: "Month",
-        value: month
-      }
-      this.props.onFilter(object);
       this.setState({
         checksearch: "2",
         [name]: value
       })
+      // let week = new Date();
+      // let object = {
+      //   week: dateFormatDate(week)
+      // }
+      // this.props.dispatch(actionYear.requestSearchWeek(object));
     }
 
     if (value === "3") {
-      var tempYear = new Date();
-      var year = tempYear.getFullYear();
+      var month = dateFormatDate(new Date(), 'mm')
       let object = {
-        isDate: "Year",
-        value: year
+        isDate: "Month",
+        value: month
       }
       this.props.onFilter(object);
       this.setState({
@@ -107,11 +127,23 @@ class ListdatetodateComponent extends Component {
         [name]: value
       })
     }
+
+    if (value === "4") {
+      var tempYear = new Date();
+      var year = tempYear.getFullYear()
+      let object = {
+        isDate: "Year",
+        value: year
+      }
+      this.props.onFilter(object);
+      this.setState({
+        checksearch: "4",
+        [name]: value
+      })
+    }
   }
-
   render() {
-    console.log(this.props.data);
-
+    console.log(this.props.data)
     return (
       <div >
         <section className="wrap-container">
@@ -122,62 +154,97 @@ class ListdatetodateComponent extends Component {
                   <h3 className="heading-3">Thống kê theo ngày-tháng-năm</h3>
                 </div>
               </div>
-              {/* <div className="menu-list">
+              <div className="menu-list">
                 <div className="p-absence">
-                  <button onClick={this.onLicenseDate} className="btn"><i className="far fa-calendar-check"></i></button>{" "}
-                  <button onClick={this.onDislicenseDate} className="btn"><i className="far fa-calendar-times"></i></button>
+                  <button onClick={this.onLicenseDate} className="btn">
+                    <i className="far fa-calendar-check" />
+                  </button>{" "}
+                  <button onClick={this.onDislicenseDate} className="btn">
+                    <i className="far fa-calendar-times" />
+                  </button>
                 </div>
 
-              </div> */}
+              </div>
               <div className="p-search">
                 {this.state.checksearch === "1" ?
                   <form className="f-search" onSubmit={this.onSubmit}>
                     <DatePicker
+                      placeholder="Từ ngày"
                       className="ip-date"
                       onChange={this.onChangeDate}
                       defaultValue={moment(now, dateFormat)}
                       name="from"
                     />
                     <DatePicker
+                      placeholder="đến ngày"
                       className="ip-date"
                       onChange={this.onChangeDateItem}
                       defaultValue={moment(now, dateFormat)}
                       name="to"
                     />
-                    <button className="btn btn-s" type="submit"><i className="fas fa-search"></i></button>
+                    <button className="btn btn-s" type="submit">
+                      <i className="fas fa-search" />
+                    </button>
                   </form>
                   :
-                  <></>
+                  <React.Fragment />
                 }
                 {
                   this.state.checksearch === "2" ?
-                    <form className="f-search" onSubmit={this.onSubmitMonth}>
-                      {/* <input type="text" className="p-search" name="month" value={this.state.month} onChange={this.onChanger} /> */}
-                      <MonthPicker placeholder="Select month" name="month" defaultValue={moment(now, monthFormat)} onChange={this.onChangeMonth} />
+                    <form className="f-search" onSubmit={this.onSubmitWeek}>
+                      <WeekPicker
+                        placeholder="Select Week"
+                        name="week"
+                        onChange={this.onChangeWeek}
+                        defaultValue={moment(now, monthFormat)}
+                      />
                       <button className="btn btn-s" type="submit"><i className="fas fa-search"></i></button>
                     </form>
                     :
-                    <></>
+                    <React.Fragment />
                 }
                 {
                   this.state.checksearch === "3" ?
-                    <form className="f-search" onSubmit={this.onSubmitYear}>
-                      <input type="text" className="p-search" name="year" placeholder="Tìm kiếm theo năm..." value={this.state.year} onChange={this.onChanger} />
-                      {/* <DatePicker
-                  className="ip-date"
-                  onChange={this.onChangeDate}
-                  defaultValue={moment(now, dateFormat)}
-                  name="from"
-                /> */}
-                      <button className="btn btn-s" type="submit"><i className="fas fa-search"></i></button>
+                    <form className="f-search" onSubmit={this.onSubmitMonth}>
+                      {/* <input type="text" className="p-search" name="month" value={this.state.month} onChange={this.onChanger} /> */}
+                      <MonthPicker
+                        placeholder="Select month"
+                        name="month"
+                        defaultValue={moment(now, monthFormat)}
+                        onChange={this.onChangeMonth} />
+                      <button className="btn btn-s" type="submit">
+                        <i className="fas fa-search" />
+                      </button>
                     </form>
                     :
-                    <></>
+                    <React.Fragment />
                 }
-                <select className="f-search op-search" onChange={this.onhandleSearch} name="search" vulue={this.state.search}>
+                {
+                  this.state.checksearch === "4" ?
+                    <form className="f-search" onSubmit={this.onSubmitYear}>
+                      <input
+                        type="text"
+                        className="p-search"
+                        name="year"
+                        placeholder="Tìm kiếm theo năm..."
+                        value={this.state.year}
+                        onChange={this.onChanger} />
+                      <button className="btn btn-s" type="submit">
+                        <i className="fas fa-search" />
+                      </button>
+                    </form>
+                    :
+                    <React.Fragment />
+                }
+                <select
+                  className="f-search op-search"
+                  onChange={this.onhandleSearch}
+                  name="search"
+                  vulue={this.state.search}>
                   <option value="1">Ngày</option>
-                  <option value="2">Tháng</option>
-                  <option value="3">Năm</option>
+                  <option value="2">Tuần</option>
+                  <option value="3">Tháng</option>
+                  <option value="4">Năm</option>
                 </select>
               </div>
             </div>
@@ -186,16 +253,16 @@ class ListdatetodateComponent extends Component {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>User</th>
-                    <th>Type</th>
-                    <th>Time_details</th>
-                    <th>At_time</th>
-                    <th>Absence_day</th>
-                    <th>Year</th>
+                    <th>Người dùng</th>
+                    <th>Lí do</th>
+                    <th>Thời gian nghỉ</th>
+                    <th>Buổi</th>
+                    <th>Tổng</th>
+                    {/* <th>Năm</th> */}
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.pagOfItem.map(data => (
+                  {this.props.data.map(data => (
                     <tr key={data.id}>
                       <td className="description">{data.id}</td>
                       <td className="description">{data.attributes.user.name}</td>
@@ -225,12 +292,11 @@ class ListdatetodateComponent extends Component {
                         }
                       </td>
                       <td className="description">{data.attributes.absence_days}</td>
-                      <td className="description">{data.attributes.current_year}</td>
+                      {/* <td className="description">{data.attributes.current_year}</td> */}
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <Pagination items={this.props.data} onChangePage={this.onChangePage}></Pagination>
             </div>
           </div>
         </section>
@@ -238,5 +304,10 @@ class ListdatetodateComponent extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    list: state.searchdate.list
+  }
+}
 
-export default ListdatetodateComponent;
+export default connect(mapStateToProps, null)(ListdatetodateComponent);

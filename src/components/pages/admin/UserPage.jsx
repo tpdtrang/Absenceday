@@ -16,7 +16,7 @@ class UserPage extends Component {
   }
   componentDidMount() {
     this.props.dispatch(action.requestGetUserStore());
-    this.props.dispatch(action.requestGetTeamStore());
+    this.props.dispatch(action.requestGetTeam());
     this.props.dispatch(action.requestGetPositionStore());
   }
   onAdd = (data) => {
