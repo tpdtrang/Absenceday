@@ -59,6 +59,7 @@ export const DELETE_STORE = "DELETE_STORE";
 export const UPDATE_STORE = "UPDATE_STORE";
 export const GET_DATE = "GET_DATE";
 export const SEARCH_DATE = "SEARCH_DATE";
+export const SEARCH_YEAR = "SEARCH_YEAR";
 export const GET_LICENSEDATE = "GET_LICENSEDATE";
 export const GET_DISLICENSEDATE = "GET_DISLICENSEDATE";
 export const GET_EXCEL = "GET_EXCEL";

@@ -77,11 +77,16 @@
             .description {
               white-space: nowrap;
               overflow: hidden;
-              max-width: 120px;
+              max-width: 150px;
               text-overflow: ellipsis;
               color: #000;
               font-family: "Roboto";
               min-width: 80px;
+              border: 1px solid #999;
+            }
+            .description-date {
+              color: #000;
+              font-family: "Roboto";
               border: 1px solid #999;
             }
           }
@@ -231,15 +236,18 @@
   border: 1px solid #999;
   padding: 4px;
 }
+
 .p-hoverdate {
+  height: 20px;
   .hover-date {
     visibility: hidden;
-    overflow: 0;
-    // background-color: #02a959;
+    opacity: 0;
     transition: all 0.2s ease-in-out;
+    width: 130px;
   }
   &:hover {
     cursor: pointer;
+    // height: 20px;
     .hover-date {
       visibility: visible;
       opacity: 1;

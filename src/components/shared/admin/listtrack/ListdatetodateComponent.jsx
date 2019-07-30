@@ -17,7 +17,7 @@ class ListdatetodateComponent extends Component {
       checksearch: '1',
       month: '',
       year: '',
-      week: ''
+      week: dateFormatDate(now, 'yyyy-mm-dd')
     }
   }
 
@@ -66,6 +66,8 @@ class ListdatetodateComponent extends Component {
   }
 
   onChangeWeek = (dataString) => {
+    console.log(dataString);
+
     this.setState({
       week: dateFormatDate(dataString, 'yyyy-mm-dd'),
       type: 'week'
@@ -80,13 +82,27 @@ class ListdatetodateComponent extends Component {
     this.props.dispatch(actionYear.requestGetLicense(this.state))
   }
 
+  onConvert = (date) => {
+    let curr = new Date(date)
+    let week = []
+    for (let i = 1; i <= 7; i++) {
+      let first = curr.getDate() - curr.getDay() + i
+      let day = new Date(curr.setDate(first)).toISOString().slice(0, 10)
+      week.push(day)
+    }
+    return week;
+  }
   onhandleSearch = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const name = event.target.name
+    const value = event.target.value
     if (value === "1") {
+      var today = new Date(),
+        date = today.getDate();
+      console.log(date);
       this.setState({
         checksearch: "1",
-        [name]: value
+        [name]: value,
+        date: date
       })
     }
 
@@ -95,6 +111,11 @@ class ListdatetodateComponent extends Component {
         checksearch: "2",
         [name]: value
       })
+      let week = new Date()
+      let object = {
+        week: dateFormatDate(week)
+      }
+      this.props.dispatch(actionYear.requestSearchWeek(object));
     }
 
     if (value === "3") {
@@ -179,6 +200,7 @@ class ListdatetodateComponent extends Component {
                         placeholder="Select Week"
                         name="week"
                         onChange={this.onChangeWeek}
+                        defaultValue={moment(now, monthFormat)}
                       />
                       <button className="btn btn-s" type="submit"><i className="fas fa-search"></i></button>
                     </form>

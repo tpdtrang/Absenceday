@@ -74,7 +74,7 @@ class TableRegistrationComponent extends Component {
                 </select> */}
 
                 <form onSubmit={this.onSubmit} className="f-search">
-                  <input type="text" name="name" className="p-search" placeholder="Tìm kiếm theo nhóm..." onChange={this.onhandleChange} value={this.state.name} />
+                  <input type="text" name="name" className="p-search" placeholder="Tìm kiếm theo tên..." onChange={this.onhandleChange} value={this.state.name} />
                   <button type="submit" className="btn btn-s"><i className="fas fa-search" /></button>
                 </form>
               </div>
@@ -95,6 +95,8 @@ class TableRegistrationComponent extends Component {
                     <th>Tổng</th>
                     {/* <th>Approve</th> */}
                     <th>Thời gian nghỉ</th>
+                    <th>Tin nhắn kèm</th>
+                    <th>Duyệt bởi</th>
                     <th>Details</th>
                   </tr>
                 </thead>
@@ -140,6 +142,8 @@ class TableRegistrationComponent extends Component {
                         </td>
                         <td className="description">{sum}</td>
                         {/* <td className="description">{data.attributes.approver_id.name}</td> */}
+                        <td className="description">{data.attributes.message}</td>
+                        <td className="description ">{data.attributes.approved_by}</td>
                         <td className="description" onClick={this.onhandleShow.bind(this, data.id)}><button className="btn"><i className="fas fa-calendar-day" style={{ color: "blue", fontSize: "18px" }}></i></button></td>
                       </tr>
                     )
