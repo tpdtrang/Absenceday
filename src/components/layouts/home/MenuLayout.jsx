@@ -84,7 +84,10 @@ class MenuLayout extends Component {
     })
   }
   onChangeDate = (date, dateString) => {
-    this.setState({ time_end: dateString, date: dateString })
+    this.setState({ time_end: dateString})
+  }
+  onChangeDateTime = (date,dateString) =>{
+    this.setState({  date: dateString })
   }
   onChangeDateItem = (date, dateString) => {
     this.setState({
@@ -350,7 +353,7 @@ class MenuLayout extends Component {
                             <label className="sl-text">Thời gian:</label>
                             <DatePicker
                               className="sl-date"
-                              onChange={this.onChangeDate}
+                              onChange={this.onChangeDateTime}
                               defaultValue={moment(now, dateFormat)}
                               allowClear={false}
                               style={{ "width": "120px" }}

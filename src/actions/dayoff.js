@@ -249,9 +249,13 @@ export function requestCreateDayOff(data) {
       dispatch(reciveData(types.REQUEST_ADD_DAYOFF, response.data.data))
     }).catch(function (error) {
       if(error.response.data.errors[0].detail === "Time registration has been matched."){
-        message.error("Bạn đã đăng ký ngày này!!")
-      }else{
-        message.error(" Đăng ký không thành công!")
+        message.error("Bạn đã đăng ký ngày này hoặc bạn đã xin nghỉ quá ngày quy định!!")
+      }
+      if(error.response.data.errors[0].detail === "Trường cc không được bỏ trống."){
+        message.error("Bạn thiếu trường cc!")
+      }
+      if(error.response.data.errors[0].detail === " Trường emails không được bỏ trống."){
+        message.error("Bạn thiếu trường emails!")
       }
     })
   }
