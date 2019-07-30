@@ -123,16 +123,43 @@ export function requestSearchMonth(data) {
 
 //chon ngay nghi
 export function requestGetDisLicense(data) {
+  // switch (paramData) {
+  //   case data.type === 'year':
+  //     paramData = {
+  //       absences: 0,
+  //       year: data.year
+  //     }
+  //   break;
+  //   case data.type === 'year':
+  //     paramData = {
+  //       absences: 0,
+  //       month: data.month
+  //     }
+  //       break;
+  //   default:
+  //     break;
+  // }
   let paramData = {}
   if (data.type === 'year') {
     paramData = {
       absences: 0,
       year: data.year
     }
-  } else {
+  } else if (data.type === 'month') {
     paramData = {
       absences: 0,
       month: data.month
+    }
+  } else if (data.type === 'week') {
+    paramData = {
+      absences: 0,
+      week: data.week
+    }
+  } else {
+    paramData = {
+      absences: 0,
+      from: data.from,
+      to: data.to
     }
   }
 
@@ -160,10 +187,21 @@ export function requestGetLicense(data) {
       absences: 1,
       year: data.year
     }
-  } else {
+  } else if (data.type === 'month') {
     paramData = {
       absences: 1,
       month: data.month
+    }
+  } else if (data.type === 'week') {
+    paramData = {
+      absences: 1,
+      week: data.week
+    }
+  } else {
+    paramData = {
+      absences: 1,
+      from: data.from,
+      to: data.to
     }
   }
   return (dispatch) => {

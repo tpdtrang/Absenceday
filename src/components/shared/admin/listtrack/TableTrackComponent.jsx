@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 class TableTrackComponent extends Component {
 
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
     this.state = {
       name: '',
       description: '',
@@ -11,23 +11,23 @@ class TableTrackComponent extends Component {
   }
 
   onSubmit = (event) => {
-    event.preventDefault();
-    console.log(this.state);
+    event.preventDefault()
+    console.log(this.state)
     this.setState({
       show: false
     })
   }
 
   onPrev = () => {
-    this.props.onPrev();
+    this.props.onPrev()
   }
 
   onDislicense = () => {
-    this.props.onDislicense();
+    this.props.onDislicense()
   }
 
   onLicense = () => {
-    this.props.onLicense();
+    this.props.onLicense()
   }
 
   onhandleChange = (event) => {
@@ -97,11 +97,66 @@ class TableTrackComponent extends Component {
                     <td className="description">{data.attributes.year}</td>
                     <td className="description">{data.attributes.annual_leave_total}</td>
                     <td className="description">{data.attributes.annual_leave_unused}</td>
-                    <td className="description">{data.attributes.January}</td>
-                    <td className="description">{data.attributes.February}</td>
-                    <td className="description">{data.attributes.March}</td>
-                    <td className="description">{data.attributes.April}</td>
-                    <td className="description">{data.attributes.May}</td>
+                    <td className="description">{data.attributes.January}
+                      {
+                        Array.isArray(data.attributes.dateDetails.January) ?
+                          data.attributes.dateDetails.January.map((item, index) => (
+                            <span className="hover-date " key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.February}
+                      {
+                        Array.isArray(data.attributes.dateDetails.February) ?
+                          data.attributes.dateDetails.February.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.March}
+                      {
+                        Array.isArray(data.attributes.dateDetails.March) ?
+                          data.attributes.dateDetails.March.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.April}
+                      {
+                        Array.isArray(data.attributes.dateDetails.April) ?
+                          data.attributes.dateDetails.April.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.May}
+                      {
+                        Array.isArray(data.attributes.dateDetails.May) ?
+                          data.attributes.dateDetails.June.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
                     <td className="description p-hoverdate">{data.attributes.June}
                       {
                         Array.isArray(data.attributes.dateDetails.June) ?
@@ -141,11 +196,66 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description">{data.attributes.August}</td>
-                    <td className="description">{data.attributes.September}</td>
-                    <td className="description">{data.attributes.October}</td>
-                    <td className="description">{data.attributes.November}</td>
-                    <td className="description">{data.attributes.December}</td>
+                    <td className="description p-hoverdate">{data.attributes.August}
+                      {
+                        Array.isArray(data.attributes.dateDetails.August) ?
+                          data.attributes.dateDetails.June.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.September}
+                      {
+                        Array.isArray(data.attributes.dateDetails.September) ?
+                          data.attributes.dateDetails.June.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.October}
+                      {
+                        Array.isArray(data.attributes.dateDetails.October) ?
+                          data.attributes.dateDetails.June.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.November}
+                      {
+                        Array.isArray(data.attributes.dateDetails.November) ?
+                          data.attributes.dateDetails.June.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
+                    <td className="description p-hoverdate">{data.attributes.December}
+                      {
+                        Array.isArray(data.attributes.dateDetails.December) ?
+                          data.attributes.dateDetails.June.map((item, index) => (
+                            <span className="hover-date" key={index} style={{ display: 'block' }}>
+                              {item}
+                            </span>
+                          ))
+                          :
+                          data.attributes.time_details
+                      }
+                    </td>
                     <td className="description">{data.attributes.sick_leave}</td>
                     <td className="description">{data.attributes.marriage_leave}</td>
                     <td className="description">{data.attributes.maternity_leave}</td>

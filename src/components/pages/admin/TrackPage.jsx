@@ -132,7 +132,7 @@ class TrackPage extends Component {
 function mapPropsToState(state) {
   return {
     track: state.track.all,
-    searchdate: state.searchdate.all,
+    searchdate: state.searchdate.filter,
     filter: state.searchdate.filter
   }
 }
