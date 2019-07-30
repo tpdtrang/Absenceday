@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, DatePicker, message } from 'antd';
+import { Modal, DatePicker, message, Select, Form, Input } from 'antd';
 import moment from 'moment';
 import 'antd/dist/antd.css';
 import Cookies from 'universal-cookie';
@@ -16,69 +16,62 @@ class MenuLayout extends Component {
       time_end: dateFormatDate(now, 'yyyy-mm-dd'),
       typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
       lead: this.props.data.length > 0 ? this.props.data[0].id : '',
-      namelead: '',
       mailto: this.props.leadmail.length > 0 ? this.props.leadmail[0].id : '',
-      namemail: '',
       at_time: 'Buổi Sáng',
       note: '',
       type: 'Từ ngày đến hết ngày',
       date: dateFormatDate(now, 'yyyy-mm-dd'),
       checkType: false,
-      disabledate: true,
       arrayNew: [],
       arrayLead: [],
-      arrayMail: []
+      arrayMail: [],
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    var self = this;
     if (this.props.data !== prevProps.data && !this.state.lead && this.props.data.length) {
-      self.setState({
+      this.setState({
         typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
         lead: this.props.data[0].id,
       })
     }
     if (this.props.leadmail !== prevProps.leadmail && !this.state.mailto && this.props.leadmail.length) {
-      self.setState({
+      this.setState({
         mailto: this.props.leadmail[0].id,
       })
     }
+    
     if (prevProps.visible !== this.props.visible) {
-      if (prevProps.edit !== this.props.edit) {
+      if (prevProps.edit !== this.props.edit  && this.props.edit) {
         let data = this.props.dataEdit.attributes;
-        console.log(data);
-        self.setState({
+        let arrayNew = data.time.map(item => {
+          return {
+            id: item.id,
+            at_time: item.at_time,
+            date: dateFormatDate(item.time_details, 'yyyy-mm-dd'),
+          }
+        });
+        this.setState({
           id: this.props.dataEdit.id,
           visible: this.props.edit,
-          // time_start:  data.time.length > 0 ?  dateFormatDate(data.time_start, 'yyyy-mm-dd') : '',
-          // time_end:  data.time.length > 0 ? dateFormatDate(data.time_end, 'yyyy-mm-dd') : '',
-          // checkType: data.time[0].type === "Chọn ngày" ? true : false,
-          // at_time: data.time[0].type === "Chọn ngày" ? data.time[0].at_time : 'Buổi Sáng',
-          // note: data.note,
-          // type: data.time.length > 0 ? data.time[0].registration_id : '',
-          // date:  dateFormatDate(data.date, 'yyyy-mm-dd'),
-          // typeday: data.type.id,
-          // arrayNew: this.state.arrayNew,
-          time_start: dateFormatDate(data.time_start, 'yyyy-mm-dd'),
-          time_end: dateFormatDate(data.time_end, 'yyyy-mm-dd'),
-          at_time: data.time[0].at_time,
-          checkType: data.time[0].type === 'Từ ngày đến hết ngày' ? false : true,
-          note: data.note,
-          type:  data.checkType !== null ? data.time[0].type : 'Từ ngày đến hết ngày',
-          date: dateFormatDate(data.date, 'yyyy-mm-dd'),
-          typeday: data.type.id,
-          arrayNew: data.type !== null ? this.state.arrayNew : ''
+          time_start: dateFormatDate(data.time[0].time_details, 'yyyy-mm-dd') ,
+          time_end: dateFormatDate(data.time[data.time.length - 1].time_details, 'yyyy-mm-dd'),
+          checkType: data.time[0].type === 'Chọn ngày' ? true : false,
+          note: this.props.edit ? data.note : '',
+          type: data.time[0].type === "Chọn ngày" ? "Chọn ngày" : "Từ ngày đến hết ngày",
+          typeday: data.type_id,
+          arrayNew: data.time[0].type === "Chọn ngày" ? arrayNew : this.state.arrayNew
         })
       } else {
+        this.onReset();
         this.setState({
-          visible: this.props.visible
+          visible: this.props.visible,
         })
       }
     }
   }
   showModal = () => {
     if (cookies.get('data') !== undefined) {
-      this.setState({ visible: true })
+      this.setState({ visible: true });
     } else {
       message.error("Bạn cần đăng nhập để đăng ký!")
     }
@@ -101,16 +94,18 @@ class MenuLayout extends Component {
   onChangeType = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    if (event.target.value === "1") {
+    if (event.target.value === "Từ ngày đến hết ngày") {
       this.setState({
         checkType: false,
         [name]: value
       })
     } else {
-      this.setState({
-        checkType: true,
-        [name]: value
-      })
+      if (event.target.value === "Chọn ngày") {
+        this.setState({
+          checkType: true,
+          [name]: value
+        })
+      }
     }
   }
   onCancel = (event) => {
@@ -125,15 +120,26 @@ class MenuLayout extends Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
-    if (this.props.edit === true) {
-      this.props.onUpdateDay(this.state);
-      this.onReset();
-      this.props.onCheckModal();
-    } else {
-      this.props.onAddDayOff(this.state);
-      this.onReset();
-      this.props.onCheckModal();
-    }
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        if (this.props.edit === true) {
+          this.props.onUpdateDay(this.state);
+          this.setState({
+            visible: false,
+            value: ''
+          })
+          this.props.form.resetFields();
+          this.onReset();
+        } else {
+          this.props.onAddDayOff(this.state);
+          this.setState({
+            visible: false
+          })
+          this.props.form.resetFields();
+          this.onReset();
+        }
+      }
+    })
   }
   onReset() {
     this.setState({
@@ -141,99 +147,17 @@ class MenuLayout extends Component {
       time_start: dateFormatDate(now, 'yyyy-mm-dd'),
       time_end: dateFormatDate(now, 'yyyy-mm-dd'),
       typeday: this.props.typedayoff.length > 0 ? this.props.typedayoff[0].id : '',
+      lead: this.props.data.length > 0 ? this.props.data[0].id : '',
+      mailto: this.props.leadmail.length > 0 ? this.props.leadmail[0].id : '',
       at_time: 'Buổi Sáng',
       note: '',
-      lead: this.props.data.length > 0 ? this.props.data[0].id : '',
+      type: 'Từ ngày đến hết ngày',
       date: dateFormatDate(now, 'yyyy-mm-dd'),
       checkType: false,
       arrayNew: [],
       arrayLead: [],
-      arrayMail: []
+      arrayMail: [],
     })
-  }
-  onAddLead = (e) => {
-    e.preventDefault();
-    let checkAdd = false;
-    if (this.state.arrayLead.length > 0) {
-      this.state.arrayLead.map(item => {
-        if (item.lead === this.state.lead) {
-          checkAdd = false
-          message.error('Trùng người duyệt')
-        } else {
-          checkAdd = true
-        }
-        return [];
-      })
-    }
-    if (this.state.arrayLead.length > 0) {
-      let name = this.props.data.filter(item => parseInt(item.id) === parseInt(this.state.lead))
-      if (checkAdd === true) {
-        let data = {
-          id: this.state.arrayLead.length > 0 ? parseInt(this.state.arrayLead[this.state.arrayLead.length - 1].id + 1) : 1,
-          lead: this.state.lead,
-          namelead: name[0].attributes.email
-        }
-        let arrayCurrent = this.state.arrayLead;
-        arrayCurrent = [...arrayCurrent, data]
-        this.setState({
-          arrayLead: arrayCurrent
-        })
-      }
-    } else {
-      let name = this.props.data.filter(item => parseInt(item.id) === parseInt(this.state.lead))
-      let data = {
-        id: this.state.arrayLead.length > 0 ? parseInt(this.state.arrayLead[this.state.arrayLead.length - 1].id + 1) : 1,
-        lead: this.state.lead,
-        namelead: name[0].attributes.email
-      }
-      let arrayCurrent = this.state.arrayLead;
-      arrayCurrent = [...arrayCurrent, data]
-      this.setState({
-        arrayLead: arrayCurrent
-      })
-    }
-  }
-  onAddMail = (e) => {
-    e.preventDefault();
-    let checkAdd = false;
-    if (this.state.arrayMail.length > 0) {
-      this.state.arrayMail.map(item => {
-        if (item.mailto === this.state.mailto) {
-          checkAdd = false
-          message.error('Trùng người duyệt')
-        } else {
-          checkAdd = true
-        }
-        return [];
-      })
-    }
-    if (this.state.arrayMail.length > 0) {
-      let mail = this.props.leadmail.filter(item => parseInt(item.id) === parseInt(this.state.mailto))
-      if (checkAdd === true) {
-        let data = {
-          id: this.state.arrayMail.length > 0 ? parseInt(this.state.arrayMail[this.state.arrayMail.length - 1].id + 1) : 1,
-          mailto: this.state.mailto,
-          namemail: mail[0].attributes.email
-        }
-        let arrayCurrent = this.state.arrayMail;
-        arrayCurrent = [...arrayCurrent, data]
-        this.setState({
-          arrayMail: arrayCurrent
-        })
-      }
-    } else {
-      let mail = this.props.leadmail.filter(item => parseInt(item.id) === parseInt(this.state.mailto))
-      let data = {
-        id: this.state.arrayMail.length > 0 ? parseInt(this.state.arrayMail[this.state.arrayMail.length - 1].id + 1) : 1,
-        mailto: this.state.mailto,
-        namemail: mail[0].attributes.email
-      }
-      let arrayCurrent = this.state.arrayMail;
-      arrayCurrent = [...arrayCurrent, data]
-      this.setState({
-        arrayMail: arrayCurrent
-      })
-    }
   }
   onAddDay = (e) => {
     e.preventDefault();
@@ -275,18 +199,6 @@ class MenuLayout extends Component {
       })
     }
   }
-  removeItemMail = (id) => {
-    let data = this.state.arrayMail.filter(item => item.id !== id);
-    this.setState({
-      arrayMail: data
-    })
-  }
-  removeItemLead = (id) => {
-    let data = this.state.arrayLead.filter(item => item.id !== id);
-    this.setState({
-      arrayLead: data
-    })
-  }
   removeItemTime = (id) => {
     let data = this.state.arrayNew.filter(item => item.id !== id);
     this.setState({
@@ -310,8 +222,23 @@ class MenuLayout extends Component {
   onList = () => {
     this.props.onList();
   }
-  onStatistical = () =>{
+  onStatistical = () => {
     this.props.onStatistical();
+  }
+  handleChange = arrayLead => {
+    this.setState({
+      arrayLead
+    })
+  }
+  handleChangeMail = arrayMail => {
+    this.setState({
+      arrayMail
+    })
+  }
+  onChangeValue = (value) => {
+    this.props.form.setFieldsValue({
+      note: 'Time',
+    });
   }
   render() {
     const contentUser = () => {
@@ -338,6 +265,16 @@ class MenuLayout extends Component {
         )
       }
     }
+    const { arrayLead, arrayMail } = this.state;
+    const filteredOptions = this.props.data.filter(o => !arrayLead.includes(o));
+    let arrayNew = [];
+    this.props.leadmail.map(item => {
+      if (!arrayLead.includes(item)) {
+        arrayNew = [...arrayNew, item]
+      }
+      return [];
+    })
+    const { getFieldDecorator } = this.props.form;
     return (
       <section className="b-menu-container">
         <div className="b-menu">
@@ -357,217 +294,198 @@ class MenuLayout extends Component {
           onOk={this.handleOk}
           footer={null}
           closable={false}>
-          <div className="b-form-container">
-            <div className="b-form-content">
-              <div className="b-heading">
-                <h1 className="b-title">
-                  Đăng Ký Nghỉ Phép
+          <Form onSubmit={this.onSubmit}>
+            <div className="b-form-container">
+              <div className="b-form-content">
+                <div className="b-heading">
+                  <h1 className="b-title">
+                    Đăng Ký Nghỉ Phép
                 </h1>
-              </div>
-              {contentUser()}
-              <div className="b-content">
-                <div className="b-form">
-                  <div className="form-group">
-                    <label className="b-text ">Loại Hình Nghỉ: </label>
-                    <select
-                      className="b-select"
-                      onChange={this.onChangeType}
-                      value={this.state.type}
-                      name="type">
-                      <option value="1">Từ ngày đến hết ngày</option>
-                      <option value="2">Chọn ngày</option>
-                    </select>
-                  </div>
-                  {
-                    this.state.checkType ?
-                      <></>
-                      :
-                      <div className="form-date">
-                        <div className="form-group">
-                          <label className="b-text ">Thời gian bắt đầu:</label>
-                          <DatePicker
-                            className="ip-date"
-                            onChange={this.onChangeDateItem}
-                            defaultValue={moment(now, dateFormat)}
-                            name="time_off_beginning"
-                          />
+                </div>
+                {contentUser()}
+                <div className="b-content">
+                  <div className="b-form">
+                    <div className="form-group">
+                      <label className="b-text ">Loại Hình Nghỉ: </label>
+                      <select
+                        className="b-select select-1"
+                        onChange={this.onChangeType}
+                        value={this.state.type}
+                        name="type">
+                        <option value="Từ ngày đến hết ngày">Từ ngày đến hết ngày</option>
+                        <option value="Chọn ngày">Chọn ngày</option>
+                      </select>
+                    </div>
+                    {
+                      this.state.checkType ?
+                        <></>
+                        :
+                        <div className="form-date">
+                          <div className="form-group">
+                            <label className="b-text ">Thời gian bắt đầu:</label>
+                            <DatePicker
+                              className="ip-date"
+                              onChange={this.onChangeDateItem}
+                              value={moment(this.state.time_start, dateFormat)}
+                              name="time_start"
+                              allowClear={false}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label className="b-text ">Thời gian kết thúc:</label>
+                            <DatePicker
+                              className="ip-date"
+                              onChange={this.onChangeDate}
+                              value={moment(this.state.time_end, dateFormat)}
+                              name="time_end"
+                              allowClear={false}
+                            />
+                          </div>
                         </div>
-                        <div className="form-group">
-                          <label className="b-text ">Thời gian kết thúc:</label>
-                          <DatePicker
-                            className="ip-date"
-                            onChange={this.onChangeDate}
-                            defaultValue={moment(now, dateFormat)}
-                            name="time_off_ending"
-                          />
-                        </div>
-                      </div>
-                  }
-                  {
-                    this.state.checkType ?
-                      <>
-                        <div className="form-group sl-form">
-                          <label className="sl-text">Thời gian:</label>
-                          <DatePicker
-                            className="sl-date"
-                            onChange={this.onChangeDate}
-                            defaultValue={moment(now, dateFormat)}
-                            style={{ "width": "120px" }}
-                          />
-                          <select
-                            className="sl-select"
-                            onChange={this.onChanger}
-                            value={this.state.at_time}
-                            name="at_time">
-                            <option>Buổi Sáng</option>
-                            <option>Buổi Chiều</option>
-                            <option>Cả Ngày</option>
-                          </select>
-                          <button onClick={this.onAddDay} className="btn-plus"><i className="fas fa-plus"></i></button>
-                        </div>
-                        <div className="listdate">
-                          {this.state.arrayNew.map(item => (
-                            <div className="item" key={item.id}>
-                              <div className="content">
-                                <p className="text-norm">
-                                  {item.date}
-                                </p>
-                                <p className="text-norm">
-                                  {item.at_time}
-                                </p>
-                              </div>
-                              <div className="group-button">
-                                <button className="b-btn" onClick={this.removeItemTime.bind(this, item.id)}>
-                                  Xóa
+                    }
+                    {
+                      this.state.checkType ?
+                        <>
+                          <div className="form-group sl-form">
+                            <label className="sl-text">Thời gian:</label>
+                            <DatePicker
+                              className="sl-date"
+                              onChange={this.onChangeDate}
+                              defaultValue={moment(now, dateFormat)}
+                              allowClear={false}
+                              style={{ "width": "120px" }}
+                            />
+                            <select
+                              className="sl-select"
+                              onChange={this.onChanger}
+                              value={this.state.at_time}
+                              name="at_time">
+                              <option>Buổi Sáng</option>
+                              <option>Buổi Chiều</option>
+                              <option>Cả Ngày</option>
+                            </select>
+                            <button onClick={this.onAddDay} className="btn-plus"><i className="fas fa-plus"></i></button>
+                          </div>
+                          <div className="listdate">
+                            {this.state.arrayNew.map(item => (
+                              <div className="item" key={item.id}>
+                                <div className="content">
+                                  <p className="text-norm">
+                                    {item.date}
+                                  </p>
+                                  <p className="text-norm">
+                                    {item.at_time}
+                                  </p>
+                                </div>
+                                <div className="group-button">
+                                  <button className="b-btn" onClick={this.removeItemTime.bind(this, item.id)}>
+                                    Xóa
                                 </button>
+                                </div>
                               </div>
-                            </div>
-                          ))}
-                        </div>
-                      </>
-                      :
-                      <></>
-                  }
-                  <div className="form-group">
-                    <label className="b-text ">Thể loại:</label>
-                    <select
-                      className="b-select"
-                      onChange={this.onChanger}
-                      value={this.state.typeday}
-                      name="typeday"
-                    >
-                      {
-                        this.props.typedayoff.map(data => (
-                          <option value={data.id} key={data.id}>{data.attributes.name}</option>
-                        ))
-                      }
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <p className="text">Lý do:</p>
-                    <textarea
-                      className="b-area"
-                      onChange={this.onChanger}
-                      value={this.state.note}
-                      name="note" required />
-                  </div>
-                  {
-                    this.props.edit === false ?
-                      <>
-                        <div className="form-group">
-                          <label className="b-text ">Chọn nguời duyệt:</label>
-                        </div>
-                        <div className="form-group">
-                          <label className="b-text text-1">To:</label>
-                          <select
-                            className="b-select sl-1"
-                            onChange={this.onChanger}
-                            value={this.state.lead}
-                            name="lead"
-                          >
+                            ))}
+                          </div>
+                        </>
+                        :
+                        <></>
+                    }
+                    <div className="form-group">
+                      <label className="b-text ">Thể loại:</label>
+                      <select
+                        className="b-select select-1"
+                        onChange={this.onChanger}
+                        value={this.state.typeday}
+                        name="typeday"
+                      >
+                        {
+                          this.props.typedayoff.map(data => (
+                            <option value={data.id} key={data.id}>{data.attributes.name}</option>
+                          ))
+                        }
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <p className="text">Lý do:</p>
+                      <Form.Item>
+                        {getFieldDecorator('note', {
+                          initialValue: this.state.note,
+                          rules: [
                             {
-                              this.props.data.map(item => (
-                                <option value={item.id} key={item.id}>{item.attributes.email}</option>
-                              ))
-                            }
-                          </select>
-                          <button onClick={this.onAddLead} className="btn-plus"><i className="fas fa-plus"></i></button>
-                        </div>
-                        <div className="listdate">
-                          {this.state.arrayLead.map(item => (
-                            <div className="item" key={item.id}>
-                              <div className="content">
-                                <p className="text-norm">
-                                  {item.namelead}
-                                </p>
-                              </div>
-                              <div className="group-button">
-                                <button className="b-btn" onClick={this.removeItemLead.bind(this, item.id)}>
-                                  Xóa
-                                </button>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </>
-                      :
-                      <></>
-                  }
-                  {
-                    this.props.edit === false ?
-                      <>
-                        <div className="form-group">
-                          <label className="b-text text-1">CC:</label>
-                          <select
-                            className="b-select sl-1"
-                            onChange={this.onChanger}
-                            value={this.state.mailto}
-                            name="mailto"
-                          >
+                              required: true,
+                              message: 'Bạn hãy nhập để gửi thông báo!'
+                            },
                             {
-                              this.props.leadmail.map(data => (
-                                <option value={data.id} key={data.id}>{data.attributes.email}</option>
-                              ))
-                            }
-                          </select>
-                          <button onClick={this.onAddMail} className="btn-plus"><i className="fas fa-plus"></i></button>
-                        </div>
-                        <div className="listdate">
-                          {this.state.arrayMail.map(item => (
-                            <div className="item" key={item.id}>
-                              <div className="content">
-                                <p className="text-norm">
-                                  {item.namemail}
-                                </p>
-                              </div>
-                              <div className="group-button">
-                                <button className="b-btn" onClick={this.removeItemMail.bind(this, item.id)}>
-                                  Xóa
-                                </button>
-                              </div>
+                              min: 10,
+                              message: 'Bạn hãy nhập hơn 10 ký tự!'
+                            },
+                          ],
+                        })(
+                          <Input
+                            className="b-area"
+                            name="note"
+                            onChange={this.onChanger}
+                            autoComplete ="off"
+                          />,
+                        )}
+                      </Form.Item>
+                    </div>
+                    {
+                      this.props.edit === false ?
+                        <>
+                          <div className="form-group">
+                            <label className="b-text ">Chọn nguời duyệt:</label>
+                          </div>
+                          <div className="b-option">
+                            <div className="form-group">
+                              <label className="b-text ">To:</label>
                             </div>
-                          ))}
-                        </div>
-                      </>
-                      :
-                      <></>
-                  }
-
-                  <form onSubmit={this.onSubmit}>
+                            <Select
+                              mode="multiple"
+                              value={arrayLead}
+                              onChange={this.handleChange}
+                              className="b-slt"
+                            >
+                              {filteredOptions.map(item => (
+                                <Select.Option key={item} value={item}>
+                                  {item}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          </div>
+                          <div className="b-option">
+                            <div className="form-group">
+                              <label className="b-text ">CC:</label>
+                            </div>
+                            <Select
+                              mode="multiple"
+                              value={arrayMail}
+                              onChange={this.handleChangeMail}
+                              className="b-slt"
+                            >
+                              {arrayNew.map(data => (
+                                <Select.Option key={data} value={data}>
+                                  {data}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          </div>
+                        </>
+                        :
+                        <></>
+                    }
                     <div className="form-group text-center">
-                      <button type="submit" className="btn-cancel">{this.props.edit ? 'Cập Nhật' : 'Đăng ký'}</button>
+                      <button type="submit" className="btn-cancel">{this.props.edit === true ? 'Cập Nhật' : 'Đăng ký'}</button>
                       <button type="cancel" className="btn-submit" onClick={this.onCancel}>Thoát</button>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Form>
         </Modal>
       </section>
     );
   }
 }
 
-export default MenuLayout;
+export default Form.create({})(MenuLayout);

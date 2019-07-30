@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 // import {Redirect} from 'react-router-dom'
 import { HeaderLayout, MenuLayout } from '../../layouts/home';
-import { ListComponent, ListQueueComponent, ListAcceptComponent, ListDisAcceptComponent, ListRegistrantion, FullCalenderComponent } from '../../shared/home';
+import { 
+  ListComponent, 
+  ListQueueComponent, 
+  ListAcceptComponent, 
+  ListDisAcceptComponent, 
+  ListRegistrantion } 
+from '../../shared/home';
 import * as action_dayoff from '../../../actions/dayoff';
 import * as action_typedayoff from '../../../actions/typeday';
 import * as action_search from '../../../actions/search';
@@ -108,12 +114,6 @@ class HomeComponent extends Component {
   onSearchQueueAcceptYear = (data) => {
     this.props.dispatch(action_search.requestSearchQueueYear(data));
   }
-  onDetails = (id) => {
-    this.setState({
-      views: "6"
-    })
-    this.props.dispatch(action_dayoff.requestFilterDay(id))
-  }
   onShowTable = () => {
     this.setState({
       views: "5"
@@ -144,7 +144,8 @@ class HomeComponent extends Component {
               : ''}
             onSearchDay={this.onSearchApprovedDay}
             onSearchMonth={this.onSearchApprovedMonth}
-            onSearchYear={this.onSearchApprovedYear}></ListQueueComponent>
+            onSearchYear={this.onSearchApprovedYear}>
+          </ListQueueComponent>
         )
       }
       if (this.state.views === "2") {
@@ -156,7 +157,8 @@ class HomeComponent extends Component {
             onSearchDay={this.onSearchPendingDay}
             onSearchMonth={this.onSearchPendingMonth}
             onSearchYear={this.onSearchPendingYear}
-            onEdit={this.onEdit}></ListComponent>
+            onEdit={this.onEdit}>
+          </ListComponent>
         )
       }
       if (this.state.views === "3") {
@@ -170,7 +172,8 @@ class HomeComponent extends Component {
             onSendAccept={this.onSendAccept}
             onSearchDay={this.onSearchQueueAcceptDay}
             onSearchMonth={this.onSearchQueueAcceptMonth}
-            onSearchYear={this.onSearchQueueAcceptYear}></ListAcceptComponent>
+            onSearchYear={this.onSearchQueueAcceptYear}>            
+          </ListAcceptComponent>
         )
       }
       if (this.state.views === "4") {
@@ -181,17 +184,16 @@ class HomeComponent extends Component {
               : ''}
             onSearchDay={this.onSearchDisApprovedDay}
             onSearchMonth={this.onSearchDisApprovedMonth}
-            onSearchYear={this.onSearchDisApprovedYear}></ListDisAcceptComponent>
+            onSearchYear={this.onSearchDisApprovedYear}>
+          </ListDisAcceptComponent>
         )
       }
       if (this.state.views === "5") {
         return (
-          <ListRegistrantion data={this.props.listregis} onDetails={this.onDetails}></ListRegistrantion>
-        )
-      }
-      if (this.state.views === "6") {
-        return (
-          <FullCalenderComponent data={this.covertArrayNew(this.props.filter)} onShowTable={this.onShowTable}></FullCalenderComponent>
+          <ListRegistrantion 
+            data={cookies.get('data') !== undefined ? this.props.listregis : ''} 
+            onDetails={this.onDetails}>
+          </ListRegistrantion>
         )
       }
     }
@@ -201,7 +203,7 @@ class HomeComponent extends Component {
         <div className="b-content">
           <div className="b-right-content">
             <MenuLayout
-              listaccept={this.props.listaccept}
+              dayoff={this.props.dayoff}
               data={this.props.leader}
               leadmail={this.props.mail}
               onDisAccept
