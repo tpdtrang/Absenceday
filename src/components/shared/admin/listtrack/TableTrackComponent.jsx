@@ -91,13 +91,13 @@ class TableTrackComponent extends Component {
               <tbody>
                 {this.props.data.map(data => (
                   <tr key={data.id}>
-                    <td className="description sticky-col first-col">{data.id}</td>
+                    <td className="description-date sticky-col first-col">{data.id}</td>
                     {/* <td className="description">{data.attributes.team}</td> */}
-                    <td className="description sticky-col second-col">{data.attributes.user.email}</td>
-                    <td className="description">{data.attributes.year}</td>
-                    <td className="description">{data.attributes.annual_leave_total}</td>
-                    <td className="description">{data.attributes.annual_leave_unused}</td>
-                    <td className="description">{data.attributes.January}
+                    <td className="description-date sticky-col second-col">{data.attributes.user.email}</td>
+                    <td className="description-date">{data.attributes.year}</td>
+                    <td className="description-date">{data.attributes.annual_leave_total}</td>
+                    <td className="description-date">{data.attributes.annual_leave_unused}</td>
+                    <td className="description-date">{data.attributes.January}
                       {
                         Array.isArray(data.attributes.dateDetails.January) ?
                           data.attributes.dateDetails.January.map((item, index) => (
@@ -109,7 +109,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.February}
+                    <td className="description-date p-hoverdate">{data.attributes.February}
                       {
                         Array.isArray(data.attributes.dateDetails.February) ?
                           data.attributes.dateDetails.February.map((item, index) => (
@@ -121,7 +121,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.March}
+                    <td className="description-date p-hoverdate">{data.attributes.March}
                       {
                         Array.isArray(data.attributes.dateDetails.March) ?
                           data.attributes.dateDetails.March.map((item, index) => (
@@ -133,7 +133,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.April}
+                    <td className="description-date p-hoverdate">{data.attributes.April}
                       {
                         Array.isArray(data.attributes.dateDetails.April) ?
                           data.attributes.dateDetails.April.map((item, index) => (
@@ -145,7 +145,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.May}
+                    <td className="description-date p-hoverdate">{data.attributes.May}
                       {
                         Array.isArray(data.attributes.dateDetails.May) ?
                           data.attributes.dateDetails.June.map((item, index) => (
@@ -157,7 +157,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.June}
+                    <td className="description-date p-hoverdate">{data.attributes.June}
                       {
                         Array.isArray(data.attributes.dateDetails.June) ?
                           data.attributes.dateDetails.June.map((item, index) => (
@@ -169,7 +169,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.July}
+                    <td className="description-date p-hoverdate">{data.attributes.July}
                       {/* {
                         Array.isArray(data.attributes.July) ?
                           data.attributes.July.map((item, index) => (
@@ -196,10 +196,10 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.August}
+                    <td className="description-date p-hoverdate">{data.attributes.August}
                       {
                         Array.isArray(data.attributes.dateDetails.August) ?
-                          data.attributes.dateDetails.June.map((item, index) => (
+                          data.attributes.dateDetails.August.map((item, index) => (
                             <span className="hover-date" key={index} style={{ display: 'block' }}>
                               {item}
                             </span>
@@ -208,7 +208,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.September}
+                    <td className="description-date p-hoverdate">{data.attributes.September}
                       {
                         Array.isArray(data.attributes.dateDetails.September) ?
                           data.attributes.dateDetails.June.map((item, index) => (
@@ -220,7 +220,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.October}
+                    <td className="description-date p-hoverdate">{data.attributes.October}
                       {
                         Array.isArray(data.attributes.dateDetails.October) ?
                           data.attributes.dateDetails.June.map((item, index) => (
@@ -232,7 +232,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.November}
+                    <td className="description-date p-hoverdate">{data.attributes.November}
                       {
                         Array.isArray(data.attributes.dateDetails.November) ?
                           data.attributes.dateDetails.June.map((item, index) => (
@@ -244,7 +244,7 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description p-hoverdate">{data.attributes.December}
+                    <td className="description-date p-hoverdate">{data.attributes.December}
                       {
                         Array.isArray(data.attributes.dateDetails.December) ?
                           data.attributes.dateDetails.June.map((item, index) => (
@@ -256,11 +256,11 @@ class TableTrackComponent extends Component {
                           data.attributes.time_details
                       }
                     </td>
-                    <td className="description">{data.attributes.sick_leave}</td>
-                    <td className="description">{data.attributes.marriage_leave}</td>
-                    <td className="description">{data.attributes.maternity_leave}</td>
-                    <td className="description">{data.attributes.bereavement_leave}</td>
-                    <td className="description">{data.attributes.unpaid_leave}</td>
+                    <td className="description-date">{data.attributes.sick_leave}</td>
+                    <td className="description-date">{data.attributes.marriage_leave}</td>
+                    <td className="description-date">{data.attributes.maternity_leave}</td>
+                    <td className="description-date">{data.attributes.bereavement_leave}</td>
+                    <td className="description-date">{data.attributes.unpaid_leave}</td>
                   </tr>
                 ))}
               </tbody>

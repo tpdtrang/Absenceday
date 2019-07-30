@@ -93,13 +93,12 @@ class ListdatetodateComponent extends Component {
     return week;
   }
   onhandleSearch = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const name = event.target.name
+    const value = event.target.value
     if (value === "1") {
       var today = new Date(),
         date = today.getDate();
       console.log(date);
-
       this.setState({
         checksearch: "1",
         [name]: value,
