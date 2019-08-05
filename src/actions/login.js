@@ -35,7 +35,7 @@ export function requestLogin(data) {
             cookies.set("data", response.data.data)
             message.success('Đăng nhập thành công')
             dispatch(reviceData(types.REQUEST_LOGIN, response.data.data));
-            window.location.reload();
+            // window.location.reload();
           }
         })
       }

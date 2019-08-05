@@ -22,7 +22,7 @@ class TableTeamPage extends Component {
     })
   }
   onDelete = (id) => {
-    this.props.dispatch(action.requestGetTeam(id));
+    this.props.dispatch(action.requestDeleteTeam(id));
   }
   onUpdate = (data) => {
     this.props.dispatch(action.requestUpdateTeam(data));
@@ -34,7 +34,6 @@ class TableTeamPage extends Component {
     let item = [...this.props.team].filter(item => item.id === id)
     if (item.length > 0) {
       this.setState({
-        id: id,
         edit: true,
         dataEdit: item[0]
       })

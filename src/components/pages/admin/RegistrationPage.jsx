@@ -58,19 +58,6 @@ class RegistrationPage extends Component {
       return [];
     }
   }
-  // translateAtTime(data) {
-  //   switch (data) {
-  //     case "Full":
-  //       return "Cả ngày"
-  //     case "Morning":
-  //       return "Buổi sáng"
-  //     case "Afternoon":
-  //       return "Buổi chiều"
-  //     default:
-  //       break;
-  //   }
-  // }
-
   covertArrayNew(data) {
     let ItemNew = [];
     data.map(item => {
@@ -95,9 +82,6 @@ class RegistrationPage extends Component {
             <CalenderComponent data={this.covertArrayNew(this.props.filter)} onhandleShow={this.onhandleShow} />
           )
         case "TABLE":
-          console.log(this.props.filter)
-          console.log(this.state.isFilter);
-
           return (
             <TableRegistrationComponent onDetails={this.onDetails} team={this.props.team} onhandleShow={this.onhandleShow}
               data={this.state.isFilter ? this.props.filter : this.props.registration} user={this.props.stores}

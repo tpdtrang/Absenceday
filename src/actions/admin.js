@@ -1,6 +1,7 @@
 import * as API from '../constants/actionAPI';
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
+import { message } from 'antd';
 // import { message } from 'antd'
 //user
 export function requestGetUserStore() {
@@ -20,8 +21,6 @@ export function requestGetUserStore() {
   }
 }
 export function requestAddUserStore(data) {
-  console.log(data);
-
   let store = null;
   store = {
     team_id: data.team_id,
@@ -31,10 +30,8 @@ export function requestAddUserStore(data) {
     address: data.address,
     first_workday: data.first_workday,
     email: data.email,
-    // role: data.role,
     password: '1121212'
   }
-  console.log(store);
   return (dispatch) => {
     return axios({
       method: 'POST',
@@ -45,10 +42,15 @@ export function requestAddUserStore(data) {
       },
       data: store
     }).then(function (response) {
-      // console.log(response.data);
       dispatch(reciveData(types.ADD_STORE, response.data.data))
+      message.success("Thêm thành công!")
     }).catch(function (error) {
-      console.log(error);
+      if(error.response.data.errors[0].detail==="Trường email đã có trong cơ sở dữ liệu."){
+        message.error("Thêm không thành công - Email đã được dùng!")
+      }
+      if(error.response.data.errors[0].detail==="Trường phone đã có trong cơ sở dữ liệu."){
+        message.error("Thêm không thành công - Phone đã được dùng!")
+      }
     })
   }
 }
@@ -63,6 +65,7 @@ export function requestDeleteUserStore(id) {
       }
     }).then(function (response) {
       dispatch(reciveData(types.DELETE_STORE, id))
+      message.success("Xóa thành công")
     }).catch(function (error) {
       console.log(error);
     })
@@ -79,22 +82,26 @@ export function requestUpdateUserStore(data) {
     first_workday: data.first_workday,
     email: data.email,
     password: '123123',
-    role: data.role
   }
   return (dispatch) => {
     return axios.request({
       method: 'PUT',
       url: `${API.API}/users/${data.id}`,
+      params: store,
       headers: {
         "Accept": "application/json",
         'Content-type': 'application/json'
-      },
-      data: store
+      }
     }).then(function (response) {
-      console.log(response.data);
       dispatch(reciveData(types.UPDATE_STORE, response.data.data))
+      message.success('Bạn đã sửa  thành công!')
     }).catch(function (error) {
-      console.log(error);
+      if(error.response.data.errors[0].detail==="This phone has exist in system, please input another email."){
+        message.error("Sửa không thành công - Số điện thoại đã được dùng!")
+      }
+      if(error.response.data.errors[0].detail==="This email has exist in system, please input another email."){
+        message.error("Sửa không thành công - Email đã được dùng!")
+      }
     })
   }
 }
@@ -134,8 +141,9 @@ export function requestAddTeam(data) {
       data: store
     }).then(function (response) {
       dispatch(reciveData(types.ADD_TEAM, response.data.data))
+      message.success("Thêm thành công")
     }).catch(function (error) {
-      console.log(error);
+      message.error("Thêm không thành công")
     })
   }
 }
@@ -150,6 +158,7 @@ export function requestDeleteTeam(id) {
       }
     }).then(function (response) {
       dispatch(reciveData(types.DELETE_TEAM, id))
+      message.success("Xóa thành công")
     }).catch(function (error) {
       console.log(error);
     })
@@ -171,7 +180,8 @@ export function requestUpdateTeam(data) {
       },
       data: store
     }).then(function (response) {
-      dispatch(reciveData(types.UPDATE_STORE, response.data.data))
+      dispatch(reciveData(types.UPDATE_TEAM, response.data.data));
+      message.success('Sửa thành công')
     }).catch(function (error) {
       console.log(error);
     })
@@ -211,8 +221,9 @@ export function requestAddPositionStore(data) {
       data: store
     }).then(function (response) {
       dispatch(reciveData(types.ADD_POSITION, response.data.data))
+      message.success("Thêm thành công")
     }).catch(function (error) {
-      console.log(error);
+      message.error("Thêm không thành công")
     })
   }
 }
@@ -227,6 +238,7 @@ export function requestDeletePositionStore(id) {
       }
     }).then(function (response) {
       dispatch(reciveData(types.DELETE_POSITION, id))
+      message.success("Xóa thành công")
     }).catch(function (error) {
       console.log(error);
 
@@ -250,6 +262,7 @@ export function requestUpdatePositionStore(data) {
       data: store
     }).then(function (response) {
       dispatch(reciveData(types.UPDATE_POSITION, response.data.data))
+      message.success("Sửa thành công")
     }).catch(function (error) {
       console.log(error);
 

@@ -39,7 +39,6 @@ class MenuLayout extends Component {
         mailto: this.props.leadmail[0].id,
       })
     }
-    
     if (prevProps.visible !== this.props.visible) {
       if (prevProps.edit !== this.props.edit  && this.props.edit) {
         let data = this.props.dataEdit.attributes;
@@ -53,8 +52,8 @@ class MenuLayout extends Component {
         this.setState({
           id: this.props.dataEdit.id,
           visible: this.props.edit,
-          time_start: dateFormatDate(data.time[0].time_details, 'yyyy-mm-dd') ,
-          time_end: dateFormatDate(data.time[data.time.length - 1].time_details, 'yyyy-mm-dd'),
+          time_start: dateFormatDate(data.time[0].type === "Từ ngày đến hết ngày" ? data.time[0].time_details : now, 'yyyy-mm-dd') ,
+          time_end: dateFormatDate(data.time[0].type === "Từ ngày đến hết ngày" ? data.time[data.time.length - 1].time_details : now, 'yyyy-mm-dd'),
           checkType: data.time[0].type === 'Chọn ngày' ? true : false,
           note: this.props.edit ? data.note : '',
           type: data.time[0].type === "Chọn ngày" ? "Chọn ngày" : "Từ ngày đến hết ngày",
@@ -238,11 +237,6 @@ class MenuLayout extends Component {
       arrayMail
     })
   }
-  onChangeValue = (value) => {
-    this.props.form.setFieldsValue({
-      note: 'Time',
-    });
-  }
   render() {
     const contentUser = () => {
       if (cookies.get("data") !== undefined) {
@@ -356,6 +350,7 @@ class MenuLayout extends Component {
                               onChange={this.onChangeDateTime}
                               defaultValue={moment(now, dateFormat)}
                               allowClear={false}
+                              name="date"
                               style={{ "width": "120px" }}
                             />
                             <select

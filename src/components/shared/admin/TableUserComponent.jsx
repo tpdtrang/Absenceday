@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Modal, DatePicker } from 'antd';
 import moment from 'moment'
-var now = new Date();
 const dateFormat = 'YYYY-MM-DD';
-
+const confirm = Modal.confirm;
+var now = new Date();
+var dateFormatDate = require('dateformat');
 class TableUserComponent extends Component {
   constructor(props, context) {
     super(props, context);
@@ -15,11 +16,7 @@ class TableUserComponent extends Component {
       phone: '',
       address: '',
       email: '',
-      first_workday: '',
-      // role: '',
-      // users: [],
-      // categories: {},
-      // idtem: '',
+      first_workday: dateFormatDate(now, 'yyyy-mm-dd'),
       isFilter: false,
       dele: false
     }
@@ -64,31 +61,22 @@ class TableUserComponent extends Component {
       })
     }
   }
-  // listData = (listData) => {
-  //   if (listData !== null && listData.length > 0) {
-  //     listData.map((data) => {
-  //       if (data && data.categories.length > 0) {
-  //         let categories = data.categories;
-  //         this.compareData(categories, data);
-  //       }
-  //       return data;
-  //     })
-  //   }
-  // }
   onSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
     if (this.props.edit) {
       this.props.onUpdate(this.state);
+      this.setState({
+        show: false
+      })
       this.onReset();
     } else {
       this.props.onAdd(this.state);
       this.onReset();
+      this.setState({
+        show: false
+      })
     }
-    this.setState({
-      show: false
-    })
-    this.onReset();
+    
   }
 
   onReset() {
@@ -99,12 +87,21 @@ class TableUserComponent extends Component {
       phone: '',
       address: '',
       email: '',
-      first_workday: '',
+      first_workday:dateFormatDate(now, 'yyyy-mm-dd'),
     })
   }
 
   onDelete(id) {
-    this.props.onDelete(id);
+    var self = this.props;
+    confirm({
+      title: 'Bạn chắc chắn muốn xóa?',
+      onOk() {
+        self.onDelete(id);
+      },
+      onCancel() {
+
+      },
+    });
   }
 
   onEdit(id) {
@@ -126,13 +123,12 @@ class TableUserComponent extends Component {
         {
           id: this.props.dataEdit.id,
           name: this.props.dataEdit.attributes.name,
-          team_id: this.props.dataEdit.attributes.team.name,
-          position_id: this.props.dataEdit.attributes.position.name,
+          team_id: this.props.dataEdit.attributes.team.id,
+          position_id: this.props.dataEdit.attributes.position.id,
           phone: this.props.dataEdit.attributes.phone,
           email: this.props.dataEdit.attributes.email,
           address: this.props.dataEdit.attributes.address,
-          first_workday: this.props.dataEdit.attributes.first_workday,
-          // role: this.props.dataEdit.attributes.roles
+          first_workday: dateFormatDate(this.props.dataEdit.attributes.first_workday, 'yyyy-mm-dd'),
         }
       )
     }
@@ -204,7 +200,7 @@ class TableUserComponent extends Component {
 
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style={{textAlign:'center'}}>
                   {
                     this.state.isFilter ?
                       this.handleShow(this.props.data).map(data => (
@@ -246,14 +242,7 @@ class TableUserComponent extends Component {
                           <td className="description">{data.attributes.first_workday}</td>
                           {/* <td className="description">{data.attributes.roles}</td> */}
                           <td className="description">
-                            <button className="btn" type="submit" onClick={this.openDele} >
-                              <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
-                            <Modal style={{ textAlign: "center" }} maskClosable={false}
-                              visible={this.state.dele} onCancel={this.onhandleClose} footer={null} >
-                              <p>Bạn có muốn xóa?</p>
-                              <button className="btn btn-primary" onClick={this.onDelete.bind(this, data.id)}>Yes</button>{"   "}
-                              <button className="btn btn-danger" onClick={this.onhandleClose}>No</button>
-                            </Modal>
+                            <button className="btn" onClick={this.onDelete.bind(this, data.id)} style={{border: 'none',outline:'none'}}><i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
                             <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
                               <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                             </button>
@@ -317,13 +306,10 @@ class TableUserComponent extends Component {
                       <DatePicker
                         style={{ "width": "100%" }}
                         onChange={this.onChangeDate}
-                        defaultValue={moment(now, dateFormat)}>
+                        value={moment(this.state.first_workday, dateFormat)}
+                        name="first_workday">
                       </DatePicker>
                     </div>
-                    {/* <div className="form-group">
-                      <label className="form-text">Vị trí:</label>
-                      <input type="text" className="form-search" name="role" onChange={this.onhandleChange} value={this.state.role} />
-                    </div> */}
                     <div className="btn-wrap">
                       <button type="submit" className="btn btn-s" variant="primary"> Lưu </button>
                     </div>

@@ -23,7 +23,7 @@ export function requestGetDayOff() {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_GET_DAYOFF, response.data.data));
     }).catch(function (error) {
-
+      
     })
   }
 }
@@ -150,6 +150,9 @@ export function requestUpdateAccept(data) {
     }).then(function (response) {
       dispatch(reciveData(types.REQUEST_UPDATE_ACCEPT, response.data.data));
     }).catch(function (error) {
+      if (error.response.data.errors[0].detail === "The absence days has registered be not appropriate for browsing, please check back before browsing for this case.") {
+        message.error("Bảng đăng ký nghỉ này đã vượt quá số ngày quy định của họ!!")
+      }
       console.log(error)
     })
   }
@@ -219,14 +222,14 @@ export function requestCreateDayOff(data) {
       cc: dataMail,
       type_id: data.typeday,
       time_start: dateFormatDate(data.time_start, 'yyyy-mm-dd'),
-      time_end:dateFormatDate(data.time_end, 'yyyy-mm-dd'),
+      time_end: dateFormatDate(data.time_end, 'yyyy-mm-dd'),
       note: data.note,
       type: 'Từ ngày đến hết ngày'
     }
   } else {
     dayoff = {
       user_id: cookies.get('data').id,
-      emails:  dataLead,
+      emails: dataLead,
       cc: dataMail,
       type_id: data.typeday,
       date: dataArrray,
@@ -244,18 +247,19 @@ export function requestCreateDayOff(data) {
         'Authorization': `${'bearer' + cookies.get('token')}`
       },
       data: dayoff
-    }).then(function (response) {  
+    }).then(function (response) {
       message.success("Bạn đã đăng ký thành công!")
       dispatch(reciveData(types.REQUEST_ADD_DAYOFF, response.data.data))
     }).catch(function (error) {
-      if(error.response.data.errors[0].detail === "Time registration has been matched."){
+      if (error.response.data.errors[0].detail === "Time registration has been matched.") {
         message.error("Bạn đã đăng ký ngày này hoặc bạn đã xin nghỉ quá ngày quy định!!")
-      }
-      if(error.response.data.errors[0].detail === "Trường cc không được bỏ trống."){
-        message.error("Bạn thiếu trường cc!")
-      }
-      if(error.response.data.errors[0].detail === " Trường emails không được bỏ trống."){
-        message.error("Bạn thiếu trường emails!")
+        return Promise.reject(error.response.data)
+      } else {
+        if (error.response.data.errors[0].detail === "Trường cc không được bỏ trống.") {
+          message.error("Bạn thiếu trường cc!")
+        } else {
+          message.error("Đăng ký không thành công")
+        }
       }
     })
   }
@@ -312,6 +316,8 @@ export function requestUpdateDay(data) {
       _method: 'PUT'
     }
   }
+  console.log(paramData);
+
   return (dispatch) => {
     return axios.request({
       method: 'POST',
@@ -326,9 +332,9 @@ export function requestUpdateDay(data) {
       message.success("Bạn đã sửa thành công!")
       dispatch(reciveData(types.REQUEST_UPDATE_DAYOFF, response.data.data));
     }).catch(function (error) {
-      if(error.response.data.errors[0].detail === "Time registration has been matched."){
+      if (error.response.data.errors[0].detail === "Time registration has been matched.") {
         message.error("Bạn đã đăng ký ngày này!!")
-      }else{
+      } else {
         message.error(" Sửa không thành công!")
       }
     })
