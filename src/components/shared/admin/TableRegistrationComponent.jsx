@@ -36,7 +36,6 @@ class TableRegistrationComponent extends Component {
   }
   onSubmit = (event) => {
     event.preventDefault();
-    console.log(this.data);
     this.props.onSearch(this.state);
 
   }
@@ -100,7 +99,7 @@ class TableRegistrationComponent extends Component {
                     <th>Details</th>
                   </tr>
                 </thead>
-                <tbody className=" results">
+                <tbody className=" results" style={{textAlign:'center'}}>
                   {this.state.pagOfItem.map(data => {
                     sum = 0;
                     return (

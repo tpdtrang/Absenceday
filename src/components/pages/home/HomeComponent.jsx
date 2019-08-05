@@ -191,8 +191,7 @@ class HomeComponent extends Component {
       if (this.state.views === "5") {
         return (
           <ListRegistrantion 
-            data={cookies.get('data') !== undefined ? this.props.listregis : ''} 
-            onDetails={this.onDetails}>
+            data={cookies.get('data') !== undefined ? this.props.listregis : ''}>
           </ListRegistrantion>
         )
       }
@@ -221,8 +220,7 @@ class HomeComponent extends Component {
               onStatistical={this.onStatistical}
               typedayoff={this.props.typedayoff}
               onAddDayOff={this.onAddDayOff}></MenuLayout>
-            {mainContent()
-            }
+            {mainContent()}
           </div>
         </div>
       </div>

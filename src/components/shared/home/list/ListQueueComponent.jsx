@@ -122,21 +122,6 @@ class ListComponent extends Component {
                   <input onChange={this.onChanger} placeholder="Tìm kiếm theo năm..." type="text" value={this.state.year} name="year" className="b-search"></input>
                   <button className="btn-search"><i className="fas fa-search" ></i></button>
                 </form>
-                // <Form  className="form-search" onSubmit={this.onSearchYear}>
-                //   <Form.Item>
-                //     {getFieldDecorator('year', {
-                //       rules: [
-                //         {
-                //           required: true,
-                //           message: 'Bạn hãy nhập số!'
-                //         },
-                //       ],
-                //     })(
-                //       <Input onChange={this.onChanger} placeholder="Tìm kiếm theo năm..." type="number" name="year" className="b-search"/>
-                //     )}
-                //     <button className="btn-search"><i className="fas fa-search" ></i></button>
-                //   </Form.Item>
-                // </Form>
                 :
                 <></>
             }
@@ -144,21 +129,11 @@ class ListComponent extends Component {
           <table className="table table-striped">
             <thead>
               <tr className="title-table">
-                <th className="item-table">STT</th>
+                <th className="item-table">ID</th>
                 <th className="item-table">TG Đăng ký</th>
-                <th className="item-table time">
-                  <div className="time-type">
-                    <div className="item-date">
-                      <p className="date">TG Nghỉ</p>
-                    </div>
-                    <div className="item-date">
-                      <p className="date">Loại Hình</p>
-                    </div>
-                    <div className="item-date">
-                      <p className="date3">Hình Thức</p>
-                    </div>
-                  </div>
-                </th>
+                <th className="item-table">Thời gian nghỉ</th>
+                <th className="item-table">Loại Hình </th>
+                <th className="item-table">Hình Thức</th>
                 <th className="item-table">Thể loại</th>
                 <th className="item-table">Lý Do</th>
                 <th className="item-table">Số Ngày Nghỉ</th>
@@ -177,17 +152,27 @@ class ListComponent extends Component {
                         <td className="name-item">
                           {
                             data.attributes.time.map(item => (
-                              <div className="type" key={item.id} style={{ "width": "100%" }}>
-                                <div className="list-1">
-                                  <p className="list-item1" >{dateFormatDate(item.time_details, "dd-mm-yyyy HH:MM")}</p>
-                                </div>
-                                <div className="list-2">
-                                  <p className="list-item2" >{item.type}</p>
-                                </div>
-                                <div className="list-3">
-                                  <p className="list-item3" >{item.at_time}</p>
-                                </div>
-                              </div>
+                              <p className="list-item1" key={item.id} style={{ "width": "100%" }}>
+                                {dateFormatDate(item.time_details, "dd-mm-yyyy HH:MM")}
+                              </p>
+                            ))
+                          }
+                        </td>
+                        <td className="name-item">
+                          {
+                            data.attributes.time.map(item => (
+                              <p className="list-item1" key={item.id} style={{ "width": "100%" }}>
+                                {item.type}
+                              </p>
+                            ))
+                          }
+                        </td>
+                        <td className="name-item">
+                          {
+                            data.attributes.time.map(item => (
+                              <p className="list-item1" key={item.id} style={{ "width": "100%" }}>
+                                {item.at_time}
+                              </p>
                             ))
                           }
                         </td>

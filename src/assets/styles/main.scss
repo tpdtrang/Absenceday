@@ -392,7 +392,7 @@
           font-size: 16px;
           font-weight: 500;
           color: #fff;
-          border-right: 1px solid #fff;
+          border-right: 1px solid rgb(219, 218, 218);
           background-color: #2962ff;
           &.second-col{
             width: 10%;
@@ -429,7 +429,7 @@
     }
     .name-item {
       text-align: center;
-      border-right: 1px solid rgb(224, 220, 220);
+      border: 1px solid rgb(219, 218, 218);
       font-weight: 400;
       color: #000;
       .type {
@@ -654,6 +654,7 @@
           width: 100%;
           min-height: 10px;
           bottom: 0;
+          
           .table-header {
             min-width: 100%;
           }
@@ -666,6 +667,9 @@
             border: 1px solid #999;
           }
           tr {
+            .detail-title{
+              display: block;
+            }
             .description {
               white-space: nowrap;
               overflow: hidden;
@@ -676,6 +680,26 @@
               min-width: 80px;
               border: 1px solid #999;
               text-align: center;
+              &.b-detail{
+                height: 50px;
+                .hover-date {
+                  visibility: hidden;
+                  overflow: 0;
+                  background-color: #2962ff;
+                  transition: all 0.2s ease-in-out;
+                  padding: 5px 2px;
+                  border-radius: 5px;
+                }
+                &:hover {
+                  cursor: pointer;
+                  height: 50%;
+                  .hover-date {
+                    visibility: visible;
+                    opacity: 1;
+                    display: block;
+                  }
+                }
+              }
             }
           }
           td {
@@ -683,15 +707,6 @@
             color: #2962ff;
           }
         }
-        // .b-scrollbar {
-        //   position: relative;
-        //   overflow-x: scroll;
-        //   display: inline-block;
-        //   height: 100%;
-        //   width: 100%;
-        //   min-height: 4px;
-        //   bottom: 0;
-        // }
       }
     }
   }

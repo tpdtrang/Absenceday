@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'antd';
 import Pagination from '../../../feature/Pagination';
+const confirm = Modal.confirm;
 class TableTeamComponent extends Component {
   constructor(props, context) {
     super(props, context);
@@ -53,14 +54,17 @@ class TableTeamComponent extends Component {
     if (this.props.edit) {
       this.props.onUpdate(this.state);
       this.onReset();
+      this.setState({
+        show: false
+      })
     } else {
       this.props.onAdd(this.state);
       this.onReset();
+      this.setState({
+        show: false
+      })
     }
-    this.setState({
-      show: false
-    })
-    this.onReset();
+    
   }
   onReset = () => {
     this.setState({
@@ -69,11 +73,17 @@ class TableTeamComponent extends Component {
     })
   }
   onDelete(id) {
-    this.props.onDelete(id);
-    this.setState({
-      show: false,
-      dele: false
+    var self = this.props;
+    confirm({
+      title: 'Bạn chắc chắn muốn xóa?',
+      onOk(){
+        self.onDelete(id);
+      },
+      onCancel(){
+        
+      }
     })
+    
   }
   onEdit(id) {
     this.props.onEdit(id);
@@ -82,7 +92,7 @@ class TableTeamComponent extends Component {
     })
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.edit !== prevProps.edit && this.props.edit) {
+    if (prevProps.edit !== this.props.edit && this.props.edit) {
       this.setState({
         id: this.props.dataEdit.id,
         name: this.props.dataEdit.attributes.name,
@@ -103,14 +113,6 @@ class TableTeamComponent extends Component {
                 </div>
               </div>
               <div className="menu-list">
-                {/* <div className="search">
-                  <input type="text" />
-                  <a href="/">
-                    <div className="icon">
-                      <i className="fas fa-search" />
-                    </div>
-                  </a>
-                </div> */}
               </div>
               <div className="menu-list">
                 <div className="add">
@@ -131,23 +133,14 @@ class TableTeamComponent extends Component {
                     <th>Hoạt động</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style={{textAlign:'center'}}>
                   {this.state.pagOfItem.map(data => (
                     <tr key={data.id}>
                       <td className="description sticky-col first-col">{data.id}</td>
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
                       <td className="description">
-                        {/* <div className="alert btn-confirm"> */}
-                        <button className="btn" type="submit" onClick={this.openDele} >
-                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
-                        <Modal style={{ textAlign: "center" }} maskClosable={false}
-                          visible={this.state.dele} onCancel={this.onhandleClose} footer={null} >
-                          <p>Bạn có muốn xóa?</p>
-                          <button className="btn btn-primary" onClick={this.onDelete.bind(this, data.id)}>Yes</button>{"   "}
-                          <button className="btn btn-danger" onClick={this.onhandleClose}>No</button>
-                        </Modal>
-                        {/* </div> */}
+                      <button className="btn" onClick={this.onDelete.bind(this, data.id)}><i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
                         <button className="btn btn-confirm" onClick={this.onEdit.bind(this, data.id)}>
                           <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                         </button>

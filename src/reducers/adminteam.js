@@ -18,7 +18,7 @@ export default function store(state = INITIAL_STATE, action = {}) {
       })
     case types.UPDATE_TEAM:
       return Object.assign({}, state, {
-        all: state.all.map(data => data.id === action.payload.id ? action.payload : data)
+        all: state.all.map(data => parseInt(data.id) === parseInt(action.payload.id) ? action.payload : data)
       })
     default:
       return state

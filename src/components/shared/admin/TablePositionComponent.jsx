@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from 'antd';
+var confirm = Modal.confirm;
 class TablePositionComponent extends Component {
   constructor(props, context) {
     super(props, context);
@@ -16,11 +17,6 @@ class TablePositionComponent extends Component {
     })
   }
 
-  openDele = () => {
-    this.setState({
-      dele: true
-    })
-  }
   onhandleClose = (e) => {
     e.preventDefault();
     this.props.onClose();
@@ -51,10 +47,15 @@ class TablePositionComponent extends Component {
     //this.onReset();
   }
   onDelete(id) {
-    this.props.onDelete(id);
-    this.setState({
-      show:false,
-      dele:false
+    var self = this.props;
+    confirm({
+      title: 'Bạn chắc chắn muốn xóa?',
+      onOk(){
+        self.onDelete(id);
+      },
+      onCancel(){
+
+      }
     })
   }
   onEdit(id) {
@@ -120,21 +121,14 @@ class TablePositionComponent extends Component {
                     <th>Hoạt động</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style={{textAlign:'center'}}>
                   {this.props.data.map(data => (
                     <tr key={data.id}>
                       <td className="description sticky-col first-col">{data.id}</td>
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
                       <td className="description">
-                        <button className="btn" type="submit" onClick={this.openDele} >
-                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
-                        <Modal style={{ textAlign: "center" }} maskClosable={false}
-                          visible={this.state.dele} onCancel={this.onhandleClose} footer={null} >
-                          <p>Bạn có muốn xóa?</p>
-                          <button className="btn btn-primary" onClick={this.onDelete.bind(this, data.id)}>Yes</button>{"   "}
-                          <button className="btn btn-danger" onClick={this.onhandleClose}>No</button>
-                        </Modal>
+                      <button className="btn" onClick={this.onDelete.bind(this, data.id)}><i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
                         <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
                           <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                         </button>

@@ -190,22 +190,12 @@ class ListComponent extends Component {
           <table className="table table-striped">
             <thead>
               <tr className="title-table">
-                <th className="item-table">STT</th>
+                <th className="item-table">ID</th>
                 <th className="item-table">Người Đăng Ký</th>
                 <th className="item-table">TG Đăng ký</th>
-                <th className="item-table time">
-                  <div className="time-type">
-                    <div className="item-date">
-                      <p className="date">TG Nghỉ</p>
-                    </div>
-                    <div className="item-date">
-                      <p className="date">Loại Hình</p>
-                    </div>
-                    <div className="item-date">
-                      <p className="date3">Hình Thức</p>
-                    </div>
-                  </div>
-                </th>
+                <th className="item-table">Thời gian nghỉ</th>
+                <th className="item-table">Loại Hình </th>
+                <th className="item-table">Hình Thức</th>
                 <th className="item-table">Thể loại</th>
                 <th className="item-table">Lý Do</th>
                 <th className="item-table">Số Ngày Nghỉ</th>
@@ -224,22 +214,32 @@ class ListComponent extends Component {
                       <td className="name-item">{data.attributes.user.name}</td>
                       <td className="name-item">{dateFormatDate(data.attributes.created_at, "dd-mm-yyyy HH:MM")}</td>
                       <td className="name-item">
-                        {
-                          data.attributes.time.map(item => (
-                            <div className="type" key={item.id} style={{ "width": "100%" }}>
-                              <div className="list-1">
-                                <p className="list-item1" >{dateFormatDate(item.time_details, "dd-mm-yyyy HH:MM")}</p>
-                              </div>
-                              <div className="list-2">
-                                <p className="list-item2" >{item.type}</p>
-                              </div>
-                              <div className="list-3">
-                                <p className="list-item3" >{item.at_time}</p>
-                              </div>
-                            </div>
-                          ))
-                        }
-                      </td>
+                          {
+                            data.attributes.time.map(item => (
+                              <p className="list-item1" key={item.id} style={{ "width": "100%" }}>
+                                {dateFormatDate(item.time_details, "dd-mm-yyyy HH:MM")}
+                              </p>
+                            ))
+                          }
+                        </td>
+                        <td className="name-item">
+                          {
+                            data.attributes.time.map(item => (
+                              <p className="list-item1" key={item.id} style={{ "width": "100%" }}>
+                                {item.type}
+                              </p>
+                            ))
+                          }
+                        </td>
+                        <td className="name-item">
+                          {
+                            data.attributes.time.map(item => (
+                              <p className="list-item1" key={item.id} style={{ "width": "100%" }}>
+                                {item.at_time}
+                              </p>
+                            ))
+                          }
+                        </td>
                       <td className="name-item">{data.attributes.type.name}</td>
                       <td className="name-item">{data.attributes.note}</td>
                       <td className="name-item">{data.attributes.total}</td>
@@ -290,7 +290,7 @@ class ListComponent extends Component {
                     }
                   ],
                 })(
-                  <Input className="b-comment"/>,
+                  <Input className="b-comment" autoComplete="off"/>,
                 )}
                 <div className="b-btn">
                   <Button className="btn-save" onClick={this.onSendAccept}>Gửi</Button>
