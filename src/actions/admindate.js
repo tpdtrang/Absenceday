@@ -35,13 +35,11 @@ export function requestSearchYear(data) {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      if (response.data && response.data.data.length > 0) {
-        dispatch(reciveData(types.SEARCH_DATE, response.data))
-      } else {
-        message.error("Không có thời gian đăng ki nghỉ trong những ngày này")
-      }
+      dispatch(reciveData(types.SEARCH_DATE, response.data))
     }).catch(function (error) {
-      console.log(error);
+      if (error.response.data.errors[0].detail === "Data not exist with your required") {
+        message.error("Không có thời gian đăng ký nghỉ trong năm này")
+      }
     })
   }
 }
@@ -62,13 +60,11 @@ export function requestSearchDay(data) {
       }
     }).then(response => {
       console.log(response.data);
-      if (response.data && response.data.data.length > 0) {
-        dispatch(reciveData(types.SEARCH_DATE, response.data))
-      } else {
-        message.error("Không có thời gian đăng ki nghỉ trong những ngày này")
-      }
+      dispatch(reciveData(types.SEARCH_DATE, response.data))
     }).catch(error => {
-      console.log(error);
+      if (error.response.data.errors[0].detail === "Data not exist with your required") {
+        message.error("Không có thời gian đăng ký nghỉ trong những ngày này")
+      }
     })
   }
 }
@@ -88,10 +84,11 @@ export function requestSearchWeek(data) {
         'Content-type': 'application/json'
       }
     }).then(response => {
-      console.log(response.data);
       dispatch(reciveData(types.SEARCH_DATE, response.data))
     }).catch(error => {
-      console.log(error);
+      if (error.response.data.errors[0].detail === "Data not exist with your required") {
+        message.error("Không có thời gian đăng ký nghỉ trong tuần này")
+      }
     })
   }
 }
@@ -110,35 +107,17 @@ export function requestSearchMonth(data) {
         'Content-type': 'application/json'
       }
     }).then(response => {
-      if (response.data && response.data.data.length > 0) {
-        dispatch(reciveData(types.SEARCH_DATE, response.data))
-      } else {
-        message.error("Không có thời gian đăng ki nghỉ trong tháng này")
-      }
+      dispatch(reciveData(types.SEARCH_DATE, response.data))
     }).catch(error => {
-      console.log(error);
+      if (error.response.data.errors[0].detail === "Data not exist with your required") {
+        message.error("Không có thời gian đăng ký nghỉ trong tháng này")
+      }
     })
   }
 }
 
 //chon ngay nghi
 export function requestGetDisLicense(data) {
-  // switch (paramData) {
-  //   case data.type === 'year':
-  //     paramData = {
-  //       absences: 0,
-  //       year: data.year
-  //     }
-  //   break;
-  //   case data.type === 'year':
-  //     paramData = {
-  //       absences: 0,
-  //       month: data.month
-  //     }
-  //       break;
-  //   default:
-  //     break;
-  // }
   let paramData = {}
   if (data.type === 'year') {
     paramData = {

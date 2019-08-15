@@ -241,8 +241,15 @@ class TableUserComponent extends Component {
                           <td className="description">{data.attributes.first_workday}</td>
                           {/* <td className="description">{data.attributes.roles}</td> */}
                           <td className="description">
-                            <button className="btn" onClick={this.onDelete.bind(this, data.id)} style={{ border: 'none', outline: 'none' }}><i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
-                            <button className="btn" onClick={this.onEdit.bind(this, data.id)}>
+                            <button
+                              className="btn"
+                              onClick={this.onDelete.bind(this, data.id)}
+                              style={{ border: 'none', outline: 'none' }}>
+                              <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
+                            </button>
+                            <button
+                              className="btn"
+                              onClick={this.onEdit.bind(this, data.id)}>
                               <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                             </button>
                           </td>

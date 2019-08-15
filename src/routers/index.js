@@ -2,7 +2,7 @@ import React from 'react'
 import { HomeComponent } from '../components/pages/home'
 import { Route, Switch } from 'react-router-dom'
 import { HomeAdmin } from '../components/pages/admin';
-import { TablePermissionPage, TableRolePage, PositionPage, TableTeamPage, UserPage,RegistrationPage ,TrackPage,ContentPage} from '../components/pages/admin';
+import { TablePermissionPage, TableRolePage, PositionPage, TableTeamPage, UserPage, RegistrationPage, TrackPage } from '../components/pages/admin';
 const Routes = () => (
   <Switch>
     <Route path="/" exact={true} component={HomeComponent} ></Route>
@@ -14,7 +14,6 @@ const Routes = () => (
     <Route path="/admin/permission" component={TablePermissionPage} exact></Route>
     <Route path="/admin/registration" component={RegistrationPage} exact></Route>
     <Route path="/admin/track" component={TrackPage} exact></Route>
-    <Route path="/admin/content" component={ContentPage} exact></Route>
   </Switch>
 );
 export default Routes;

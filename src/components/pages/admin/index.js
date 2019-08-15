@@ -6,5 +6,4 @@ import TableRolePage from './TableRolePage';
 import TablePermissionPage from './TablePermissionPage';
 import RegistrationPage from './RegistrationPage';
 import TrackPage from './TrackPage';
-import ContentPage from './ContentPage';
-export { HomeAdmin, TableTeamPage,UserPage, PositionPage, TableRolePage, TablePermissionPage ,RegistrationPage,TrackPage,ContentPage};
+export { HomeAdmin, TableTeamPage, UserPage, PositionPage, TableRolePage, TablePermissionPage, RegistrationPage, TrackPage };

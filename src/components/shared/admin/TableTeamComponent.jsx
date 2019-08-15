@@ -64,7 +64,7 @@ class TableTeamComponent extends Component {
         show: false
       })
     }
-    
+
   }
   onReset = () => {
     this.setState({
@@ -76,14 +76,14 @@ class TableTeamComponent extends Component {
     var self = this.props;
     confirm({
       title: 'Bạn chắc chắn muốn xóa?',
-      onOk(){
+      onOk() {
         self.onDelete(id);
       },
-      onCancel(){
-        
+      onCancel() {
+
       }
     })
-    
+
   }
   onEdit(id) {
     this.props.onEdit(id);
@@ -116,7 +116,11 @@ class TableTeamComponent extends Component {
               </div>
               <div className="menu-list">
                 <div className="add">
-                  <button type="submit" className="btn" onClick={this.onhandleShow} style={{ fontSize: "13px", color: "#fff", backgroundColor: " #02a959" }} >
+                  <button
+                    type="submit"
+                    className="btn"
+                    onClick={this.onhandleShow}
+                    style={{ fontSize: "13px", color: "#fff", backgroundColor: " #02a959" }} >
                     <i className="fas fa-plus" style={{ fontSize: "13px", color: "#fff", paddingRight: "5px" }} />
                     Create New
                   </button>
@@ -133,15 +137,21 @@ class TableTeamComponent extends Component {
                     <th>Hoạt động</th>
                   </tr>
                 </thead>
-                <tbody style={{textAlign:'center'}}>
+                <tbody style={{ textAlign: 'center' }}>
                   {this.state.pagOfItem.map(data => (
                     <tr key={data.id}>
                       <td className="description sticky-col first-col">{data.id}</td>
                       <td className="description">{data.attributes.name}</td>
                       <td className="description">{data.attributes.description}</td>
                       <td className="description">
-                      <button className="btn" onClick={this.onDelete.bind(this, data.id)}><i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} /></button>
-                        <button className="btn btn-confirm" onClick={this.onEdit.bind(this, data.id)}>
+                        <button
+                          className="btn"
+                          onClick={this.onDelete.bind(this, data.id)}>
+                          <i className="far fa-trash-alt" style={{ color: "red", fontSize: "18px" }} />
+                        </button>
+                        <button
+                          className="btn btn-confirm"
+                          onClick={this.onEdit.bind(this, data.id)}>
                           <i className="far fa-edit" style={{ color: "blue", fontSize: "18px" }} />
                         </button>
                       </td>
@@ -149,9 +159,17 @@ class TableTeamComponent extends Component {
                   ))}
                 </tbody>
               </table>
-              <Pagination items={this.props.data} onChangePage={this.onChangePage}></Pagination>
+              <Pagination
+                items={this.props.data}
+                onChangePage={this.onChangePage}>
+              </Pagination>
             </div>
-            <Modal maskClosable={false} visible={this.state.show} style={{ "top": "3%" }} footer={null} onCancel={this.onhandleClose}>
+            <Modal
+              maskClosable={false}
+              visible={this.state.show}
+              style={{ "top": "3%" }}
+              footer={null}
+              onCancel={this.onhandleClose}>
               <div className="p-modal">
                 <div className="title-form">
                   <h3 className="heading-3">Thêm nhóm</h3>
@@ -161,13 +179,26 @@ class TableTeamComponent extends Component {
                   <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                       <label className="form-text">Tên:</label>
-                      <input type="text" className="form-search" name="name" onChange={this.onhandleChange} value={this.state.name} /></div>
+                      <input type="text"
+                        className="form-search"
+                        name="name"
+                        onChange={this.onhandleChange}
+                        value={this.state.name} />
+                    </div>
                     <div className="form-group">
                       <label className="form-text">Mô tả:</label>
-                      <input type="text" className="form-search" name="description" onChange={this.onhandleChange} value={this.state.description} /></div>
+                      <input type="text"
+                        className="form-search"
+                        name="description"
+                        onChange={this.onhandleChange}
+                        value={this.state.description} />
+                    </div>
                     <div className="btn-wrap">
-                      <button type="submit" className="btn btn-s">
-                        Lưu </button>
+                      <button
+                        type="submit"
+                        className="btn btn-s">
+                        Lưu
+                        </button>
                     </div>
                   </form>
                 </div>

@@ -45,10 +45,10 @@ export function requestAddUserStore(data) {
       dispatch(reciveData(types.ADD_STORE, response.data.data))
       message.success("Thêm thành công!")
     }).catch(function (error) {
-      if(error.response.data.errors[0].detail==="Trường email đã có trong cơ sở dữ liệu."){
+      if (error.response.data.errors[0].detail === "Trường email đã có trong cơ sở dữ liệu.") {
         message.error("Thêm không thành công - Email đã được dùng!")
       }
-      if(error.response.data.errors[0].detail==="Trường phone đã có trong cơ sở dữ liệu."){
+      if (error.response.data.errors[0].detail === "Trường phone đã có trong cơ sở dữ liệu.") {
         message.error("Thêm không thành công - Phone đã được dùng!")
       }
     })
@@ -96,10 +96,10 @@ export function requestUpdateUserStore(data) {
       dispatch(reciveData(types.UPDATE_STORE, response.data.data))
       message.success('Bạn đã sửa  thành công!')
     }).catch(function (error) {
-      if(error.response.data.errors[0].detail==="This phone has exist in system, please input another email."){
+      if (error.response.data.errors[0].detail === "This phone has exist in system, please input another email.") {
         message.error("Sửa không thành công - Số điện thoại đã được dùng!")
       }
-      if(error.response.data.errors[0].detail==="This email has exist in system, please input another email."){
+      if (error.response.data.errors[0].detail === "This email has exist in system, please input another email.") {
         message.error("Sửa không thành công - Email đã được dùng!")
       }
     })

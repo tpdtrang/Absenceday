@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 class TableTrackComponent extends Component {
 
   constructor(props, context) {
@@ -263,7 +263,7 @@ class TableTrackComponent extends Component {
               </tbody>
             </table>
           </div>
-          <Modal
+          {/* <Modal
             maskClosable={false}
             visible={this.state.show}
             style={{ "top": "3%" }}
@@ -301,7 +301,7 @@ class TableTrackComponent extends Component {
                 </form>
               </div>
             </div>
-          </Modal>
+          </Modal> */}
         </div>
       </section >
     );
